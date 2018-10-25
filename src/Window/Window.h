@@ -20,6 +20,8 @@ public:
 	void resize(const int width, const int height);
 	void update();
 
+    SDL_Surface * getSurface();
+
 };
 
 #endif // WINDOW_H

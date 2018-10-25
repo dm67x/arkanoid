@@ -21,3 +21,7 @@ void Window::resize(const int width, const int height) {
 void Window::update() {
     SDL_UpdateWindowSurface(_window);
 }
+
+SDL_Surface * Window::getSurface() {
+    return _surface;
+}
