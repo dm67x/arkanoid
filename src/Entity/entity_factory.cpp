@@ -14,9 +14,9 @@ std::shared_ptr<Entity> EntityFactory::create(std::string id, std::string name) 
     if (entity) return entity;
 
     if (name == "ball") {
-        entity = std::make_shared<Entities::Ball>();
+        entity = std::make_shared<Entities::Ball>(id);
     } else if (name == "ship") {
-        entity = std::make_shared<Entities::Ship>();
+        entity = std::make_shared<Entities::Ship>(id);
     } else if (name == "block") {
 
     }

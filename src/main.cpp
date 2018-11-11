@@ -4,6 +4,8 @@
 
 #include "Entity/entity_factory.h"
 #include "System/Systems/render.h"
+#include "Entity/Entities/ball.h"
+#include "Component/Components/position.h"
 
 int x_vault;
 
@@ -90,6 +92,13 @@ int main(int argc, char** argv)
     init();
     EntityFactory * entity_factory = Singleton<EntityFactory>::getInstance();
     entity_factory->create("ball_1", "ball");
+
+    Entities::Ball * ball2 = static_cast<Entities::Ball *>(entity_factory->create("ball_2", "ball").get());
+    Components::Position * ball2_pos = static_cast<Components::Position *>(ball2->findComponent("position").get());
+    ball2_pos->set(400, 250);
+
+    entity_factory->create("ship_1", "ship");
+
     Systems::Render renderer;
     
 	bool quit = false;

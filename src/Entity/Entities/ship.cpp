@@ -4,7 +4,7 @@
 
 using namespace Entities;
 
-Ship::Ship() : Entity("ship") {
+Ship::Ship(std::string name) : Entity(name, "ship") {
     SDL_Rect scrVaiss = { 128, 0, 128, 32 };
 
     add(std::make_shared<Components::Position>(150, 150));

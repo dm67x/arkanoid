@@ -12,11 +12,12 @@ class Entity
 
 private:
     std::string name;
+    std::string type;
     std::vector<std::shared_ptr<Component>> components;
     static ComponentPool * components_pool;
 
 protected:
-    Entity(std::string name);
+    Entity(std::string name, std::string type);
 
 public:
     virtual ~Entity();
@@ -24,6 +25,7 @@ public:
     void add(std::shared_ptr<Component> component);
     void remove(std::shared_ptr<Component> component);
     std::vector<std::shared_ptr<Component>> getComponents();
+    std::shared_ptr<Component> findComponent(std::string type);
 
 };
 

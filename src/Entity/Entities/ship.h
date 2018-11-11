@@ -10,7 +10,7 @@ class Ship : public Entity
 {
 
 public:
-    Ship();
+    Ship(std::string name);
     ~Ship();
 
 };

@@ -10,7 +10,7 @@ class Ball : public Entity
 {
 
 public:
-    Ball();
+    Ball(std::string name);
     ~Ball();
 
 };
