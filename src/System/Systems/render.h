@@ -14,6 +14,7 @@ public:
     Render();
     ~Render();
 
+    void update(float dt);
     void draw(SDL_Surface & surface);
 
 };

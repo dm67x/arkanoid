@@ -11,6 +11,10 @@ Render::~Render() {
 
 }
 
+void Render::update(float dt) {
+    // Nothing to do
+}
+
 void Render::draw(SDL_Surface & surface) {
     Entity * entity;
     Components::Graphic * graphic_component = nullptr;
