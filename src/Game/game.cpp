@@ -20,6 +20,7 @@ Game::Game() {
     mouseManager = new MouseManager();
     entity_factory = Singleton<EntityFactory>::getInstance();
     renderer = new Systems::Render();
+    movement = new Systems::Movement();
 }
 
 Game::~Game() {
@@ -27,6 +28,7 @@ Game::~Game() {
     delete keyManager;
     delete mouseManager;
     delete renderer;
+    delete movement;
     SDL_Quit();
 }
 
@@ -40,16 +42,11 @@ void Game::init() {
     });
 
     entity_factory->create("ball_1", "ball");
-
-    Entities::Ball * ball2 = static_cast<Entities::Ball *>(entity_factory->create("ball_2", "ball").get());
-    Components::Position * ball2_pos = static_cast<Components::Position *>(ball2->findComponent("position").get());
-    ball2_pos->set(400, 250);
-
     entity_factory->create("ship_1", "ship");
 }
 
 void Game::update() {
-
+    movement->update(0);
 }
 
 void Game::draw() {
@@ -69,6 +66,7 @@ void Game::run() {
         }
 
         update();
+        SDL_FillRect(window->getSurface(), NULL, 0x000000);
         draw();
 
         window->update();

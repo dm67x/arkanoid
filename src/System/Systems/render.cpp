@@ -4,7 +4,7 @@
 
 using namespace Systems;
 
-Render::Render() : System() {
+Render::Render() {
 }
 
 Render::~Render() {
@@ -24,11 +24,11 @@ void Render::draw(SDL_Surface & surface) {
     for (auto e : entity_pool->getAll()) {
         entity = e.second.get();
         for (auto c : entity->getComponents()) {
-            if (dynamic_cast<Components::Graphic *>(c.get())) {
+            if (c.get()->getName() == "Graphic") {
                 graphic_component = dynamic_cast<Components::Graphic *>(c.get());
             }
 
-            if (dynamic_cast<Components::Position *>(c.get())) {
+            if (c.get()->getName() == "Position") {
                 position_component = dynamic_cast<Components::Position *>(c.get());
             }
         }
@@ -36,7 +36,12 @@ void Render::draw(SDL_Surface & surface) {
         if (graphic_component && position_component) {
             cut = graphic_component->getCut();
             position = position_component->get();
+            position.w = cut.w;
+            position.h = cut.h;
             SDL_BlitSurface(graphic_component->getSurface(), &cut, &surface, &position);
         }
+
+        graphic_component = nullptr;
+        position_component = nullptr;
     }
 }

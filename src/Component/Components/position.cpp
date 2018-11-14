@@ -23,5 +23,5 @@ SDL_Rect Position::get() {
 }
 
 std::string Position::getName() {
-    return "Transform";
+    return "Position";
 }
