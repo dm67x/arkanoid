@@ -18,6 +18,7 @@ public:
     ~ComponentPool();
 
     void add(std::string id, std::shared_ptr<Component> c);
+    void remove(std::string id);
     std::shared_ptr<Component> get(std::string id);
 
 };

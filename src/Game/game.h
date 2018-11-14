@@ -16,6 +16,8 @@ private:
     SDL_Event event;
     InputManager * keyManager, * mouseManager;
 
+    ComponentPool * components;
+    EntityPool * entities;
     EntityFactory * entity_factory;
     Systems::Render * renderer;
     Systems::Movement * movement;

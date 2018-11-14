@@ -19,6 +19,7 @@ public:
     Velocity(int speed, int directionX, int directionY);
     ~Velocity();
 
+    void set(int speed, int directionX, int directionY);
     SDL_Rect getVelocity();
     std::string getName();
 

@@ -38,5 +38,5 @@ SDL_Rect Graphic::getCut() {
 }
 
 std::string Graphic::getName() {
-    return "Graphic";
+    return "graphic";
 }

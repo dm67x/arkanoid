@@ -21,6 +21,12 @@ SDL_Rect Velocity::getVelocity() {
     return r;
 }
 
+void Velocity::set(int speed, int directionX, int directionY) {
+    this->speed = speed;
+    this->directionX = directionX;
+    this->directionY = directionY;
+}
+
 std::string Velocity::getName() {
-    return "Velocity";
+    return "velocity";
 }

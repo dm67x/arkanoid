@@ -24,11 +24,11 @@ void Render::draw(SDL_Surface & surface) {
     for (auto e : entity_pool->getAll()) {
         entity = e.second.get();
         for (auto c : entity->getComponents()) {
-            if (c.get()->getName() == "Graphic") {
+            if (c.get()->getName() == "graphic") {
                 graphic_component = dynamic_cast<Components::Graphic *>(c.get());
             }
 
-            if (c.get()->getName() == "Position") {
+            if (c.get()->getName() == "position") {
                 position_component = dynamic_cast<Components::Position *>(c.get());
             }
         }
@@ -36,6 +36,8 @@ void Render::draw(SDL_Surface & surface) {
         if (graphic_component && position_component) {
             cut = graphic_component->getCut();
             position = position_component->get();
+            position.x -= cut.w / 2;
+            position.y -= cut.h / 2;
             position.w = cut.w;
             position.h = cut.h;
             SDL_BlitSurface(graphic_component->getSurface(), &cut, &surface, &position);

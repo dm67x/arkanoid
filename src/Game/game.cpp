@@ -4,6 +4,7 @@
 #include "Entity/Entities/ball.h"
 #include "Entity/Entities/ship.h"
 #include "Component/Components/position.h"
+#include "Component/Components/velocity.h"
 
 #include <iostream>
 
@@ -21,6 +22,8 @@ Game::Game() {
     entity_factory = Singleton<EntityFactory>::getInstance();
     renderer = new Systems::Render();
     movement = new Systems::Movement();
+    entities = Singleton<EntityPool>::getInstance();
+    components = Singleton<ComponentPool>::getInstance();
 }
 
 Game::~Game() {
@@ -63,10 +66,17 @@ void Game::run() {
 
             if (event.type == SDL_QUIT)
                 quit = true;
+            else if (event.type == SDL_MOUSEMOTION) {
+                int x = event.motion.x;
+                std::shared_ptr<Component> comp = components->get("position_ship_ship_1");
+                Components::Position * position = nullptr;
+                if (comp) position = dynamic_cast<Components::Position *>(comp.get());
+                if (position) position->set(x, position->get().y);
+            }
         }
 
         update();
-        SDL_FillRect(window->getSurface(), NULL, 0x000000);
+        SDL_FillRect(window->getSurface(), nullptr, 0x000000);
         draw();
 
         window->update();

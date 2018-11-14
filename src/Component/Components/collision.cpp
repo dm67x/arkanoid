@@ -11,5 +11,5 @@ Collision::~Collision() {
 }
 
 std::string Collision::getName() {
-    return "Collision";
+    return "collision";
 }
