@@ -10,7 +10,7 @@ Ball::Ball(std::string name) : Entity(name, "ball") {
 
     add(std::make_shared<Components::Position>(450, 300));
     add(std::make_shared<Components::Graphic>("./sprites.bmp", srcBall));
-    add(std::make_shared<Components::Velocity>(2, 0, -1));
+    add(std::make_shared<Components::Velocity>(2, 0, 1));
 }
 
 Ball::~Ball() {

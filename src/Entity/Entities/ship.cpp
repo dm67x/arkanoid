@@ -10,9 +10,8 @@ Ship::Ship(std::string name) : Entity(name, "ship") {
 
     add(std::make_shared<Components::Position>(150, 700));
     add(std::make_shared<Components::Graphic>("./sprites.bmp", scrVaiss));
-    add(std::make_shared<Components::Velocity>(2, 1, 0));
 }
 
 Ship::~Ship() {
-    // delete des composants
+
 }

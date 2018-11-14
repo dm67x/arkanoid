@@ -12,7 +12,9 @@ Entity::Entity(std::string name, std::string type) {
 }
 
 Entity::~Entity() {
-
+    for (auto c : components) {
+        remove(c);
+    }
 }
 
 void Entity::add(std::shared_ptr<Component> component) {
@@ -20,15 +22,22 @@ void Entity::add(std::shared_ptr<Component> component) {
     auto comp = components_pool->get(id);
     if (comp == nullptr) {
         components_pool->add(id, component);
-        this->components.push_back(component);
+        components.push_back(component);
         return;
     }
 
-    this->components.push_back(comp);
+    components.push_back(comp);
 }
 
 void Entity::remove(std::shared_ptr<Component> component) {
-    // TODO
+    std::string id = component.get()->getName() + "_" + this->type + "_" + this->name;
+
+    for (auto it = components.begin(); it != components.end(); it++) {
+        if (*it == component)
+            components.erase(it);
+    }
+
+    components_pool->remove(id);
 }
 
 std::vector<std::shared_ptr<Component>> Entity::getComponents() {
@@ -36,14 +45,11 @@ std::vector<std::shared_ptr<Component>> Entity::getComponents() {
 }
 
 std::shared_ptr<Component> Entity::findComponent(std::string type) {
+    Component * comp;
     for (auto c : getComponents()) {
-        Component * comp = c.get();
-        if (type == "position") {
-            if (dynamic_cast<Components::Position *>(comp)) return c;
-        } else if (type == "graphic") {
-            if (dynamic_cast<Components::Graphic *>(comp)) return c;
-        } else if (type == "collision") {
-            if (dynamic_cast<Components::Collision *>(comp)) return c;
+        comp = c.get();
+        if (comp->getName() == type) {
+            return c;
         }
     }
 
