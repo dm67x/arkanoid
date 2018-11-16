@@ -1,4 +1,4 @@
-CMakeLists.txt.*
-extlibs
+CMakeLists.txt.user*
+extlibs/**
 build
 .vs
