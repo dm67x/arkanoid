@@ -1,23 +1,24 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include "Entity/entity_pool.h"
+#include "Entity/entity_factory.h"
+#include <vector>
 #include <SDL.h>
 
 class System
 {
 
 protected:
-    static EntityPool * entity_pool;
+	static EntityFactory * _entity_factory;
 
-    System();
-
+	System();
+	
 public:
-    virtual ~System();
+	virtual ~System();
 
-    virtual void update(float dt) = 0;
-    virtual void draw(SDL_Surface & surface) = 0;
+	virtual void update(double dt) = 0;
+	virtual void draw(SDL_Surface & surface) = 0;
 
 };
 
-#endif
+#endif // SYSTEM_H

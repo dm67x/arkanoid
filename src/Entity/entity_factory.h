@@ -1,23 +1,29 @@
+/**
+  * @file entity_factory.h
+  * @version 1
+  */
+
 #ifndef ENTITY_FACTORY_H
 #define ENTITY_FACTORY_H
 
 #include "singleton.h"
 #include "entity.h"
-#include "entity_pool.h"
-#include <memory>
+#include <vector>
 
-class EntityFactory : public Singleton<EntityFactory>
+/**
+ * @brief The EntityFactory class
+ */
+class EntityFactory : Singleton<EntityFactory>
 {
 
 private:
-    EntityPool * pool;
+	std::vector<Entity *> _entities;
 
 public:
-    EntityFactory();
-    ~EntityFactory();
+    Entity * create(std::string type);
 
-    std::shared_ptr<Entity> create(std::string id, std::string name);
+	std::vector<Entity *> getEntities();
 
 };
 
-#endif
+#endif // ENTITY_FACTORY_H

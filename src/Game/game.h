@@ -4,27 +4,29 @@
 #include "Window/window.h"
 #include "InputManager/input_manager.h"
 #include "Entity/entity_factory.h"
-#include "System/Systems/render.h"
-#include "System/Systems/movement.h"
+#include "Player/player.h"
+#include "System/Render/render.h"
+#include "System/Collision/collision.h"
 
 class Game
 {
 
 private:
-    Window * window;
-    bool quit;
-    SDL_Event event;
-    InputManager * keyManager, * mouseManager;
+    Window * _window;
+    bool _quit;
+    SDL_Event _event;
+    InputManager * _key_manager, * _mouse_manager;
+    EntityFactory * _entity_factory;
 
-    ComponentPool * components;
-    EntityPool * entities;
-    EntityFactory * entity_factory;
-    Systems::Render * renderer;
-    Systems::Movement * movement;
+    Entity * _ball;
+    Player * _player;
+
+	Systems::Render * _renderer;
+	Systems::Collision * _collision;
 
 protected:
     void init();
-    void update();
+    void update(double dt);
     void draw();
 
 public:

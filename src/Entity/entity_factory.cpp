@@ -1,26 +1,29 @@
+/**
+ * @file entity_factory.cpp
+ * @version 1
+ */
+
 #include "entity_factory.h"
-#include "Entities/ball.h"
-#include "Entities/ship.h"
+#include "Entity/Ship/ship.h"
+#include "Entity/Ball/ball.h"
+#include "Entity/Wall/wall.h"
 
-EntityFactory::EntityFactory() {
-    pool = Singleton<EntityPool>::getInstance();
-}
+Entity * EntityFactory::create(std::string type) {
+    Entity * entity = nullptr;
 
-EntityFactory::~EntityFactory() {
-}
-
-std::shared_ptr<Entity> EntityFactory::create(std::string id, std::string name) {
-    std::shared_ptr<Entity> entity = pool->get(id);
-    if (entity) return entity;
-
-    if (name == "ball") {
-        entity = std::make_shared<Entities::Ball>(id);
-    } else if (name == "ship") {
-        entity = std::make_shared<Entities::Ship>(id);
-    } else if (name == "block") {
-
+    if (type.compare("ball") == 0) {
+        entity = new Entities::Ball();
+    } else if (type.compare("ship") == 0) {
+        entity = new Entities::Ship();
+    } else if (type.compare("wall") == 0) {
+        entity = new Entities::Wall();
     }
 
-    pool->add(id, entity);
+	_entities.push_back(entity);
+
     return entity;
+}
+
+std::vector<Entity*> EntityFactory::getEntities() {
+	return _entities;
 }

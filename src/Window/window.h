@@ -4,13 +4,16 @@
 #include <SDL.h>
 #include <string>
 #include <vector>
+#include "vector2.h"
 
 class Window
 {
 
 private:
-    SDL_Window * window;
-    SDL_Surface * surface;
+    SDL_Window * _window;
+    SDL_Surface * _surface;
+
+	int _width, _height;
 
 public:
     Window();
@@ -21,6 +24,7 @@ public:
     void update();
 
     SDL_Surface * getSurface();
+	Vector2<int> getSize() const;
 
 };
 

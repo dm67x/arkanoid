@@ -1,10 +1,7 @@
 #include "game.h"
 #include "InputManager/key_manager.h"
 #include "InputManager/mouse_manager.h"
-#include "Entity/Entities/ball.h"
-#include "Entity/Entities/ship.h"
-#include "Component/Components/position.h"
-#include "Component/Components/velocity.h"
+#include "Entity/Ball/ball.h"
 
 #include <iostream>
 
@@ -15,71 +12,86 @@ Game::Game() {
         exit(1);
     }
 
-    window = new Window();
-    quit = false;
-    keyManager = new KeyManager();
-    mouseManager = new MouseManager();
-    entity_factory = Singleton<EntityFactory>::getInstance();
-    renderer = new Systems::Render();
-    movement = new Systems::Movement();
-    entities = Singleton<EntityPool>::getInstance();
-    components = Singleton<ComponentPool>::getInstance();
+    _window = new Window();
+    _quit = false;
+    _key_manager = new KeyManager();
+    _mouse_manager = new MouseManager();
+    _entity_factory = Singleton<EntityFactory>::getInstance();
+    _player = new Player("player1");
+    _ball = nullptr;
+	_renderer = new Systems::Render();
+	_collision = new Systems::Collision();
 }
 
 Game::~Game() {
-    delete window;
-    delete keyManager;
-    delete mouseManager;
-    delete renderer;
-    delete movement;
+    delete _window;
+    delete _key_manager;
+    delete _mouse_manager;
+
+    delete _player;
+    delete _ball;
+
+	delete _renderer;
+	delete _collision;
+
     SDL_Quit();
 }
 
 void Game::init() {
-    keyManager->addAction(SDLK_ESCAPE, [this](SDL_Event) {
-        this->quit = true;
+    _key_manager->addAction(SDLK_ESCAPE, [this](SDL_Event) {
+        this->_quit = true;
     });
 
-    mouseManager->addAction(SDL_BUTTON_LEFT, [](SDL_Event e) {
+    _mouse_manager->addAction(SDL_BUTTON_LEFT, [](SDL_Event e) {
         std::cout << "mouse click, X: " << e.button.x << ", Y: " << e.button.y << std::endl;
     });
 
-    entity_factory->create("ball_1", "ball");
-    entity_factory->create("ship_1", "ship");
+    _ball = _entity_factory->create("ball");
+
+	Vector2<int> window_size = _window->getSize();
+	_player->getShip()->setPosition(Vector2<int>(window_size._x / 2, window_size._y - 20));
+	_ball->setPosition(Vector2<int>(window_size._x / 2, window_size._y / 2));
 }
 
-void Game::update() {
-    movement->update(0);
+void Game::update(double dt) {
+	_collision->update(dt);
 }
 
 void Game::draw() {
-    renderer->draw(*window->getSurface());
+	_renderer->draw(*_window->getSurface());
 }
 
 void Game::run() {
     init();
 
-    while (!quit) {
-        if (SDL_PollEvent(&event)) {
-            keyManager->update(event);
-            mouseManager->update(event);
+    Uint64 old_time = 0;
+    Uint64 new_time = SDL_GetPerformanceCounter();
+    double delta = 0;
 
-            if (event.type == SDL_QUIT)
-                quit = true;
-            else if (event.type == SDL_MOUSEMOTION) {
-                int x = event.motion.x;
-                std::shared_ptr<Component> comp = components->get("position_ship_ship_1");
-                Components::Position * position = nullptr;
-                if (comp) position = dynamic_cast<Components::Position *>(comp.get());
-                if (position) position->set(x, position->get().y);
+    while (!_quit) {
+        if (SDL_PollEvent(&_event)) {
+            _key_manager->update(_event);
+            _mouse_manager->update(_event);
+
+            if (_event.type == SDL_QUIT)
+                _quit = true;
+            else if (_event.type == SDL_MOUSEMOTION) {
+                int x = _event.motion.x;
+                _player->getShip()->setPosition(
+                    Vector2<int>(x, _player->getShip()->getPosition()._y)
+                );
             }
         }
 
-        update();
-        SDL_FillRect(window->getSurface(), nullptr, 0x000000);
+        old_time = new_time;
+        new_time = SDL_GetPerformanceCounter();
+        delta = ((new_time - old_time)*1000.0) / static_cast<double>(SDL_GetPerformanceFrequency());
+        update(delta);
+
+        SDL_FillRect(_window->getSurface(), nullptr, 0x000000);
         draw();
 
-        window->update();
+        _window->update();
         SDL_Delay(20);
     }
 }

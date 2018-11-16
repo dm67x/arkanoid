@@ -1,32 +1,42 @@
+/**
+  * @file entity.h
+  * @version 1
+  */
+
 #ifndef ENTITY_H
 #define ENTITY_H
 
 #include <string>
-#include <memory>
-#include <vector>
-#include "Component/component.h"
-#include "Component/component_pool.h"
+#include "vector2.h"
+#include <SDL.h>
 
+/**
+ * @brief La classe entité (mère de toutes les autres classes entités)
+ */
 class Entity
 {
 
 private:
-    std::string name;
-    std::string type;
-    std::vector<std::shared_ptr<Component>> components;
-    static ComponentPool * components_pool;
+    std::string _name;
+    Vector2<int> _position;
 
 protected:
-    Entity(std::string name, std::string type);
+    Entity(std::string _name);
+    Entity(std::string _name, Vector2<int> _position);
+
+    SDL_Rect _src_rect;
 
 public:
     virtual ~Entity();
 
-    void add(std::shared_ptr<Component> component);
-    void remove(std::shared_ptr<Component> component);
-    std::vector<std::shared_ptr<Component>> getComponents();
-    std::shared_ptr<Component> findComponent(std::string type);
+    void setPosition(Vector2<int> _position);
+    Vector2<int> getPosition();
+
+    std::string getName();
+    SDL_Rect getRect();
+
+    bool collideWith(Entity & e);
 
 };
 
-#endif
+#endif // ENTITY_H

@@ -1,10 +1,9 @@
 #include "system.h"
 
-EntityPool * System::entity_pool = Singleton<EntityPool>::getInstance();
+EntityFactory * System::_entity_factory = Singleton<EntityFactory>::getInstance();
 
 System::System() {
 }
 
 System::~System() {
-
 }
