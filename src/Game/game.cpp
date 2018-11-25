@@ -2,6 +2,7 @@
 #include "InputManager/key_manager.h"
 #include "InputManager/mouse_manager.h"
 #include "Entity/Ball/ball.h"
+#include "Component/Position/position.h"
 
 #include <iostream>
 
@@ -49,8 +50,26 @@ void Game::init() {
     _ball = _entity_factory->create("ball");
 
 	Vector2<int> window_size = _window->getSize();
-	_player->getShip()->setPosition(Vector2<int>(window_size._x / 2, window_size._y - 20));
-	_ball->setPosition(Vector2<int>(window_size._x / 2, window_size._y / 2));
+
+	Components::Position * position = dynamic_cast<Components::Position *>(_player->getShip()->findComponent("position"));
+    if (position) {
+        position->setPosition(Vector2<int>(window_size._x / 2, window_size._y - 20));
+    }
+
+
+	position = dynamic_cast<Components::Position *>(_ball->findComponent("position"));
+    if (position) {
+        position->setPosition(Vector2<int>(window_size._x / 2, window_size._y / 2));
+    }
+
+	for (int x = 0; x < 10; x++) {
+		for (int y = 0; y < 10; y++) {
+			Entity * entity = _entity_factory->create("wall");
+            position = dynamic_cast<Components::Position *>(entity->findComponent("position"));
+            if (position)
+			    position->setPosition(Vector2<int>(x * 31 + 150, y * 15 + 150));
+		}
+	}
 }
 
 void Game::update(double dt) {
@@ -77,9 +96,9 @@ void Game::run() {
                 _quit = true;
             else if (_event.type == SDL_MOUSEMOTION) {
                 int x = _event.motion.x;
-                _player->getShip()->setPosition(
-                    Vector2<int>(x, _player->getShip()->getPosition()._y)
-                );
+                Components::Position * position = dynamic_cast<Components::Position *>(_player->getShip()->findComponent("position"));
+                if (position)
+                    position->setPosition(Vector2<int>(x, position->getPosition()._y));
             }
         }
 

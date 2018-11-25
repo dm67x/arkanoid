@@ -5,34 +5,37 @@
 
 #include "entity.h"
 
-Entity::Entity(std::string name)
-    : _name(name), _position(Vector2<int>(0, 0)) {
-}
-
-Entity::Entity(std::string name, Vector2<int> position)
-    : _name(name), _position(position) {
+Entity::Entity(std::string name) : name(name) {
+    components.clear();
 }
 
 Entity::~Entity() {
 }
 
-void Entity::setPosition(Vector2<int> position) {
-    this->_position = position;
-}
-
-Vector2<int> Entity::getPosition() {
-    return _position;
-}
-
 std::string Entity::getName() {
-    return _name;
+    return name;
 }
 
-SDL_Rect Entity::getRect() {
-    return _src_rect;
+std::map<std::string, Component *> Entity::getComponents() {
+    return components;
 }
 
-bool Entity::collideWith(Entity & e) {
+void Entity::addComponent(Component * c) {
+    if (components.find(name) != components.end()) return;
+    components.insert(std::make_pair(c->getName(), c));
+}
+
+void Entity::removeComponent(std::string name) {
+    if (components.find(name) == components.end()) return;
+    components.erase(name);
+}
+
+Component * Entity::findComponent(std::string name) {
+    if (components.find(name) == components.end()) return nullptr;
+    return components.at(name);
+}
+
+/*bool Entity::collideWith(Entity & e) {
     SDL_Rect bounding_e, bounding;
     Vector2<int> position_e = e.getPosition();
     Vector2<int> position = getPosition();
@@ -52,4 +55,4 @@ bool Entity::collideWith(Entity & e) {
             && bounding_e.h > bounding.y
             && bounding_e.x < bounding.w
             && bounding_e.y < bounding.h);
-}
+}*/

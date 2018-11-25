@@ -14,15 +14,9 @@ namespace Entities
 class Ball : public Entity
 {
 
-private:
-    double _speed;
-    Vector2<int> _direction;
-
 public:
     Ball();
     ~Ball() override;
-
-    void setDirection(Vector2<int> _direction);
 
 };
 

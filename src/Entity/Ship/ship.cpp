@@ -4,12 +4,14 @@
  */
 
 #include "ship.h"
+#include "Component/Graphic/graphic.h"
+#include "Component/Position/position.h"
 
 using namespace Entities;
 
 Ship::Ship() : Entity("ship") {
-    setPosition(Vector2<int>(100, 500));
-    _src_rect = { 385, 192, 98, 16 };
+    addComponent(new Components::Graphic({ 385, 192, 98, 16 }));
+    addComponent(new Components::Position());
 }
 
 Ship::~Ship() {

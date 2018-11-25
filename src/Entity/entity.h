@@ -7,8 +7,8 @@
 #define ENTITY_H
 
 #include <string>
-#include "vector2.h"
-#include <SDL.h>
+#include <map>
+#include "Component/component.h"
 
 /**
  * @brief La classe entité (mère de toutes les autres classes entités)
@@ -17,25 +17,22 @@ class Entity
 {
 
 private:
-    std::string _name;
-    Vector2<int> _position;
+    std::string name;
+    std::map<std::string, Component *> components;
 
 protected:
-    Entity(std::string _name);
-    Entity(std::string _name, Vector2<int> _position);
-
-    SDL_Rect _src_rect;
+    Entity(std::string name);
 
 public:
     virtual ~Entity();
 
-    void setPosition(Vector2<int> _position);
-    Vector2<int> getPosition();
-
     std::string getName();
-    SDL_Rect getRect();
+    std::map<std::string, Component *> getComponents();
+    void addComponent(Component * c);
+    void removeComponent(std::string name);
+    Component * findComponent(std::string name);
 
-    bool collideWith(Entity & e);
+    //bool collideWith(Entity & e);
 
 };
 

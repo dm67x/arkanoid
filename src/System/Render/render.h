@@ -10,7 +10,7 @@ namespace Systems
 	{
 		
 	private:
-		SDL_Surface * _sprite;
+		SDL_Surface * sprite;
 
 	public:
 		Render();

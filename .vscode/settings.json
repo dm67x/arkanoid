@@ -1,0 +1,10 @@
+{
+    "cmake.configureSettings": {
+        "SDL2_DIR": "extlibs\\SDL2-2.0.8"
+    },
+    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
+    "C_Cpp.configurationWarnings": "Disabled",
+    "files.associations": {
+        "map": "cpp"
+    }
+}
