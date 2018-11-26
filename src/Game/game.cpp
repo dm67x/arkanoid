@@ -1,8 +1,5 @@
 #include "game.h"
-#include "InputManager/key_manager.h"
-#include "InputManager/mouse_manager.h"
-#include "Component/transform.h"
-#include "Component/graphic.h"
+#include "Entity/entity_factory.h"
 
 #include <iostream>
 
@@ -15,36 +12,40 @@ Game::Game() {
 
     window = new Window();
     quit = false;
-    key_manager = new KeyManager();
-    mouse_manager = new MouseManager();
-    render_system = new RenderSystem();
+    render_system = new RenderSystem(SDL_LoadBMP("./Arkanoid_sprites.bmp"));
+    entity_factory = Singleton<EntityFactory>::getInstance();
+    event_manager = Singleton<EventManager>::getInstance();
 }
 
 Game::~Game() {
     delete window;
-    delete key_manager;
-    delete mouse_manager;
     delete render_system;
 
     SDL_Quit();
 }
 
 void Game::init() {
-    key_manager->addAction(SDLK_ESCAPE, [this](SDL_Event) {
+    ship = dynamic_cast<Entities::Ship *>(entity_factory->build("ship"));
+    ship->setPosition(Vector2<int>(window->getSize().x / 2, window->getSize().y - 20));
+
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            brick = dynamic_cast<Entities::Brick *>(entity_factory->build("brick"));
+            brick->setPosition(Vector2<int>(100 + i * 40, 100 + j * 50));
+        }
+    }
+
+    event_manager->attach("quit", [this](SDL_Event) {
         this->quit = true;
     });
 
-    mouse_manager->addAction(SDL_BUTTON_LEFT, [](SDL_Event e) {
+    event_manager->attach("showMouseInfo", [](SDL_Event e) {
         std::cout << "mouse click, X: " << e.button.x << ", Y: " << e.button.y << std::endl;
     });
 
-    Entity ship("ship");
-    Components::Transform transform;
-    transform.position = Vector2<int>(150, 150);
-    ship.add(&transform);
-    Components::Graphic graphic;
-    graphic.graphic = { 385, 192, 98, 16 };
-    ship.add(&graphic);
+    event_manager->attach("moveShip", [this](SDL_Event e) {
+        this->ship->setPosition(Vector2<int>(event.motion.x, ship->getPosition().y));
+    });
 }
 
 void Game::run() {
@@ -52,11 +53,16 @@ void Game::run() {
 
     while (!quit) {
         if (SDL_PollEvent(&event)) {
-            key_manager->update(event);
-            mouse_manager->update(event);
-
             if (event.type == SDL_QUIT)
-                quit = true;
+                event_manager->trigger("quit", event);
+            else if (event.type == SDL_MOUSEBUTTONDOWN)
+                event_manager->trigger("showMouseInfo", event);
+            else if (event.type == SDL_MOUSEMOTION)
+                event_manager->trigger("moveShip", event);
+            else if (event.type == SDL_KEYDOWN) {
+                if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+                    event_manager->trigger("quit", event);
+            }
         }
 
         SDL_FillRect(window->getSurface(), nullptr, 0x000000);

@@ -13,8 +13,8 @@ public:
      * @brief Vector2
      */
     Vector2() {
-        _x = T(0);
-        _y = T(0);
+        x = T(0);
+        y = T(0);
     }
 
     /**
@@ -23,26 +23,26 @@ public:
      * @param y
      */
     Vector2(T x, T y) {
-        this->_x = x;
-        this->_y = y;
+        this->x = x;
+        this->y = y;
     }
 
-    T _x, _y;
+    T x, y;
 
     Vector2<T> operator*(Vector2<T> & v) {
-        return Vector2<T>(_x * v._x, _y * v._y);
+        return Vector2<T>(x * v.x, y * v.y);
     }
 
     Vector2<T> operator+(Vector2<T> & v) {
-        return Vector2<T>(_x + v._x, _y + v._y);
+        return Vector2<T>(x + v.x, y + v.y);
     }
 
     Vector2<T> operator+(T d) {
-        return Vector2<T>(_x + d, _y + d);
+        return Vector2<T>(x + d, y + d);
     }
 
     Vector2<T> operator*(T d) {
-        return Vector2<T>(_x * d, _y * d);
+        return Vector2<T>(x * d, y * d);
     }
 
 };

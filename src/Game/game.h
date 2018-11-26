@@ -2,8 +2,11 @@
 #define GAME_H
 
 #include "Window/window.h"
-#include "InputManager/input_manager.h"
-#include "System/render_system.h"
+#include "EventManager/event_manager.h"
+#include "System/RenderSystem/render_system.h"
+#include "Entity/entity_factory.h"
+#include "Entity/Ship/ship.h"
+#include "Entity/Brick/brick.h"
 
 class Game
 {
@@ -12,9 +15,13 @@ private:
     Window * window;
     bool quit;
     SDL_Event event;
-    InputManager * key_manager, * mouse_manager;
-    
+    EventManager * event_manager;
+    EntityFactory * entity_factory;
     RenderSystem * render_system;
+
+    // Test
+    Entities::Ship * ship;
+    Entities::Brick * brick;
 
 protected:
     void init();
