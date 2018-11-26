@@ -1,6 +1,7 @@
 #include "entity.h"
 
 int Entity::next_id = 0;
+EventManager * Entity::event_manager = Singleton<EventManager>::getInstance();
 
 Entity::Entity(const std::string name) {
     this->name = name;

@@ -4,6 +4,7 @@
 #include "vector2.h"
 #include <SDL.h>
 #include <string>
+#include "EventManager/event_manager.h"
 
 class Entity
 {
@@ -16,6 +17,8 @@ private:
     static int next_id;
 
 protected:
+    static EventManager * event_manager;
+
     Entity(const std::string name);
 
 public:

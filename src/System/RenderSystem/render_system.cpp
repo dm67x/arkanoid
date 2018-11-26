@@ -4,6 +4,10 @@ RenderSystem::RenderSystem(SDL_Surface * sprite) {
     this->sprite = sprite;
 }
 
+void RenderSystem::input(SDL_Event e) {
+    
+}
+
 void RenderSystem::update(float deltaTime) {
     // Do nothing
 }

@@ -15,11 +15,13 @@ Game::Game() {
     render_system = new RenderSystem(SDL_LoadBMP("./Arkanoid_sprites.bmp"));
     entity_factory = Singleton<EntityFactory>::getInstance();
     event_manager = Singleton<EventManager>::getInstance();
+    movement_system = new MovementSystem();
 }
 
 Game::~Game() {
     delete window;
     delete render_system;
+    delete movement_system;
 
     SDL_Quit();
 }
@@ -46,11 +48,6 @@ void Game::init() {
         SDL_Event * ev = static_cast<SDL_Event *>(e);
         std::cout << "mouse click, X: " << ev->button.x << ", Y: " << ev->button.y << std::endl;
     });
-
-    event_manager->attach("moveShip", [this](void * e) {
-        SDL_Event * ev = static_cast<SDL_Event *>(e);
-        this->ship->setPosition(Vector2<int>(ev->motion.x, ship->getPosition().y));
-    });
 }
 
 void Game::run() {
@@ -62,12 +59,12 @@ void Game::run() {
                 event_manager->trigger("quit", nullptr);
             else if (event.type == SDL_MOUSEBUTTONDOWN)
                 event_manager->trigger("showMouseInfo", &event);
-            else if (event.type == SDL_MOUSEMOTION)
-                event_manager->trigger("moveShip", &event);
             else if (event.type == SDL_KEYDOWN) {
                 if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
                     event_manager->trigger("quit", nullptr);
             }
+
+            movement_system->input(event);
         }
 
         SDL_FillRect(window->getSurface(), nullptr, 0x000000);
