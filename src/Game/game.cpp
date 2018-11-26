@@ -28,6 +28,9 @@ void Game::init() {
     ship = dynamic_cast<Entities::Ship *>(entity_factory->build("ship"));
     ship->setPosition(Vector2<int>(window->getSize().x / 2, window->getSize().y - 20));
 
+    ball = dynamic_cast<Entities::Ball *>(entity_factory->build("ball"));
+    ball->setPosition(Vector2<int>(window->getSize().x / 2, window->getSize().y -40));
+
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
             brick = dynamic_cast<Entities::Brick *>(entity_factory->build("brick"));
@@ -35,16 +38,18 @@ void Game::init() {
         }
     }
 
-    event_manager->attach("quit", [this](SDL_Event) {
+    event_manager->attach("quit", [this](void *) {
         this->quit = true;
     });
 
-    event_manager->attach("showMouseInfo", [](SDL_Event e) {
-        std::cout << "mouse click, X: " << e.button.x << ", Y: " << e.button.y << std::endl;
+    event_manager->attach("showMouseInfo", [](void * e) {
+        SDL_Event * ev = static_cast<SDL_Event *>(e);
+        std::cout << "mouse click, X: " << ev->button.x << ", Y: " << ev->button.y << std::endl;
     });
 
-    event_manager->attach("moveShip", [this](SDL_Event e) {
-        this->ship->setPosition(Vector2<int>(event.motion.x, ship->getPosition().y));
+    event_manager->attach("moveShip", [this](void * e) {
+        SDL_Event * ev = static_cast<SDL_Event *>(e);
+        this->ship->setPosition(Vector2<int>(ev->motion.x, ship->getPosition().y));
     });
 }
 
@@ -54,14 +59,14 @@ void Game::run() {
     while (!quit) {
         if (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)
-                event_manager->trigger("quit", event);
+                event_manager->trigger("quit", nullptr);
             else if (event.type == SDL_MOUSEBUTTONDOWN)
-                event_manager->trigger("showMouseInfo", event);
+                event_manager->trigger("showMouseInfo", &event);
             else if (event.type == SDL_MOUSEMOTION)
-                event_manager->trigger("moveShip", event);
+                event_manager->trigger("moveShip", &event);
             else if (event.type == SDL_KEYDOWN) {
                 if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
-                    event_manager->trigger("quit", event);
+                    event_manager->trigger("quit", nullptr);
             }
         }
 

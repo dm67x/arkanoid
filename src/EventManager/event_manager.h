@@ -2,11 +2,10 @@
 #define EVENT_MANAGER_H
 
 #include <map>
-#include <SDL.h>
 #include <functional>
 #include "singleton.h"
 
-using EventFunction = std::function<void(SDL_Event)>;
+using EventFunction = std::function<void(void *)>;
 
 class EventManager : public Singleton<EventManager>
 {
@@ -16,7 +15,7 @@ private:
 public:
     void attach(std::string action, EventFunction function);
     void detach(std::string action);
-    void trigger(std::string action, SDL_Event e);
+    void trigger(std::string action, void * param);
 };
 
 #endif

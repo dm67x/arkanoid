@@ -8,6 +8,6 @@ void EventManager::detach(std::string action) {
     listeners.erase(action);
 }
 
-void EventManager::trigger(std::string action, SDL_Event e) {
-    listeners.at(action)(e);
+void EventManager::trigger(std::string action, void * param) {
+    listeners.at(action)(param);
 }

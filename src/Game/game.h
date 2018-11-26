@@ -7,6 +7,7 @@
 #include "Entity/entity_factory.h"
 #include "Entity/Ship/ship.h"
 #include "Entity/Brick/brick.h"
+#include "Entity/Ball/ball.h"
 
 class Game
 {
@@ -22,6 +23,7 @@ private:
     // Test
     Entities::Ship * ship;
     Entities::Brick * brick;
+    Entities::Ball * ball;
 
 protected:
     void init();
