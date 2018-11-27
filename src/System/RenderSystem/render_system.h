@@ -10,8 +10,6 @@ private:
 
 public:
     RenderSystem(SDL_Surface * sprite);
-    void input(SDL_Event e) override;
-    void update(float deltaTime) override;
     void draw(SDL_Surface & surface) override;
 };
 

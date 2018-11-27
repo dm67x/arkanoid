@@ -8,7 +8,8 @@ Ball::Ball() : DynamicEntity("ball") {
     setSpeed(5.0f);
 
     event_manager->attach("launch_ball", [this](void *) {
-        setDirection(Vector2<int>(0, -1));
+        if (this->getDirection().y == 0)
+            setDirection(Vector2<int>(0, -1));
     });
 }
 

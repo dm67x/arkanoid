@@ -11,10 +11,12 @@ protected:
     static EntityPool * pool;
     static EventManager * event_manager;
 
+    System();
+
 public:
-    virtual void input(SDL_Event e) = 0;
-    virtual void update(float deltaTime) = 0;
-    virtual void draw(SDL_Surface & surface) = 0;
+    virtual void input(SDL_Event e);
+    virtual void update(float deltaTime);
+    virtual void draw(SDL_Surface & surface);
 };
 
 #endif

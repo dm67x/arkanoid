@@ -11,7 +11,3 @@ void MovementSystem::update(float deltaTime) {
         entity->move();
     }
 }
-
-void MovementSystem::draw(SDL_Surface & surface) {
-
-}

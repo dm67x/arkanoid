@@ -1,4 +1,5 @@
 #include "brick.h"
+#include "Entity/entity_factory.h"
 
 using namespace Entities;
 
@@ -20,6 +21,9 @@ void Brick::setHit(int hit) {
 
 void Brick::damage(int force) {
     hit -= force;
+    if (hit <= 0) {
+        Singleton<EntityFactory>::getInstance()->destroy(this); // destroy animation WIP
+    }
 }
 
 void Brick::makeDestructible() {

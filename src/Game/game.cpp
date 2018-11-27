@@ -1,5 +1,8 @@
 #include "game.h"
 #include "Entity/entity_factory.h"
+#include "System/RenderSystem/render_system.h"
+#include "System/MovementSystem/movement_system.h"
+#include "System/ColliderSystem/collider_system.h"
 
 #include <iostream>
 
@@ -14,16 +17,18 @@ Game::Game() {
     quit = false;
     entity_factory = Singleton<EntityFactory>::getInstance();
     event_manager = Singleton<EventManager>::getInstance();
-    render_system = new RenderSystem(SDL_LoadBMP("./Arkanoid_sprites.bmp"));
-    movement_system = new MovementSystem();
-    collider_system = new ColliderSystem();
+
+    systems.push_back(new RenderSystem(SDL_LoadBMP("./Arkanoid_sprites.bmp")));
+    systems.push_back(new MovementSystem());
+    systems.push_back(new ColliderSystem());
 }
 
 Game::~Game() {
     delete window;
-    delete render_system;
-    delete movement_system;
-    delete collider_system;
+
+    for (auto s : systems) {
+        delete s;
+    }
 
     SDL_Quit();
 }
@@ -45,11 +50,6 @@ void Game::init() {
     event_manager->attach("quit", [this](void *) {
         this->quit = true;
     });
-
-    event_manager->attach("showMouseInfo", [](void * e) {
-        SDL_Event * ev = static_cast<SDL_Event *>(e);
-        std::cout << "mouse click, X: " << ev->button.x << ", Y: " << ev->button.y << std::endl;
-    });
 }
 
 void Game::run() {
@@ -60,22 +60,21 @@ void Game::run() {
             if (event.type == SDL_QUIT)
                 event_manager->trigger("quit", nullptr);
             else if (event.type == SDL_MOUSEBUTTONDOWN)
-                event_manager->trigger("showMouseInfo", &event);
+                event_manager->trigger("launch_ball", nullptr);
             else if (event.type == SDL_KEYDOWN) {
                 if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
                     event_manager->trigger("quit", nullptr);
-                if (event.key.keysym.scancode == SDL_SCANCODE_SPACE)
-                    event_manager->trigger("launch_ball", nullptr);
             }
 
-            movement_system->input(event);
+            for (auto s : systems) s->input(event);
         }
 
-        movement_system->update(0.0f);
-        collider_system->update(0.0f);
+        for (auto s : systems) s->update(0.0f);
 
         SDL_FillRect(window->getSurface(), nullptr, 0x000000);
-        render_system->draw(*window->getSurface());
+
+        for (auto s : systems) s->draw(*window->getSurface());
+
         window->update();
         SDL_Delay(20);
     }

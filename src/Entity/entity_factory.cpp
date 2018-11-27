@@ -19,3 +19,7 @@ Entity * EntityFactory::build(std::string type) {
 
     return entity;
 }
+
+void EntityFactory::destroy(Entity * e) {
+    Singleton<EntityPool>::getInstance()->remove(*e);
+}

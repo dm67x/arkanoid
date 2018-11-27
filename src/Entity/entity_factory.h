@@ -8,6 +8,7 @@ class EntityFactory : public Singleton<EntityFactory>
 {
 public:
     Entity * build(std::string type);
+    void destroy(Entity * e);
 };
 
 #endif
