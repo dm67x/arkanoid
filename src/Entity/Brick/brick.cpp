@@ -20,6 +20,7 @@ void Brick::setHit(int hit) {
 }
 
 void Brick::damage(int force) {
+    if (!destructible) return;
     hit -= force;
     if (hit <= 0) {
         Singleton<EntityFactory>::getInstance()->destroy(this); // destroy animation WIP

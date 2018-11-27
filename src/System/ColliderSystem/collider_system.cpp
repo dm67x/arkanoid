@@ -1,8 +1,11 @@
 #include "collider_system.h"
 #include "Entity/Brick/Brick.h"
+#include <iostream>
+#include <algorithm>
 
 void ColliderSystem::update(float deltaTime) {
-    Vector2<int> p1, p2, direction;
+    Vector2<int> p1, p2;
+    Vector2<float> direction, reflection, d;
     int dx = 0, dy = 0;
 
     for (auto entity : pool->all("ball")) {
@@ -23,9 +26,9 @@ void ColliderSystem::update(float deltaTime) {
                 dy = p1.y - p2.y;
 
                 if (dx < 0) { // gauche
-                    direction.x = -1;
+                    direction.x = -0.196f;
                 } else if (dx > 0) { // droite
-                    direction.x = 1;
+                    direction.x = 0.196f;
                 } else { // centre
                     direction.x = 0;
                 }
@@ -37,8 +40,18 @@ void ColliderSystem::update(float deltaTime) {
                 } else {
                     direction.y = 0;
                 }
+                
 
-                entity->setDirection(direction);
+                d = entity->getDirection();
+                reflection.x = d.x - 2.0 * (d.x * direction.x + d.y * direction.y) * direction.x;
+                reflection.y = d.y - 2.0 * (d.x * direction.x + d.y * direction.y) * direction.y;
+
+                float norm = sqrt(reflection.x * reflection.x + reflection.y * reflection.y);
+                reflection.x /= norm;
+                reflection.y /= norm;
+
+                std::cout << reflection.x << " " << reflection.y << std::endl;
+                entity->setDirection(reflection);
             }
         }
     }

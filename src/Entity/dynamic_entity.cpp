@@ -2,10 +2,11 @@
 
 void DynamicEntity::move() {
     Vector2<int> position = getPosition();
-    position = position + direction * speed;
+    position.x += static_cast<int>(direction.x * speed);
+    position.y += static_cast<int>(direction.y * speed);
     setPosition(position);
 }
 
-void DynamicEntity::setDirection(Vector2<int> direction) {
+void DynamicEntity::setDirection(Vector2<float> direction) {
     this->direction = direction;
 }

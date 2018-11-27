@@ -47,6 +47,24 @@ void Game::init() {
         }
     }
 
+    for (int i = 0; i < window->getSize().x / 31 + 1; i++) {
+        brick = dynamic_cast<Entities::Brick *>(entity_factory->build("brick"));
+        brick->setPosition(Vector2<int>(15 + i * 31, 0));
+        brick->makeInvicible();
+        brick = dynamic_cast<Entities::Brick *>(entity_factory->build("brick"));
+        brick->setPosition(Vector2<int>(15 + i * 31, window->getSize().y));
+        brick->makeInvicible();
+    }
+
+    for (int i = 0; i < window->getSize().y / 15 + 1; i++) {
+        brick = dynamic_cast<Entities::Brick *>(entity_factory->build("brick"));
+        brick->setPosition(Vector2<int>(0, 7 + i * 15));
+        brick->makeInvicible();
+        brick = dynamic_cast<Entities::Brick *>(entity_factory->build("brick"));
+        brick->setPosition(Vector2<int>(window->getSize().x, 7 + i * 15));
+        brick->makeInvicible();
+    }
+
     event_manager->attach("quit", [this](void *) {
         this->quit = true;
     });
