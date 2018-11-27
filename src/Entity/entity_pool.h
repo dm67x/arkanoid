@@ -14,6 +14,7 @@ public:
     void add(Entity & e);
     void remove(Entity & e);
     void clear();
+    std::vector<Entity *> all(std::string type) const;
     inline std::vector<Entity *> all() const { return entities; }
 };
 

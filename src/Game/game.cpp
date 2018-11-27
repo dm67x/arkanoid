@@ -12,16 +12,18 @@ Game::Game() {
 
     window = new Window();
     quit = false;
-    render_system = new RenderSystem(SDL_LoadBMP("./Arkanoid_sprites.bmp"));
     entity_factory = Singleton<EntityFactory>::getInstance();
     event_manager = Singleton<EventManager>::getInstance();
+    render_system = new RenderSystem(SDL_LoadBMP("./Arkanoid_sprites.bmp"));
     movement_system = new MovementSystem();
+    collider_system = new ColliderSystem();
 }
 
 Game::~Game() {
     delete window;
     delete render_system;
     delete movement_system;
+    delete collider_system;
 
     SDL_Quit();
 }
@@ -31,7 +33,7 @@ void Game::init() {
     ship->setPosition(Vector2<int>(window->getSize().x / 2, window->getSize().y - 20));
 
     ball = dynamic_cast<Entities::Ball *>(entity_factory->build("ball"));
-    ball->setPosition(Vector2<int>(window->getSize().x / 2, window->getSize().y -40));
+    ball->setPosition(Vector2<int>(window->getSize().x / 2, 0));
 
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
@@ -66,6 +68,9 @@ void Game::run() {
 
             movement_system->input(event);
         }
+
+        movement_system->update(0.0f);
+        collider_system->update(0.0f);
 
         SDL_FillRect(window->getSurface(), nullptr, 0x000000);
         render_system->draw(*window->getSurface());

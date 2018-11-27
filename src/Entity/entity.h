@@ -24,6 +24,8 @@ protected:
 public:
     virtual ~Entity();
     virtual std::string getType() = 0;
+    virtual void move() = 0;
+    virtual void setDirection(Vector2<int> direction) = 0;
 
     void setPosition(Vector2<int> v);
     void setGraphic(SDL_Rect rect);

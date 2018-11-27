@@ -4,6 +4,7 @@ using namespace Entities;
 
 Ship::Ship() : DynamicEntity("Ship") {
     setGraphic({ 385, 192, 98, 16 });
+    setSpeed(0.0f);
 
     event_manager->attach("move_ship", [this](void * p) {
         SDL_Event * e = (SDL_Event *)p;

@@ -1,9 +1,9 @@
-#ifndef MOVEMENT_SYSTEM_H
-#define MOVEMENT_SYSTEM_H
+#ifndef COLLIDER_SYSTEM_H
+#define COLLIDER_SYSTEM_H
 
 #include "System/system.h"
 
-class MovementSystem : public System
+class ColliderSystem : public System
 {
 public:
     void input(SDL_Event e) override;

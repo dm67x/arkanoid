@@ -5,6 +5,7 @@
 #include "EventManager/event_manager.h"
 #include "System/RenderSystem/render_system.h"
 #include "System/MovementSystem/movement_system.h"
+#include "System/ColliderSystem/collider_system.h"
 #include "Entity/entity_factory.h"
 #include "Entity/Ship/ship.h"
 #include "Entity/Brick/brick.h"
@@ -23,6 +24,7 @@ private:
     // Systems
     RenderSystem * render_system;
     MovementSystem * movement_system;
+    ColliderSystem * collider_system;
 
     // Test
     Entities::Ship * ship;

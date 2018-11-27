@@ -11,6 +11,8 @@ protected:
 public:
     virtual ~StaticEntity() {}
     virtual std::string getType() = 0;
+    void move() override {}
+    void setDirection(Vector2<int> direction) override {}
 };
 
 #endif
