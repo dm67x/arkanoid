@@ -20,6 +20,7 @@ public:
 
     inline void setSpeed(float s) { speed = s; }
     inline float getSpeed() const { return speed; }
+    inline Vector2<int> getDirection() const override { return direction; }
 };
 
 #endif

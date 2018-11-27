@@ -33,7 +33,7 @@ void Game::init() {
     ship->setPosition(Vector2<int>(window->getSize().x / 2, window->getSize().y - 20));
 
     ball = dynamic_cast<Entities::Ball *>(entity_factory->build("ball"));
-    ball->setPosition(Vector2<int>(window->getSize().x / 2, 0));
+    ball->setPosition(Vector2<int>(window->getSize().x / 2, window->getSize().y - 40));
 
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
@@ -64,6 +64,8 @@ void Game::run() {
             else if (event.type == SDL_KEYDOWN) {
                 if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
                     event_manager->trigger("quit", nullptr);
+                if (event.key.keysym.scancode == SDL_SCANCODE_SPACE)
+                    event_manager->trigger("launch_ball", nullptr);
             }
 
             movement_system->input(event);

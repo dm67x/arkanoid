@@ -9,7 +9,7 @@ void ColliderSystem::update(float deltaTime) {
         for (auto entity2 : pool->all()) {
             if (entity == entity2) continue;
             if (entity->collideWith(*entity2)) {
-                entity->setDirection(Vector2<int>(0, -1));
+                entity->setDirection(entity->getDirection() * Vector2<int>(0, -1));
             }
         }
     }
