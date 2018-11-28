@@ -1,7 +1,8 @@
 #include "collider_system.h"
-#include "Entity/Brick/Brick.h"
+#include "Entity/Brick/brick.h"
 #include <iostream>
 #include <algorithm>
+#include <cmath>
 
 void ColliderSystem::update(float deltaTime) {
     Vector2<int> p1, p2;
