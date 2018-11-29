@@ -5,11 +5,14 @@ RenderSystem::RenderSystem(SDL_Surface * sprite) {
 }
 
 void RenderSystem::draw(SDL_Surface & surface) {
+	SDL_Rect graphic, bounding;
     for (auto entity : pool->all()) {
+		graphic = entity->getGraphic();
+		bounding = entity->getBoundingBox();
         SDL_BlitSurface(
             sprite, 
-            &entity->getGraphic(), 
+            &graphic, 
             &surface, 
-            &entity->getBoundingBox());
+            &bounding);
     }
 }
