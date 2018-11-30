@@ -15,6 +15,7 @@ public:
 	void add(Scene & s);
 	void remove(const std::string name);
 	void goTo(const std::string name);
+	void goTo(Scene & s);
 	void clean();
 
 	inline Scene * getScene() const { return current; }

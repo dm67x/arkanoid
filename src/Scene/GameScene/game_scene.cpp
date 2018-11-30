@@ -23,10 +23,10 @@ void GameScene::load() {
 	systems.push_back(new MovementSystem());
 
 	Entity * ship = entity_factory->build("ship");
-	ship->setPosition(Vector2<float>(400, 500));
+	ship->setPosition(Vector2<float>(getWidth() / 2.0f, getHeight() - 20));
 
 	Entity * ball = entity_factory->build("ball");
-	ball->setPosition(Vector2<float>(400, 480));
+	ball->setPosition(Vector2<float>(getWidth() / 2.0f, getHeight() - 40));
 
 	Entity * brick = nullptr;
 	for (int i = 0; i < 10; i++) {
@@ -42,9 +42,13 @@ void GameScene::update(float deltaTime) {
 }
 
 void GameScene::draw(SDL_Surface & surface) {
+	SDL_FillRect(&surface, nullptr, 0x000000);
 	for (auto s : systems) s->draw(surface);
 }
 
 void GameScene::input(SDL_Event e) {
+	if (e.type == SDL_MOUSEBUTTONDOWN)
+		event_manager->trigger("launch_ball", nullptr);
+
 	for (auto s : systems) s->input(e);
 }

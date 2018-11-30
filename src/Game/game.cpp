@@ -1,6 +1,7 @@
 #include "game.h"
 #include "Entity/entity_factory.h"
 #include "Scene/GameScene/game_scene.h"
+#include "Scene/TransitionScene/transition_scene.h"
 
 #include <iostream>
 
@@ -25,11 +26,12 @@ Game::~Game() {
 }
 
 void Game::init() {
+	Scene * transition = new Scenes::TransitionScene("game", 1.5f);
 	Scene * gameScene = new Scenes::GameScene();
+	gameScene->setSize(window->getSize().x, window->getSize().y);
 	scene_manager->add(*gameScene);
-	scene_manager->goTo("game");
-
-	scene_manager->getScene()->load();
+	//scene_manager->goTo("game");
+	scene_manager->goTo(*transition);
 
     event_manager->attach("quit", [this](void *) {
         this->quit = true;
@@ -47,8 +49,6 @@ void Game::run() {
         if (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)
                 event_manager->trigger("quit", nullptr);
-            else if (event.type == SDL_MOUSEBUTTONDOWN)
-                event_manager->trigger("launch_ball", nullptr);
             else if (event.type == SDL_KEYDOWN) {
                 if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
                     event_manager->trigger("quit", nullptr);
@@ -64,9 +64,6 @@ void Game::run() {
 		SDL_Log("passed times %f", deltaTime);
 
 		scene_manager->getScene()->update(deltaTime);
-
-        SDL_FillRect(window->getSurface(), nullptr, 0x000000);
-
 		scene_manager->getScene()->draw(*window->getSurface());
 
         window->update();

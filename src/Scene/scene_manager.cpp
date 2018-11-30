@@ -12,7 +12,16 @@ void SceneManager::goTo(const std::string name) {
 	// charger la scene voulue
 	current = scenes.at(name);
 	// charger les entités dans la pool d'entité
-	if (current) current->reload();
+	if (current) {
+		current->reload();
+		current->load();
+	}
+}
+
+void SceneManager::goTo(Scene & s) {
+	current = &s;
+	current->reload();
+	current->load();
 }
 
 void SceneManager::clean() {
