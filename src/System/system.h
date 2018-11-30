@@ -17,6 +17,8 @@ public:
     virtual void input(SDL_Event e);
     virtual void update(float deltaTime);
     virtual void draw(SDL_Surface & surface);
+
+	static void setPool(EntityPool * p);
 };
 
 #endif

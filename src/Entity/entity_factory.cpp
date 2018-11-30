@@ -5,6 +5,8 @@
 #include "entity_pool.h"
 #include <cassert>
 
+EntityPool * EntityFactory::pool = nullptr;
+
 Entity * EntityFactory::build(std::string type) {
     Entity * entity = nullptr;
     
@@ -12,8 +14,8 @@ Entity * EntityFactory::build(std::string type) {
     else if (type == "ship") entity = new Entities::Ship();
     else if (type == "ball") entity = new Entities::Ball();
 
-    if (entity)
-        Singleton<EntityPool>::getInstance()->add(*entity);
+    if (entity && pool)
+        pool->add(*entity);
     else
         assert("Not a valid entity");
 
@@ -21,5 +23,10 @@ Entity * EntityFactory::build(std::string type) {
 }
 
 void EntityFactory::destroy(Entity * e) {
-    Singleton<EntityPool>::getInstance()->remove(*e);
+	if (pool)
+		pool->remove(*e);
+}
+
+void EntityFactory::setPool(EntityPool * p) {
+	pool = p;
 }

@@ -3,11 +3,7 @@
 
 #include "Window/window.h"
 #include "EventManager/event_manager.h"
-#include "System/system.h"
-#include "Entity/entity_factory.h"
-#include "Entity/Ship/ship.h"
-#include "Entity/Brick/brick.h"
-#include "Entity/Ball/ball.h"
+#include "Scene/scene_manager.h"
 
 class Game
 {
@@ -17,15 +13,9 @@ private:
     bool quit;
     SDL_Event event;
     EventManager * event_manager;
-    EntityFactory * entity_factory;
 
-    // Systems
-    std::vector<System *> systems;
-
-    // Test
-    Entities::Ship * ship;
-    Entities::Brick * brick;
-    Entities::Ball * ball;
+	SceneManager * scene_manager;
+    
 
 protected:
     void init();

@@ -5,6 +5,8 @@ RenderSystem::RenderSystem(SDL_Surface * sprite) {
 }
 
 void RenderSystem::draw(SDL_Surface & surface) {
+	if (!pool) return;
+
 	SDL_Rect graphic, bounding;
     for (auto entity : pool->all()) {
 		graphic = entity->getGraphic();

@@ -5,6 +5,8 @@
 #include <cmath>
 
 void ColliderSystem::update(float deltaTime) {
+	if (!pool) return;
+
     Vector2<float> p1, p2;
     Vector2<float> direction, reflection, d;
     int dx = 0, dy = 0;

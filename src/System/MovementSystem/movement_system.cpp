@@ -8,6 +8,8 @@ void MovementSystem::input(SDL_Event e) {
 }
     
 void MovementSystem::update(float deltaTime) {
+	if (!pool) return;
+
 	DynamicEntity * dynamic = nullptr;
 	Vector2<float> position, direction;
 	float speed;
