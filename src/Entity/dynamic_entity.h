@@ -15,7 +15,6 @@ protected:
 public:
     virtual ~DynamicEntity() {}
     virtual std::string getType() = 0;
-    void move() override;
     void setDirection(Vector2<float> direction) override;
 
     inline void setSpeed(float s) { speed = s; }

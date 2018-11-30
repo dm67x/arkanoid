@@ -35,33 +35,33 @@ Game::~Game() {
 
 void Game::init() {
     ship = dynamic_cast<Entities::Ship *>(entity_factory->build("ship"));
-    ship->setPosition(Vector2<int>(window->getSize().x / 2, window->getSize().y - 20));
+    ship->setPosition(Vector2<float>(window->getSize().x / 2, window->getSize().y - 20));
 
     ball = dynamic_cast<Entities::Ball *>(entity_factory->build("ball"));
-    ball->setPosition(Vector2<int>(window->getSize().x / 2, window->getSize().y - 40));
+    ball->setPosition(Vector2<float>(window->getSize().x / 2, window->getSize().y - 40));
 
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++) {
             brick = dynamic_cast<Entities::Brick *>(entity_factory->build("brick"));
-            brick->setPosition(Vector2<int>(100 + i * 40, 100 + j * 50));
+            brick->setPosition(Vector2<float>(100 + i * 40, 100 + j * 50));
         }
     }
 
     for (int i = 0; i < window->getSize().x / 31 + 1; i++) {
         brick = dynamic_cast<Entities::Brick *>(entity_factory->build("brick"));
-        brick->setPosition(Vector2<int>(15 + i * 31, 0));
+        brick->setPosition(Vector2<float>(15 + i * 31, 0));
         brick->makeInvicible();
         brick = dynamic_cast<Entities::Brick *>(entity_factory->build("brick"));
-        brick->setPosition(Vector2<int>(15 + i * 31, window->getSize().y));
+        brick->setPosition(Vector2<float>(15 + i * 31, window->getSize().y));
         brick->makeInvicible();
     }
 
     for (int i = 0; i < window->getSize().y / 15 + 1; i++) {
         brick = dynamic_cast<Entities::Brick *>(entity_factory->build("brick"));
-        brick->setPosition(Vector2<int>(0, 7 + i * 15));
+        brick->setPosition(Vector2<float>(0, 7 + i * 15));
         brick->makeInvicible();
         brick = dynamic_cast<Entities::Brick *>(entity_factory->build("brick"));
-        brick->setPosition(Vector2<int>(window->getSize().x, 7 + i * 15));
+        brick->setPosition(Vector2<float>(window->getSize().x, 7 + i * 15));
         brick->makeInvicible();
     }
 
@@ -72,6 +72,10 @@ void Game::init() {
 
 void Game::run() {
     init();
+
+	Uint64 time_now = SDL_GetPerformanceCounter();
+	Uint64 time_last = 0;
+	float deltaTime = 0;
 
     while (!quit) {
         if (SDL_PollEvent(&event)) {
@@ -87,13 +91,19 @@ void Game::run() {
             for (auto s : systems) s->input(event);
         }
 
-        for (auto s : systems) s->update(0.0f);
+		time_last = time_now;
+		time_now = SDL_GetPerformanceCounter();
+		deltaTime = static_cast<float>(((time_now - time_last) * 1000) / SDL_GetPerformanceFrequency()) * 0.001f;
+
+		SDL_Log("passed times %f", deltaTime);
+
+        for (auto s : systems) s->update(deltaTime);
 
         SDL_FillRect(window->getSurface(), nullptr, 0x000000);
 
         for (auto s : systems) s->draw(*window->getSurface());
 
         window->update();
-        SDL_Delay(20);
+        //SDL_Delay(20);
     }
 }

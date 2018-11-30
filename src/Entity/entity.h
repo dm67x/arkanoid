@@ -10,7 +10,7 @@ class Entity
 {
 private:
     std::string name;
-    Vector2<int> position;
+    Vector2<float> position;
     SDL_Rect graphic;
 
     int id;
@@ -24,13 +24,12 @@ protected:
 public:
     virtual ~Entity();
     virtual std::string getType() = 0;
-    virtual void move() = 0;
     virtual void setDirection(Vector2<float> direction) = 0;
     virtual Vector2<float> getDirection() const = 0;
 
-    void setPosition(Vector2<int> v);
+    void setPosition(Vector2<float> v);
     void setGraphic(SDL_Rect rect);
-    inline Vector2<int> getPosition() const { return position; }
+    inline Vector2<float> getPosition() const { return position; }
     inline SDL_Rect getGraphic() const { return graphic; }
     inline int getID() const { return id; }
 

@@ -11,7 +11,7 @@ Entity::Entity(const std::string name) {
 Entity::~Entity() {
 }
 
-void Entity::setPosition(Vector2<int> v) {
+void Entity::setPosition(Vector2<float> v) {
     position = v;
 }
 
@@ -21,10 +21,10 @@ void Entity::setGraphic(SDL_Rect rect) {
 
 SDL_Rect Entity::getBoundingBox() {
     return { 
-        position.x - graphic.w / 2, 
-        position.y - graphic.h / 2, 
-        position.x + graphic.w / 2, 
-        position.y + graphic.h / 2 
+        static_cast<int>(position.x - graphic.w / 2.0f), 
+		static_cast<int>(position.y - graphic.h / 2.0f),
+		static_cast<int>(position.x + graphic.w / 2.0f),
+		static_cast<int>(position.y + graphic.h / 2.0f)
     };
 }
 

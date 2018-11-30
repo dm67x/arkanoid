@@ -5,7 +5,7 @@
 #include <cmath>
 
 void ColliderSystem::update(float deltaTime) {
-    Vector2<int> p1, p2;
+    Vector2<float> p1, p2;
     Vector2<float> direction, reflection, d;
     int dx = 0, dy = 0;
 
@@ -26,12 +26,10 @@ void ColliderSystem::update(float deltaTime) {
                 dx = p1.x - p2.x;
                 dy = p1.y - p2.y;
 
-                if (dx < 0) { // gauche
-                    direction.x = -0.196f;
-                } else if (dx > 0) { // droite
-                    direction.x = 0.196f;
-                } else { // centre
-                    direction.x = 0;
+				if (dx == 0) { // centre
+					direction.x = 0;
+				} else { // droite ou gauche
+                    direction.x = dx < 0 ? -0.2f : 0.2f;
                 }
 
                 if (dy < 0) { // haut
