@@ -9,6 +9,8 @@ void SceneManager::remove(const std::string name) {
 }
 
 void SceneManager::goTo(const std::string name) {
+	// transition
+	
 	// charger la scene voulue
 	current = scenes.at(name);
 	// charger les entités dans la pool d'entité
@@ -16,12 +18,6 @@ void SceneManager::goTo(const std::string name) {
 		current->reload();
 		current->load();
 	}
-}
-
-void SceneManager::goTo(Scene & s) {
-	current = &s;
-	current->reload();
-	current->load();
 }
 
 void SceneManager::clean() {
