@@ -1,5 +1,6 @@
 #include "collider_system.h"
 #include "Entity/Brick/brick.h"
+#include "Window/window.h"
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -54,6 +55,21 @@ void ColliderSystem::update(float deltaTime) {
                 std::cout << reflection.x << " " << reflection.y << std::endl;
                 entity->setDirection(reflection);
             }
+
+			// Pour la scene circulaire
+			/*SDL_Rect bounding = entity->getBoundingBox();
+			Vector2<int> window_size = Singleton<Window>::getInstance()->getSize();
+			direction = entity->getDirection();
+
+			if (bounding.x + bounding.w < 0) {
+				entity->setPosition(Vector2<float>(window_size.x, bounding.y));
+			}
+			else if (bounding.x - bounding.w > window_size.x) {
+				entity->setPosition(Vector2<float>(0, bounding.y));
+			}
+			else if (bounding.y + bounding.h < 0) {
+				entity->setDirection(Vector2<float>(direction.x, 1));
+			}*/
         }
     }
 }

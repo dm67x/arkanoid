@@ -10,7 +10,7 @@ EntityPool * EntityFactory::pool = nullptr;
 Entity * EntityFactory::build(std::string type) {
     Entity * entity = nullptr;
     
-    if (type == "brick") entity = new Entities::Brick();
+    if (type == "brick") entity = new Entities::Brick(50);
     else if (type == "ship") entity = new Entities::Ship();
     else if (type == "ball") entity = new Entities::Ball();
 

@@ -11,14 +11,13 @@ Game::Game() {
         exit(1);
     }
 
-    window = new Window();
+	window = Singleton<Window>::getInstance();
     quit = false;
     event_manager = Singleton<EventManager>::getInstance();
 	scene_manager = Singleton<SceneManager>::getInstance();
 }
 
 Game::~Game() {
-    delete window;
 	scene_manager->clean();
 
     SDL_Quit();

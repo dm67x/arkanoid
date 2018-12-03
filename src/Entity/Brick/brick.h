@@ -10,11 +10,14 @@ namespace Entities
     private:
         int hit; // number of hits to destroy
         bool destructible; // can be destroyed
+		int points;
         // power up
 
+		void setGraphicWithPoints();
+
     public:
-        Brick();
-        Brick(int hit);
+        Brick(int points);
+        Brick(int points, int hit);
         ~Brick() override;
 
         void setHit(int hit);

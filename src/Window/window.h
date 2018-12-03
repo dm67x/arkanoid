@@ -5,21 +5,23 @@
 #include <string>
 #include <vector>
 #include "vector2.h"
+#include "singleton.h"
 
-class Window
+class Window : public Singleton<Window>
 {
 
 private:
-    SDL_Window * _window;
-    SDL_Surface * _surface;
+    SDL_Window * window;
+    SDL_Surface * surface;
 
-	int _width, _height;
+	int width, height;
+	std::string title;
 
 public:
-    Window();
-    Window(const std::string title, const int width, const int height);
+	Window();
     ~Window();
 
+	void setTitle(const std::string title);
     void resize(const int width, const int height);
     void update();
 

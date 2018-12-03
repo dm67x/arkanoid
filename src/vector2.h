@@ -29,20 +29,20 @@ public:
 
     T x, y;
 
-    Vector2<T> operator*(Vector2<T> & v) {
-        return Vector2<T>(x * v.x, y * v.y);
+    Vector2 operator*(const Vector2<T> & v) const {
+        return Vector2(x * v.x, y * v.y);
     }
 
-    Vector2<T> operator+(Vector2<T> & v) {
-        return Vector2<T>(x + v.x, y + v.y);
+    Vector2 operator+(const Vector2<T> & v) const {
+        return Vector2(x + v.x, y + v.y);
     }
 
-    Vector2<T> operator+(T d) {
-        return Vector2<T>(x + d, y + d);
+    Vector2 operator+(const T & d) const {
+        return Vector2(x + d, y + d);
     }
 
-    Vector2<T> operator*(T d) {
-        return Vector2<T>(x * d, y * d);
+    Vector2 operator*(const T & d) const {
+        return Vector2(x * d, y * d);
     }
 
 };

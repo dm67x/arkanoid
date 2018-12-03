@@ -21,8 +21,7 @@ void MovementSystem::update(float deltaTime) {
 			direction = dynamic->getDirection();
 			speed = dynamic->getSpeed();
 
-			position.x += direction.x * (speed * 60.0f * deltaTime);
-			position.y += direction.y * (speed * 60.0f * deltaTime);
+			position = position + direction * (speed * 60.0f * deltaTime);
 
 			dynamic->setPosition(position);
 		}
