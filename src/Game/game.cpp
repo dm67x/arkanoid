@@ -26,12 +26,10 @@ Game::~Game() {
 }
 
 void Game::init() {
-	Scene * transition = new Scenes::TransitionScene("game", 1.5f);
 	Scene * gameScene = new Scenes::GameScene();
 	gameScene->setSize(window->getSize().x, window->getSize().y);
 	scene_manager->add(*gameScene);
-	//scene_manager->goTo("game");
-	scene_manager->goTo(*transition);
+	scene_manager->goTo("game");
 
     event_manager->attach("quit", [this](void *) {
         this->quit = true;
@@ -59,7 +57,7 @@ void Game::run() {
 
 		time_last = time_now;
 		time_now = SDL_GetPerformanceCounter();
-		deltaTime = static_cast<float>(((time_now - time_last) * 1000) / SDL_GetPerformanceFrequency()) * 0.001f;
+		deltaTime = ((time_now - time_last) * 1000 / static_cast<float>(SDL_GetPerformanceFrequency())) * 0.001f;
 
 		SDL_Log("passed times %f", deltaTime);
 
