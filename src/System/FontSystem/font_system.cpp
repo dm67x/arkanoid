@@ -20,11 +20,11 @@ void FontSystem::draw(SDL_Surface & surface) {
 			for (int i = 0; i < graphics.size(); i++) {
 				graphic = graphics.at(i);
 				dest = { 
-					graphic.w * i + static_cast<int>(position.x), 
-					static_cast<int>(position.y), 
-					graphic.w, graphic.h 
+					(graphic.w / 2) * i + static_cast<int>(position.x) / 2, 
+					static_cast<int>(position.y) / 2, 
+					graphic.w / 2, graphic.h / 2 
 				};
-				SDL_BlitSurface(&sprite, &graphic, &surface, &dest);
+				SDL_BlitScaled(&sprite, &graphic, &surface, &dest);
 			}
 		}
 	}
