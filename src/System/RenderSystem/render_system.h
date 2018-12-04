@@ -6,10 +6,10 @@
 class RenderSystem : public System
 {
 private:
-    SDL_Surface * sprite;
+    SDL_Surface & sprite;
 
 public:
-    RenderSystem(SDL_Surface * sprite);
+    RenderSystem(SDL_Surface & sprite);
     void draw(SDL_Surface & surface) override;
 };
 

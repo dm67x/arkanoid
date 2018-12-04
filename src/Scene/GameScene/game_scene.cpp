@@ -2,9 +2,9 @@
 #include "System/RenderSystem/render_system.h"
 #include "System/ColliderSystem/collider_system.h"
 #include "System/MovementSystem/movement_system.h"
-#include "Entity/Ball/ball.h"
-#include "Entity/Ship/ship.h"
-#include "Entity/Brick/brick.h"
+#include "System/FontSystem/font_system.h"
+#include "Entity/Text/text.h"
+#include <iostream>
 
 using namespace Scenes;
 
@@ -18,7 +18,16 @@ GameScene::~GameScene() {
 }
 
 void GameScene::load() {
-	systems.push_back(new RenderSystem(SDL_LoadBMP("./Arkanoid_sprites.bmp")));
+	SDL_Surface * sprite = SDL_LoadBMP("./Arkanoid_sprites.bmp");
+	SDL_Surface * font = SDL_LoadBMP("./Arkanoid_ascii.bmp");
+
+	if (!sprite || !font) {
+		std::cerr << "error on reading assets files" << std::endl;
+		exit(1);
+	}
+
+	systems.push_back(new RenderSystem(*sprite));
+	systems.push_back(new FontSystem(*font));
 	systems.push_back(new ColliderSystem());
 	systems.push_back(new MovementSystem());
 
@@ -35,6 +44,14 @@ void GameScene::load() {
 			brick->setPosition(Vector2<float>(100 + i * 40, 100 + j * 50));
 		}
 	}
+
+	Entity * text = entity_factory->build("text");
+	text->setPosition(Vector2<float>(10, 10));
+	Entities::Text * dtext = dynamic_cast<Entities::Text *>(text);
+	if (dtext) {
+		dtext->setText("Player 1");
+	}
+
 }
 
 void GameScene::update(float deltaTime) {

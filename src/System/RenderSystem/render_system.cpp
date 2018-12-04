@@ -1,7 +1,6 @@
 #include "render_system.h"
 
-RenderSystem::RenderSystem(SDL_Surface * sprite) {
-    this->sprite = sprite;
+RenderSystem::RenderSystem(SDL_Surface & sprite) : sprite(sprite) {
 }
 
 void RenderSystem::draw(SDL_Surface & surface) {
@@ -9,10 +8,12 @@ void RenderSystem::draw(SDL_Surface & surface) {
 
 	SDL_Rect graphic, bounding;
     for (auto entity : pool->all()) {
+		if (entity->getType() == "text") continue;
+
 		graphic = entity->getGraphic();
 		bounding = entity->getBoundingBox();
         SDL_BlitSurface(
-            sprite, 
+            &sprite, 
             &graphic, 
             &surface, 
             &bounding);

@@ -2,6 +2,7 @@
 #include "Entity/Ship/ship.h"
 #include "Entity/Brick/brick.h"
 #include "Entity/Ball/ball.h"
+#include "Entity/Text/text.h"
 #include "entity_pool.h"
 #include <cassert>
 
@@ -13,6 +14,7 @@ Entity * EntityFactory::build(std::string type) {
     if (type == "brick") entity = new Entities::Brick(50);
     else if (type == "ship") entity = new Entities::Ship();
     else if (type == "ball") entity = new Entities::Ball();
+	else if (type == "text") entity = new Entities::Text("");
 
     if (entity && pool)
         pool->add(*entity);
