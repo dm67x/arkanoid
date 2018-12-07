@@ -45,6 +45,12 @@ public:
         return Vector2(x * d, y * d);
     }
 
+	void normalize() {
+		float norm = static_cast<float>(std::sqrt(x * x + y * y));
+		x = x / norm;
+		y = y / norm;
+	}
+
 };
 
 #endif // VECTOR2_H

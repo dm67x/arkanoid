@@ -4,17 +4,23 @@
 #include "System/MovementSystem/movement_system.h"
 #include "System/FontSystem/font_system.h"
 #include "Entity/Text/text.h"
+#include "Entity/Brick/brick.h"
 #include <iostream>
+#include <cassert>
 
 using namespace Scenes;
 
 GameScene::GameScene() : Scene("game") {
-	pool = new EntityPool();
-	reload();
+	// Attacher l'evenement permettant de détruire une entité
+	event_manager->attach("destroy_entity", [this](void * brick) {
+		Entity * b = static_cast<Entity *>(brick);
+		if (b) {
+			this->destroyEntity(*b);
+		}
+	});
 }
 
 GameScene::~GameScene() {
-	delete pool;
 }
 
 void GameScene::load() {
@@ -32,26 +38,42 @@ void GameScene::load() {
 	systems.push_back(new MovementSystem());
 
 	Entity * ship = entity_factory->build("ship");
-	ship->setPosition(Vector2<float>(getWidth() / 2.0f, getHeight() - 20));
+	assert(ship);
+	ship->setPosition(Vector2<float>(
+		getWidth() / 2.0f, 
+		getHeight() - 20.0f
+	));
+	addEntity(*ship);
 
 	Entity * ball = entity_factory->build("ball");
-	ball->setPosition(Vector2<float>(getWidth() / 2.0f, getHeight() - 40));
+	assert(ball);
+	ball->setPosition(Vector2<float>(
+		ship->getPosition().x, 
+		ship->getBoundingBox().y - ball->getGraphic().h / 2.0f
+	));
+	addEntity(*ball);
 
-	Entity * brick = nullptr;
+	Entities::Brick * brick = nullptr;
+	int pts = 0;
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
-			brick = entity_factory->build("brick");
-			brick->setPosition(Vector2<float>(100 + i * 40, 100 + j * 50));
+			brick = dynamic_cast<Entities::Brick *>(entity_factory->build("brick"));
+			assert(brick);
+			brick->setPosition(Vector2<float>(
+				100.0f + i * 40.0f, 
+				100.0f + j * 50.0f
+			));
+			pts = (pts + 50) % 130;
+			brick->setPoints(pts);
+			addEntity(*brick);
 		}
 	}
 
-	Entity * text = entity_factory->build("text");
+	Entities::Text * text = dynamic_cast<Entities::Text *>(entity_factory->build("text"));
+	assert(text);
 	text->setPosition(Vector2<float>(10, 10));
-	Entities::Text * dtext = dynamic_cast<Entities::Text *>(text);
-	if (dtext) {
-		dtext->setText("Player 1");
-	}
-
+	text->setText("0");
+	addEntity(*text);
 }
 
 void GameScene::update(float deltaTime) {
@@ -64,8 +86,5 @@ void GameScene::draw(SDL_Surface & surface) {
 }
 
 void GameScene::input(SDL_Event e) {
-	if (e.type == SDL_MOUSEBUTTONDOWN)
-		event_manager->trigger("launch_ball", nullptr);
-
 	for (auto s : systems) s->input(e);
 }

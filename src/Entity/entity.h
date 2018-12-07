@@ -1,9 +1,10 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "vector2.h"
 #include <SDL.h>
 #include <string>
+
+#include "vector2.h"
 #include "EventManager/event_manager.h"
 
 class Entity

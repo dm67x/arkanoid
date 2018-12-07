@@ -6,14 +6,18 @@
 #include <cmath>
 
 void ColliderSystem::update(float deltaTime) {
-	if (!pool) return;
+	if (!current_scene) return;
 
     Vector2<float> p1, p2;
     Vector2<float> direction, reflection, d;
     int dx = 0, dy = 0;
 
-    for (auto entity : pool->all("ball")) {
-        for (auto entity2 : pool->all()) {
+	std::vector<Entity *> entities = current_scene->getEntities();
+
+    for (auto entity : entities) {
+		if (entity->getType() != "ball") continue;
+
+        for (auto entity2 : entities) {
             if (entity == entity2) continue;
 
             if (entity->collideWith(*entity2)) {
@@ -26,8 +30,8 @@ void ColliderSystem::update(float deltaTime) {
 
                 p1 = entity->getPosition();
                 p2 = entity2->getPosition();
-                dx = p1.x - p2.x;
-                dy = p1.y - p2.y;
+                dx = static_cast<int>(p1.x - p2.x);
+                dy = static_cast<int>(p1.y - p2.y);
 
 				if (dx == 0) { // centre
 					direction.x = 0;
@@ -45,14 +49,11 @@ void ColliderSystem::update(float deltaTime) {
                 
 
                 d = entity->getDirection();
-                reflection.x = d.x - 2.0 * (d.x * direction.x + d.y * direction.y) * direction.x;
-                reflection.y = d.y - 2.0 * (d.x * direction.x + d.y * direction.y) * direction.y;
+                reflection.x = d.x - 2.0f * (d.x * direction.x + d.y * direction.y) * direction.x;
+                reflection.y = d.y - 2.0f * (d.x * direction.x + d.y * direction.y) * direction.y;
+				reflection.normalize();
 
-                float norm = sqrt(reflection.x * reflection.x + reflection.y * reflection.y);
-                reflection.x /= norm;
-                reflection.y /= norm;
-
-                std::cout << reflection.x << " " << reflection.y << std::endl;
+                SDL_Log("%d %d\n", reflection.x, reflection.y);
                 entity->setDirection(reflection);
             }
 

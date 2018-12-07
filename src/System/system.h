@@ -1,14 +1,15 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include "Entity/entity_pool.h"
 #include <SDL.h>
+
 #include "EventManager/event_manager.h"
+#include "Scene/scene.h"
 
 class System
 {
 protected:
-    static EntityPool * pool;
+	static Scene * current_scene;
     static EventManager * event_manager;
 
     System();
@@ -18,7 +19,7 @@ public:
     virtual void update(float deltaTime);
     virtual void draw(SDL_Surface & surface);
 
-	static void setPool(EntityPool * p);
+	static void setScene(Scene & s);
 };
 
 #endif

@@ -5,18 +5,20 @@
 void MovementSystem::input(SDL_Event e) {
     if (e.type == SDL_MOUSEMOTION)
         event_manager->trigger("move_ship", &e);
+	if (e.type == SDL_MOUSEBUTTONDOWN)
+		event_manager->trigger("launch_ball", nullptr);
 }
     
 void MovementSystem::update(float deltaTime) {
-	if (!pool) return;
+	if (!current_scene) return;
 
 	DynamicEntity * dynamic = nullptr;
 	Vector2<float> position, direction;
 	float speed;
 	
-	for (auto entity : pool->all()) {
+	for (auto entity : current_scene->getEntities()) {
 		dynamic = dynamic_cast<DynamicEntity *>(entity);
-		if (dynamic) {
+		if (dynamic && dynamic->canMove()) {
 			position = dynamic->getPosition();
 			direction = dynamic->getDirection();
 			speed = dynamic->getSpeed();

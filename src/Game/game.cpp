@@ -13,7 +13,6 @@ Game::Game() {
 
 	window = Singleton<Window>::getInstance();
     quit = false;
-    event_manager = Singleton<EventManager>::getInstance();
 	scene_manager = Singleton<SceneManager>::getInstance();
 }
 
@@ -28,10 +27,6 @@ void Game::init() {
 	gameScene->setSize(window->getSize().x, window->getSize().y);
 	scene_manager->add(*gameScene);
 	scene_manager->goTo("game");
-
-    event_manager->attach("quit", [this](void *) {
-        this->quit = true;
-    });
 }
 
 void Game::run() {
@@ -44,10 +39,10 @@ void Game::run() {
     while (!quit) {
         if (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)
-                event_manager->trigger("quit", nullptr);
+				this->quit = true;
             else if (event.type == SDL_KEYDOWN) {
                 if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
-                    event_manager->trigger("quit", nullptr);
+					this->quit = true;
             }
 
 			scene_manager->getScene()->input(event);

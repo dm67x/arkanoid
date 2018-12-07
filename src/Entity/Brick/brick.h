@@ -24,6 +24,7 @@ namespace Entities
         void damage(int force = 1);
         void makeDestructible();
         void makeInvicible();
+		void setPoints(int pts);
 
         std::string getType() override;
     };

@@ -3,10 +3,6 @@
 #include "Entity/Brick/brick.h"
 #include "Entity/Ball/ball.h"
 #include "Entity/Text/text.h"
-#include "entity_pool.h"
-#include <cassert>
-
-EntityPool * EntityFactory::pool = nullptr;
 
 Entity * EntityFactory::build(std::string type) {
     Entity * entity = nullptr;
@@ -15,20 +11,5 @@ Entity * EntityFactory::build(std::string type) {
     else if (type == "ship") entity = new Entities::Ship();
     else if (type == "ball") entity = new Entities::Ball();
 	else if (type == "text") entity = new Entities::Text("");
-
-    if (entity && pool)
-        pool->add(*entity);
-    else
-        assert("Not a valid entity");
-
     return entity;
-}
-
-void EntityFactory::destroy(Entity * e) {
-	if (pool)
-		pool->remove(*e);
-}
-
-void EntityFactory::setPool(EntityPool * p) {
-	pool = p;
 }

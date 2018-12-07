@@ -12,8 +12,6 @@ private:
     Window * window;
     bool quit;
     SDL_Event event;
-    EventManager * event_manager;
-
 	SceneManager * scene_manager;
     
 

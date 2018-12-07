@@ -24,7 +24,8 @@ void Brick::damage(int force) {
     if (!destructible) return;
     hit -= force;
     if (hit <= 0) {
-        Singleton<EntityFactory>::getInstance()->destroy(this); // destroy animation WIP
+		event_manager->trigger("destroy_entity", this);
+        // destroy animation WIP
     }
 }
 
@@ -36,11 +37,50 @@ void Brick::makeInvicible() {
     destructible = false;
 }
 
-void Brick::setGraphicWithPoints() {
-	setGraphic({ 0, 0, 31, 15 });
-	/*if (points <= 50) {
+void Entities::Brick::setPoints(int pts)
+{
+	this->points = pts;
+	setGraphicWithPoints();
+}
 
-	}*/
+void Brick::setGraphicWithPoints() {
+	switch (points) {
+	case 50:
+		setGraphic({ 0, 0, 31, 15 });
+		break;
+
+	case 60:
+		setGraphic({ 31, 0, 31, 15 });
+		break;
+
+	case 70:
+		setGraphic({ 62, 0, 31, 15 });
+		break;
+
+	case 80:
+		setGraphic({ 93, 0, 31, 15 });
+		break;
+
+	case 90:
+		setGraphic({ 124, 0, 31, 15 });
+		break;
+
+	case 100:
+		setGraphic({ 155, 0, 31, 15 });
+		break;
+
+	case 110:
+		setGraphic({ 0, 15, 31, 15 });
+		break;
+
+	case 120:
+		setGraphic({ 31, 15, 31, 15 });
+		break;
+
+	default:
+		setGraphic({ 0, 30, 31, 15 });
+		break;
+	}
 }
 
 std::string Brick::getType() {

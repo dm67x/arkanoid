@@ -1,4 +1,5 @@
 #include "scene_manager.h"
+#include "System/system.h"
 
 void SceneManager::add(Scene & s) {
 	scenes.insert(std::make_pair(s.getName(), &s));
@@ -15,7 +16,7 @@ void SceneManager::goTo(const std::string name) {
 	current = scenes.at(name);
 	// charger les entités dans la pool d'entité
 	if (current) {
-		current->reload();
+		System::setScene(*current);
 		current->load();
 	}
 }

@@ -8,7 +8,7 @@ Ship::Ship() : DynamicEntity("Ship") {
 
     event_manager->attach("move_ship", [this](void * p) {
         SDL_Event * e = (SDL_Event *)p;
-        this->setPosition(Vector2<float>(e->motion.x, this->getPosition().y));
+        this->setPosition(Vector2<float>(static_cast<float>(e->motion.x), this->getPosition().y));
     });
 }
 
