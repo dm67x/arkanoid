@@ -3,7 +3,10 @@
 
 using namespace Entities;
 
-Brick::Brick(int points) : Brick(points, 1) {
+Brick::Brick() : Brick(50) {
+}
+
+Brick::Brick(int points) : Brick(points, 2) {
 }
 
 Brick::Brick(int points, int hit) : StaticEntity("Brick") {
@@ -46,39 +49,39 @@ void Entities::Brick::setPoints(int pts)
 void Brick::setGraphicWithPoints() {
 	switch (points) {
 	case 50:
-		setGraphic({ 0, 0, 31, 15 });
+		setGraphic({ 0, 0, 30, 14 });
 		break;
 
 	case 60:
-		setGraphic({ 31, 0, 31, 15 });
+		setGraphic({ 32, 0, 30, 14 });
 		break;
 
 	case 70:
-		setGraphic({ 62, 0, 31, 15 });
+		setGraphic({ 64, 0, 30, 14 });
 		break;
 
 	case 80:
-		setGraphic({ 93, 0, 31, 15 });
+		setGraphic({ 96, 0, 30, 14 });
 		break;
 
 	case 90:
-		setGraphic({ 124, 0, 31, 15 });
+		setGraphic({ 128, 0, 30, 14 });
 		break;
 
 	case 100:
-		setGraphic({ 155, 0, 31, 15 });
+		setGraphic({ 160, 0, 30, 14 });
 		break;
 
 	case 110:
-		setGraphic({ 0, 15, 31, 15 });
+		setGraphic({ 0, 16, 30, 14 });
 		break;
 
 	case 120:
-		setGraphic({ 31, 15, 31, 15 });
+		setGraphic({ 32, 16, 30, 14 });
 		break;
 
 	default:
-		setGraphic({ 0, 30, 31, 15 });
+		setGraphic({ 0, 32, 30, 14 });
 		break;
 	}
 }

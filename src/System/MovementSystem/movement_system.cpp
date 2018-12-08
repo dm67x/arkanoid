@@ -3,10 +3,13 @@
 #include "Entity/dynamic_entity.h"
 
 void MovementSystem::input(SDL_Event e) {
-    if (e.type == SDL_MOUSEMOTION)
-        event_manager->trigger("move_ship", &e);
-	if (e.type == SDL_MOUSEBUTTONDOWN)
+	if (e.type == SDL_MOUSEMOTION) {
+		event_manager->trigger("move_ball_before_launch", &e);
+		event_manager->trigger("move_ship", &e);
+	}
+	else if (e.type == SDL_MOUSEBUTTONDOWN) {
 		event_manager->trigger("launch_ball", nullptr);
+	}
 }
     
 void MovementSystem::update(float deltaTime) {

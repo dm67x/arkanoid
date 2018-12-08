@@ -16,6 +16,7 @@ namespace Entities
 		void setGraphicWithPoints();
 
     public:
+		Brick();
         Brick(int points);
         Brick(int points, int hit);
         ~Brick() override;

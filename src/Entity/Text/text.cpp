@@ -3,6 +3,9 @@
 
 using namespace Entities;
 
+Text::Text() : Text("") {
+}
+
 Text::Text(const std::string text) : StaticEntity("Text") {
 	setText(text);
 }

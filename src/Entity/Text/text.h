@@ -15,6 +15,7 @@ namespace Entities
 		SDL_Rect getGraphicFromChar(char c);
 
 	public:
+		Text();
 		Text(const std::string text);
 
 		void setText(const std::string text);
