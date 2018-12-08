@@ -9,7 +9,7 @@ void MovementSystem::input(SDL_Event e) {
 		event_manager->trigger("move_ship", &e);
 	}
 	else if (e.type == SDL_MOUSEBUTTONDOWN) {
-		//event_manager->trigger("launch_ball", nullptr);
+		event_manager->trigger("launch_ball", nullptr);
 	}
 }
     

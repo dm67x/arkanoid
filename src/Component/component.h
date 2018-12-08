@@ -2,6 +2,7 @@
 #define COMPONENT_H
 
 #include <string>
+#include <vector>
 
 #include "Entity/entity.h"
 

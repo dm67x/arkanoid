@@ -52,6 +52,24 @@ GameScene::GameScene() : Scene("game") {
 				tc->position.x = e->motion.x;
 		}
 	});
+
+	// Evenement permettant de lancer une balle
+	event_manager->attach("launch_ball", [this](void *) {
+		MovementComponent * mc = nullptr;
+
+		for (auto comp : this->pool->getComponents(ball)) {
+			if (comp->getName() == "movement") {
+				mc = static_cast<MovementComponent *>(comp);
+			}
+		}
+
+		if (mc) {
+			if (mc->is_static) {
+				mc->is_static = false;
+				mc->direction = Vector2<float>(0, -1);
+			}
+		}
+	});
 }
 
 GameScene::~GameScene() {
@@ -69,7 +87,7 @@ void GameScene::load() {
 
 	systems.push_back(new RenderSystem(*sprite));
 	//systems.push_back(new FontSystem(*font));
-	//systems.push_back(new ColliderSystem());
+	systems.push_back(new ColliderSystem());
 	systems.push_back(new MovementSystem());
 
 	// Creation de l'entité "ship"
@@ -77,30 +95,28 @@ void GameScene::load() {
 	TransformComponent * ship_transform = new TransformComponent(ship);
 	RenderComponent * ship_render = new RenderComponent(ship, { 385, 192, 98, 16 });
 	MovementComponent * ship_movement = new MovementComponent(ship);
-
-	/*SDL_Rect box = {
-		ship->transform
-	};
-	CollisionComponent * collision_system = new CollisionComponent(ship, box);*/
+	CollisionComponent * ship_collision = new CollisionComponent(ship, ship_transform, ship_render);
 
 	ship_transform->position.y = getHeight() - 20.0f;
 
 	pool->add(ship, *ship_transform);
 	pool->add(ship, *ship_render);
 	pool->add(ship, *ship_movement);
-	//pool->add(ship, *collision_system);
+	pool->add(ship, *ship_collision);
 
 	// Creation de l'entité "ball"
 	ball = 0x02;
 	TransformComponent * ball_transform = new TransformComponent(ball);
 	RenderComponent * ball_render = new RenderComponent(ball, { 80, 64, 16, 16 });
 	MovementComponent * ball_movement = new MovementComponent(ball, 5.0f, Vector2<float>(0, -1), true);
+	CollisionComponent * ball_collision = new CollisionComponent(ball, ball_transform, ball_render);
 
-	ball_transform->position.y = ship_transform->position.y - 20 - ball_render->src.h / 2.0f;
+	ball_transform->position.y = ship_collision->getBoundingBox().y - ball_render->src.h / 2.0f;
 
 	pool->add(ball, *ball_transform);
 	pool->add(ball, *ball_render);
 	pool->add(ball, *ball_movement);
+	pool->add(ball, *ball_collision);
 
 	/*try {
 		Entity * ship = entity_factory->build("ship");
