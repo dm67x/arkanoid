@@ -39,21 +39,4 @@ void MovementSystem::update(float deltaTime) {
 		tc = nullptr;
 		mc = nullptr;
 	}
-
-	/*DynamicEntity * dynamic = nullptr;
-	Vector2<float> position, direction;
-	float speed;
-	
-	for (auto entity : current_scene->getEntities()) {
-		dynamic = dynamic_cast<DynamicEntity *>(entity);
-		if (dynamic && dynamic->canMove()) {
-			position = dynamic->getPosition();
-			direction = dynamic->getDirection();
-			speed = dynamic->getSpeed();
-
-			position = position + direction * (speed * 60.0f * deltaTime);
-
-			dynamic->setPosition(position);
-		}
-    }*/
 }
