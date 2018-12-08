@@ -3,7 +3,7 @@
 
 #include "Entity/entity.h"
 #include "Window/window.h"
-#include "Entity/entity_factory.h"
+#include "Entity/entity_pool.h"
 
 #include <string>
 #include <vector>
@@ -21,12 +21,8 @@ protected:
 	Scene(const std::string name);
 
 	std::vector<System *> systems;
-	std::vector<Entity *> entities;
 	static EventManager * event_manager;
-	static EntityFactory * entity_factory;
-
-	void destroyEntity(Entity & e);
-	void addEntity(Entity & e);
+	EntityPool * pool;
 
 public:
 	virtual ~Scene();
@@ -40,7 +36,7 @@ public:
 	inline const std::string getName() const { return name; }
 	inline const int getWidth() const { return width; }
 	inline const int getHeight() const { return height; }
-	inline const std::vector<Entity *> getEntities() const { return entities; }
+	inline EntityPool * getPool() const { return pool; }
 };
 
 #endif

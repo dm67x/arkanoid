@@ -7,6 +7,10 @@ namespace Scenes
 {
 	class GameScene : public Scene
 	{
+	private:
+		Entity ship;
+		Entity ball;
+
 	public:
 		GameScene();
 		~GameScene() override;

@@ -1,5 +1,4 @@
 #include "game.h"
-#include "Entity/entity_factory.h"
 #include "Scene/GameScene/game_scene.h"
 
 #include <iostream>

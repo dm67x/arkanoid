@@ -1,12 +1,12 @@
-#include "collider_system.h"
-#include "Entity/Brick/brick.h"
-#include "Window/window.h"
 #include <iostream>
 #include <algorithm>
 #include <cmath>
 
+#include "collider_system.h"
+#include "Window/window.h"
+
 void ColliderSystem::update(float deltaTime) {
-	if (!current_scene) return;
+	/*if (!current_scene) return;
 
     Vector2<float> p1, p2;
     Vector2<float> direction, reflection, d;
@@ -71,6 +71,6 @@ void ColliderSystem::update(float deltaTime) {
 			else if (bounding.y + bounding.h < 0) {
 				entity->setDirection(Vector2<float>(direction.x, 1));
 			}*/
-        }
-    }
+        /*}
+    }*/
 }

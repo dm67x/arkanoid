@@ -1,11 +1,10 @@
 #include "font_system.h"
-#include "Entity/Text/text.h"
 
 FontSystem::FontSystem(SDL_Surface & sprite) : sprite(sprite) {
 }
 
 void FontSystem::draw(SDL_Surface & surface) {
-	if (!current_scene) return;
+	/*if (!current_scene) return;
 
 	std::vector<SDL_Rect> graphics;
 	Vector2<float> position;
@@ -29,5 +28,5 @@ void FontSystem::draw(SDL_Surface & surface) {
 				SDL_BlitScaled(&sprite, &graphic, &surface, &dest);
 			}
 		}
-	}
+	}*/
 }
