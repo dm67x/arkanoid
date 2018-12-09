@@ -25,10 +25,10 @@ void RenderSystem::draw(SDL_Surface & surface) {
 
 		if (tc && rc) {
 			SDL_Rect destination;
-			destination.x = tc->position.x - rc->src.w / 2;
-			destination.y = tc->position.y - rc->src.h / 2;
-			destination.w = tc->scale.x * rc->src.w;
-			destination.h = tc->scale.y * rc->src.h;
+			destination.x = static_cast<int>(tc->position.x) - rc->src.w / 2;
+			destination.y = static_cast<int>(tc->position.y) - rc->src.h / 2;
+			destination.w = static_cast<int>(tc->scale.x * rc->src.w);
+			destination.h = static_cast<int>(tc->scale.y * rc->src.h);
 
 			SDL_BlitSurface(
 				&sprite,

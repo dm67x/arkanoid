@@ -14,7 +14,6 @@ private:
     SDL_Event event;
 	SceneManager * scene_manager;
     
-
 protected:
     void init();
 

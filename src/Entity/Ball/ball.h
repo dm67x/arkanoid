@@ -7,6 +7,7 @@
 #include "Component/render_component.h"
 #include "Component/collision_component.h"
 #include "Component/movement_component.h"
+#include "Component/type_component.h"
 
 class Ball
 {
@@ -22,6 +23,7 @@ public:
 	RenderComponent * render;
 	CollisionComponent * collision;
 	MovementComponent * movement;
+	TypeComponent * type;
 };
 
 #endif

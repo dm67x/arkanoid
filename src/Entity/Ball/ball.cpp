@@ -24,7 +24,7 @@ Ball::Ball(Entity id, EntityPool * pool)
 
 		if (tc && mc) {
 			if (mc->is_static)
-				tc->position.x = e->motion.x;
+				tc->position.x = static_cast<float>(e->motion.x);
 		}
 	});
 
@@ -52,11 +52,13 @@ Ball::Ball(Entity id, EntityPool * pool)
 	movement = new MovementComponent(id, 5.0f, Vector2<float>(0, -1), true);
 	collision = new CollisionComponent(id, transform, render);
 	collision->q = 2;
+	type = new TypeComponent(id, "ball");
 
 	pool->add(id, *transform);
 	pool->add(id, *render);
 	pool->add(id, *movement);
 	pool->add(id, *collision);
+	pool->add(id, *type);
 }
 
 Ball::~Ball() {
@@ -67,4 +69,5 @@ Ball::~Ball() {
 	pool->remove(id, *render);
 	pool->remove(id, *movement);
 	pool->remove(id, *collision);
+	pool->remove(id, *type);
 }

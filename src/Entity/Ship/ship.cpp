@@ -13,7 +13,7 @@ Ship::Ship(Entity id, EntityPool * pool)
 		for (auto comp : this->pool->getComponents(this->id)) {
 			if (comp->getName() == "transform") {
 				TransformComponent * tc = static_cast<TransformComponent *>(comp);
-				tc->position.x = e->motion.x;
+				tc->position.x = static_cast<float>(e->motion.x);
 			}
 		}
 	});
@@ -24,11 +24,13 @@ Ship::Ship(Entity id, EntityPool * pool)
 	movement = new MovementComponent(id);
 	collision = new CollisionComponent(id, transform, render);
 	movement->is_static = true;
+	type = new TypeComponent(id, "ship");
 
 	pool->add(id, *transform);
 	pool->add(id, *render);
 	pool->add(id, *movement);
 	pool->add(id, *collision);
+	pool->add(id, *type);
 }
 
 Ship::~Ship() {
@@ -38,4 +40,5 @@ Ship::~Ship() {
 	pool->remove(id, *render);
 	pool->remove(id, *movement);
 	pool->remove(id, *collision);
+	pool->remove(id, *type);
 }

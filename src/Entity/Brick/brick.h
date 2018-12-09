@@ -8,6 +8,7 @@
 #include "Component/collision_component.h"
 #include "Component/hit_component.h"
 #include "Component/points_component.h"
+#include "Component/type_component.h"
 
 class Brick
 {
@@ -26,6 +27,7 @@ public:
 	CollisionComponent * collision;
 	HitComponent * hit;
 	PointsComponent * points;
+	TypeComponent * type;
 };
 
 #endif

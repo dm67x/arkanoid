@@ -9,12 +9,14 @@ Brick::Brick(Entity id, EntityPool * pool, int points)
 	collision = new CollisionComponent(id, transform, render);
 	this->points = new PointsComponent(id, points);
 	hit = new HitComponent(id);
+	type = new TypeComponent(id, "brick");
 
 	pool->add(id, *transform);
 	pool->add(id, *render);
 	pool->add(id, *collision);
 	pool->add(id, *this->points);
 	pool->add(id, *hit);
+	pool->add(id, *type);
 }
 
 Brick::~Brick() {
@@ -23,6 +25,7 @@ Brick::~Brick() {
 	pool->remove(id, *collision);
 	pool->remove(id, *this->points);
 	pool->remove(id, *hit);
+	pool->remove(id, *type);
 }
 
 SDL_Rect Brick::getGraphicsFromPoints(int points) {

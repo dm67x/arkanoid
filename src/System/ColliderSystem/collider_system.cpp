@@ -7,6 +7,7 @@
 #include "Component/collision_component.h"
 #include "Component/movement_component.h"
 #include "Component/hit_component.h"
+#include "Component/type_component.h"
 
 void ColliderSystem::update(float deltaTime) {
 	if (!current_scene) return;
@@ -19,24 +20,27 @@ void ColliderSystem::update(float deltaTime) {
 	CollisionComponent * cc1 = nullptr, *cc2 = nullptr;
 	MovementComponent * mc = nullptr;
 	HitComponent * hc = nullptr;
+	TypeComponent * tc = nullptr;
 
-	for (auto entity : pool->getEntities()) {
-		for (auto comp : entity.second) {
-			if (comp->getName() == "collision") {
+	std::map<Entity, std::vector<Component *>> entities = pool->getEntities();
+
+	for (auto ent : entities) {
+		for (auto comp : ent.second) {
+			if (comp->getName() == "type")
+				tc = static_cast<TypeComponent *>(comp);
+			else if (comp->getName() == "collision")
 				cc1 = static_cast<CollisionComponent *>(comp);
-			}
-			else if (comp->getName() == "movement") {
+			else if (comp->getName() == "movement")
 				mc = static_cast<MovementComponent *>(comp);
-			}
 		}
 
-		if (!cc1 || !mc) continue; // si pas de composant de collision ou movement continuer
+		if (!tc || !cc1 || !mc) continue; // si pas de composant de collision ou movement arreter
+		if (tc->type != "ball") continue; // si ce n'est paas une balle
 
-		for (auto entity2 : pool->getEntities()) {
-			if (entity.first == entity2.first)
-				continue; // continuer si la meme entité
+		for (auto entity : entities) {
+			if (entity.first == ent.first) continue; // continuer si la meme entité
 
-			for (auto comp : entity2.second) {
+			for (auto comp : entity.second) {
 				if (comp->getName() == "collision") {
 					cc2 = static_cast<CollisionComponent *>(comp);
 				}
@@ -52,7 +56,7 @@ void ColliderSystem::update(float deltaTime) {
 					if (hc->destructible) {
 						hc->hit--;
 						if (hc->hit <= 0) {
-							event_manager->trigger("destroy_entity", (void *)&(entity2.first));
+							event_manager->trigger("destroy_entity", (void *)&(entity.first));
 						}
 					}
 				}
@@ -89,6 +93,7 @@ void ColliderSystem::update(float deltaTime) {
 			}
 		}
 
+		tc = nullptr;
 		mc = nullptr;
 		cc1 = cc2 = nullptr;
 		hc = nullptr;
