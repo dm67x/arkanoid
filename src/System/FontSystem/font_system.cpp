@@ -1,32 +1,45 @@
 #include "font_system.h"
+#include "Component/text_component.h"
+#include "Component/transform_component.h"
 
 FontSystem::FontSystem(SDL_Surface & sprite) : sprite(sprite) {
 }
 
 void FontSystem::draw(SDL_Surface & surface) {
-	/*if (!current_scene) return;
+	if (!current_scene) return;
 
-	std::vector<SDL_Rect> graphics;
-	Vector2<float> position;
-	Entities::Text * text = nullptr;
-	SDL_Rect dest, graphic;
+	EntityPool * pool = current_scene->getPool();
+	TextComponent * tc = nullptr;
+	TransformComponent * trc = nullptr;
+	std::vector<SDL_Rect> rects;
+	SDL_Rect graphic, dest;
 
-	for (auto entity : current_scene->getEntities()) {
-		if (entity->getType() != "text") continue;
+	for (auto entity : pool->getEntities()) {
+		for (auto comp : entity.second) {
+			if (comp->getName() == "text") {
+				tc = static_cast<TextComponent *>(comp);
+			}
+			else if (comp->getName() == "transform") {
+				trc = static_cast<TransformComponent *>(comp);
+			}
+		}
 
-		text = dynamic_cast<Entities::Text *>(entity);
-		if (text) {
-			position = text->getPosition();
-			graphics = text->getTextGraphics();
-			for (size_t i = 0; i < graphics.size(); i++) {
-				graphic = graphics.at(i);
-				dest = { 
-					static_cast<int>((graphic.w / 2) * i + position.x / 2),
-					static_cast<int>(position.y) / 2, 
-					graphic.w / 2, graphic.h / 2 
+		if (tc && trc) {
+			rects = tc->getRects();
+			for (size_t i = 0; i < rects.size(); i++) {
+				graphic = rects.at(i);
+				dest = {
+					static_cast<int>((graphic.w / 2) * i + trc->position.x / 2),
+					static_cast<int>(trc->position.y / 2),
+					static_cast<int>(graphic.w * trc->scale.x), 
+					static_cast<int>(graphic.h * trc->scale.y)
 				};
 				SDL_BlitScaled(&sprite, &graphic, &surface, &dest);
 			}
 		}
-	}*/
+
+		tc = nullptr;
+		trc = nullptr;
+		rects.clear();
+	}
 }

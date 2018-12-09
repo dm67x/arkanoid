@@ -30,10 +30,10 @@ public:
 
 	inline SDL_Rect getBoundingBox() const {
 		SDL_Rect box;
-		box.x = static_cast<int>(transform->position.x) - render->src.w / 2 + q;
-		box.y = static_cast<int>(transform->position.y) - render->src.h / 2 + q;
-		box.w = static_cast<int>(transform->position.x) + render->src.w / 2 - q;
-		box.h = static_cast<int>(transform->position.y) + render->src.h / 2 - q;
+		box.x = static_cast<int>(transform->position.x) - static_cast<int>((render->src.w / 2 + q) * transform->scale.x);
+		box.y = static_cast<int>(transform->position.y) - static_cast<int>((render->src.h / 2 + q) * transform->scale.y);
+		box.w = static_cast<int>(transform->position.x) + static_cast<int>((render->src.w / 2 - q) * transform->scale.x);
+		box.h = static_cast<int>(transform->position.y) + static_cast<int>((render->src.h / 2 - q) * transform->scale.y);
 		return box;
 	}
 

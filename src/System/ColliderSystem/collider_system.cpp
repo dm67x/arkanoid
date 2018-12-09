@@ -88,7 +88,7 @@ void ColliderSystem::update(float deltaTime) {
 				reflection.y = d.y - 2.0f * (d.x * direction.x + d.y * direction.y) * direction.y;
 				reflection.normalize();
 
-				//SDL_Log("%d %d\n", reflection.x, reflection.y);
+				SDL_Log("%d %d\n", reflection.x, reflection.y);
 				mc->direction = reflection;
 			}
 		}

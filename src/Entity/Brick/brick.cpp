@@ -20,12 +20,7 @@ Brick::Brick(Entity id, EntityPool * pool, int points)
 }
 
 Brick::~Brick() {
-	pool->remove(id, *transform);
-	pool->remove(id, *render);
-	pool->remove(id, *collision);
-	pool->remove(id, *this->points);
-	pool->remove(id, *hit);
-	pool->remove(id, *type);
+	pool->remove(id);
 }
 
 SDL_Rect Brick::getGraphicsFromPoints(int points) {

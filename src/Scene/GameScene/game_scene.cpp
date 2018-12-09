@@ -10,6 +10,7 @@
 #include "Entity/Ship/ship.h"
 #include "Entity/Ball/ball.h"
 #include "Entity/Brick/brick.h"
+#include "Entity/Text/text.h"
 
 using namespace Scenes;
 
@@ -35,7 +36,7 @@ void GameScene::load() {
 	}
 
 	systems.push_back(new RenderSystem(*sprite));
-	//systems.push_back(new FontSystem(*font));
+	systems.push_back(new FontSystem(*font));
 	systems.push_back(new ColliderSystem());
 	systems.push_back(new MovementSystem());
 
@@ -47,10 +48,15 @@ void GameScene::load() {
 	Ball * ball = new Ball(0x02, pool);
 	ball->transform->position.y = ship->collision->getBoundingBox().y - ball->render->src.h / 2.0f;
 
+	// Creation du texte pour le score
+	Text * score = new Text(0x03, pool, "Score: 0");
+	score->transform->position = Vector2<float>(10, 10);
+	score->transform->scale = Vector2<float>(0.6f, 0.6f);
+
 	// Creation des bricks de test
 	int pts = 0;
 	Brick * brick;
-	Entity id = 0x03;
+	Entity id = 0x04;
 
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
