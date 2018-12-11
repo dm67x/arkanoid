@@ -6,10 +6,10 @@ EntityPool::EntityPool() {
 EntityPool::~EntityPool() {
 }
 
-void EntityPool::add(Entity e, Component & c) {
+void EntityPool::add(uint32_t e, Component & c) {
 	std::vector<Component *> comps;
 
-	if (entities.find(e) == entities.end()) { // clé n'existe pas
+	if (entities.find(e) == entities.end()) { // clï¿½ n'existe pas
 		comps.push_back(&c);
 		entities.insert(std::make_pair(e, comps));
 	}
@@ -20,11 +20,11 @@ void EntityPool::add(Entity e, Component & c) {
 	}
 }
 
-void EntityPool::remove(Entity e) {
+void EntityPool::remove(uint32_t e) {
 	entities.erase(e);
 }
 
-void EntityPool::remove(Entity e, Component & c) {
+void EntityPool::remove(uint32_t e, Component & c) {
 	std::vector<Component *> comps;
 
 	if (entities.find(e) != entities.end()) { // cle existe
@@ -38,7 +38,7 @@ void EntityPool::remove(Entity e, Component & c) {
 	}
 }
 
-std::vector<Component *> EntityPool::getComponents(Entity e) const {
+std::vector<Component *> EntityPool::getComponents(uint32_t e) const {
 	std::vector<Component *> comps;
 	comps = entities.at(e);
 	return comps;

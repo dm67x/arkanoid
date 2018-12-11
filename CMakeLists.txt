@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 project(Arkanoid LANGUAGES CXX)
 
@@ -22,11 +23,18 @@ file(GLOB_RECURSE source_files src/**/* src/*)
 
 add_executable(${PROJECT_NAME} ${source_files})
 target_include_directories(${PROJECT_NAME} PUBLIC src)
-target_link_libraries(${PROJECT_NAME} PUBLIC SDL2 SDL2main)
+
+if (MINGW)
+	target_link_libraries(${PROJECT_NAME} PUBLIC mingw32 SDL2main SDL2)
+else ()
+	target_link_libraries(${PROJECT_NAME} PUBLIC SDL2main SDL2)
+endif ()
+
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_nullptr)
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/Arkanoid_sprites.bmp
-	DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+# Copier les assets
+file (GLOB ASSETS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/*.bmp)
+file(COPY ${ASSETS_FILES} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 if (MSVC)
 	source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files}) 

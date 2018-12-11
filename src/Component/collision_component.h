@@ -10,8 +10,8 @@
 class CollisionComponent : public Component
 {
 public:
-	CollisionComponent(Entity entity, TransformComponent * t, RenderComponent * r) 
-		: Component(entity), transform(t), render(r), q(0) {
+	CollisionComponent(TransformComponent * t, RenderComponent * r) 
+		: Component(), transform(t), render(r), q(0) {
 	}
 
 	TransformComponent * transform;

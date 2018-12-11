@@ -17,8 +17,8 @@ using namespace Scenes;
 GameScene::GameScene() : Scene("game") {
 	// Attacher l'evenement permettant de d�truire une entit�
 	event_manager->attach("destroy_entity", [this](void * ent) {
-		Entity to_destroy = *(static_cast<Entity *>(ent));
-		this->pool->remove(to_destroy);
+		uint32_t id = *(static_cast<uint32_t *>(ent));
+		this->pool->remove(id);
 	});
 }
 
@@ -56,7 +56,7 @@ void GameScene::load() {
 	// Creation des bricks de test
 	int pts = 0;
 	Brick * brick;
-	Entity id = 0x04;
+	uint32_t id = 0x04;
 
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {

@@ -6,7 +6,7 @@
 class TypeComponent : public Component
 {
 public:
-	TypeComponent(Entity id, std::string type) : Component(id), type(type) {}
+	TypeComponent(std::string type) : Component(), type(type) {}
 
 	std::string type;
 	std::string getName() override { return "type"; }

@@ -6,8 +6,8 @@
 class PointsComponent : public Component
 {
 public:
-	PointsComponent(Entity id, int pts) : Component(id), points(pts) {}
-	PointsComponent(Entity id) : PointsComponent(id, 50) {}
+	PointsComponent(int pts) : Component(), points(pts) {}
+	PointsComponent() : PointsComponent(50) {}
 
 	int points;
 

@@ -8,7 +8,7 @@
 class RenderComponent : public Component
 {
 public:
-	RenderComponent(Entity entity, SDL_Rect src) : Component(entity), src(src) {}
+	RenderComponent(SDL_Rect src) : Component(), src(src) {}
 	
 	SDL_Rect src;
 

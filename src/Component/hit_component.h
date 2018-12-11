@@ -6,9 +6,9 @@
 class HitComponent : public Component
 {
 public:
-	HitComponent(Entity id, int hit, bool destructible) 
-		: Component(id), hit(hit), destructible(destructible) {}
-	HitComponent(Entity id) : HitComponent(id, 2, true) {}
+	HitComponent(int hit, bool destructible) 
+		: Component(), hit(hit), destructible(destructible) {}
+	HitComponent() : HitComponent(2, true) {}
 
 	int hit;
 	bool destructible;

@@ -21,8 +21,8 @@ private:
 	}
 
 public:
-	TextComponent(Entity id, std::string text) 
-		: Component(id), text(text) {}
+	TextComponent(std::string text) 
+		: Component(), text(text) {}
 
 	std::string text;
 	

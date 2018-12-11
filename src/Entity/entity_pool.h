@@ -4,27 +4,26 @@
 #include <map>
 #include <vector>
 
-#include "entity.h"
 #include "Component/component.h"
 
 class EntityPool
 {
 private:
-	std::map<Entity, std::vector<Component *>> entities;
+	std::map<uint32_t, std::vector<Component *>> entities;
 
 public:
 	EntityPool();
 	~EntityPool();
 
-	void add(Entity e, Component & c);
-	void remove(Entity e);
-	void remove(Entity e, Component & c);
+	void add(uint32_t e, Component & c);
+	void remove(uint32_t e);
+	void remove(uint32_t e, Component & c);
 
-	inline std::map<Entity, std::vector<Component *>> getEntities() const {
+	inline std::map<uint32_t, std::vector<Component *>> getEntities() const {
 		return entities;
 	}
 
-	std::vector<Component *> getComponents(Entity e) const;
+	std::vector<Component *> getComponents(uint32_t e) const;
 };
 
 #endif

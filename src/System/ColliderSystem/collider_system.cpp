@@ -22,7 +22,7 @@ void ColliderSystem::update(float deltaTime) {
 	HitComponent * hc = nullptr;
 	TypeComponent * tc = nullptr;
 
-	std::map<Entity, std::vector<Component *>> entities = pool->getEntities();
+	std::map<uint32_t, std::vector<Component *>> entities = pool->getEntities();
 
 	for (auto ent : entities) {
 		for (auto comp : ent.second) {

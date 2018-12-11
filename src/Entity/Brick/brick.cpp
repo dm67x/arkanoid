@@ -1,26 +1,18 @@
 #include "brick.h"
 
-Brick::Brick(Entity id, EntityPool * pool, int points) 
-	: id(id), pool(pool) 
+Brick::Brick(uint32_t id, EntityPool * pool, int points) 
+	: Entity(id, pool, "brick")
 {
 	// Components
-	transform = new TransformComponent(id);
-	render = new RenderComponent(id, getGraphicsFromPoints(points));
-	collision = new CollisionComponent(id, transform, render);
-	this->points = new PointsComponent(id, points);
-	hit = new HitComponent(id);
-	type = new TypeComponent(id, "brick");
+	render = new RenderComponent(getGraphicsFromPoints(points));
+	collision = new CollisionComponent(transform, render);
+	this->points = new PointsComponent(points);
+	hit = new HitComponent();
 
-	pool->add(id, *transform);
 	pool->add(id, *render);
 	pool->add(id, *collision);
 	pool->add(id, *this->points);
 	pool->add(id, *hit);
-	pool->add(id, *type);
-}
-
-Brick::~Brick() {
-	pool->remove(id);
 }
 
 SDL_Rect Brick::getGraphicsFromPoints(int points) {

@@ -2,24 +2,14 @@
 #define TEXT_H
 
 #include "Entity/entity.h"
-#include "Entity/entity_pool.h"
 #include "Component/text_component.h"
-#include "Component/transform_component.h"
-#include "Component/type_component.h"
 
-class Text
+class Text : public Entity
 {
-private:
-	Entity id;
-	EntityPool * pool;
-
 public:
-	Text(Entity id, EntityPool * pool, std::string text);
-	~Text();
+	Text(uint32_t id, EntityPool * pool, std::string text);
 
 	TextComponent * text;
-	TransformComponent * transform;
-	TypeComponent * type;
 };
 
 #endif
