@@ -1,7 +1,7 @@
 #ifndef COLLISION_COMPONENT_H
 #define COLLISION_COMPONENT_H
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 #include "component.h"
 #include "transform_component.h"

@@ -1,15 +1,28 @@
 cmake_minimum_required(VERSION 3.7)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 project(Arkanoid LANGUAGES CXX)
 
-find_package(SDL2 REQUIRED)
+# telecharger et installer SDL2 sur la machine
+include(ExternalProject)
+ExternalProject_Add(sdl2 
+	PREFIX ${CMAKE_BINARY_DIR}/external
+	URL "https://www.libsdl.org/release/SDL2-2.0.8.tar.gz"
+    	URL_HASH SHA256=edc77c57308661d576e843344d8638e025a7818bff73f8fbfab09c3c5fd092ec
+	INSTALL_DIR ${CMAKE_BINARY_DIR}/external/installed
+	CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/external/installed
+)
+set_target_properties(sdl2 PROPERTIES EXCLUDE_FROM_ALL TRUE)
+
+include(GNUInstallDirs)
+link_directories(${CMAKE_BINARY_DIR}/external/installed/${CMAKE_INSTALL_LIBDIR})
+include_directories(${CMAKE_BINARY_DIR}/external/installed/${CMAKE_INSTALL_INCLUDEDIR})
+find_package(SDL2 HINTS ${CMAKE_BINARY_DIR}/external/installed)
 
 file(GLOB_RECURSE source_files src/**/* src/*)
 
 add_executable(${PROJECT_NAME} ${source_files})
-target_include_directories(${PROJECT_NAME} PUBLIC ${SDL2_INCLUDE_DIRS} src)
-target_link_libraries(${PROJECT_NAME} PUBLIC ${SDL2_LIBRARIES})
+target_include_directories(${PROJECT_NAME} PUBLIC src)
+target_link_libraries(${PROJECT_NAME} PUBLIC SDL2 SDL2main)
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_nullptr)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets/Arkanoid_sprites.bmp

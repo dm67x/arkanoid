@@ -15,7 +15,7 @@
 using namespace Scenes;
 
 GameScene::GameScene() : Scene("game") {
-	// Attacher l'evenement permettant de détruire une entité
+	// Attacher l'evenement permettant de dï¿½truire une entitï¿½
 	event_manager->attach("destroy_entity", [this](void * ent) {
 		Entity to_destroy = *(static_cast<Entity *>(ent));
 		this->pool->remove(to_destroy);
@@ -40,11 +40,11 @@ void GameScene::load() {
 	systems.push_back(new ColliderSystem());
 	systems.push_back(new MovementSystem());
 
-	// Creation de l'entité "ship"
+	// Creation de l'entitï¿½ "ship"
 	Ship * ship = new Ship(0x01, pool);
 	ship->transform->position.y = getHeight() - 20.0f;
 
-	// Creation de l'entité "ball"
+	// Creation de l'entitï¿½ "ball"
 	Ball * ball = new Ball(0x02, pool);
 	ball->transform->position.y = ship->collision->getBoundingBox().y - ball->render->src.h / 2.0f;
 

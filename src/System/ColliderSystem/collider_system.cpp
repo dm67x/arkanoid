@@ -12,7 +12,7 @@
 void ColliderSystem::update(float deltaTime) {
 	if (!current_scene) return;
 
-	Vector2<float> p1, p2;
+	SDL_Rect p1, p2;
 	Vector2<float> direction, reflection, d;
 	int dx = 0, dy = 0;
 
@@ -38,7 +38,7 @@ void ColliderSystem::update(float deltaTime) {
 		if (tc->type != "ball") continue; // si ce n'est paas une balle
 
 		for (auto entity : entities) {
-			if (entity.first == ent.first) continue; // continuer si la meme entité
+			if (entity.first == ent.first) continue; // continuer si la meme entitï¿½
 
 			for (auto comp : entity.second) {
 				if (comp->getName() == "collision") {
@@ -61,35 +61,25 @@ void ColliderSystem::update(float deltaTime) {
 					}
 				}
 
-				p1 = cc1->transform->position;
-				p2 = cc2->transform->position;
-				dx = static_cast<int>(p1.x - p2.x);
-				dy = static_cast<int>(p1.y - p2.y);
+				p1 = cc1->getBoundingBox(); // balle
+				p2 = cc2->getBoundingBox(); // autre
 
-				if (dx == 0) { // centre
-					direction.x = 0;
-				}
-				else { // droite ou gauche
-					direction.x = dx < 0 ? -0.2f : 0.2f;
-				}
+				//SDL_Log("x: %i y: %i w: %i h: %i", p1.x, p1.y, p1.w, p1.h);
 
-				if (dy < 0) { // haut
-					direction.y = -1;
-				}
-				else if (dy > 0) { // bas
-					direction.y = 1;
-				}
-				else {
-					direction.y = 0;
+				direction = mc->direction;
+
+				if (p1.y <= p2.y || p1.y >= p2.h) { // balle haut ou bas
+					direction.x *= -1;
+					SDL_Log("haut ou bas");
 				}
 
-				d = mc->direction;
-				reflection.x = d.x - 2.0f * (d.x * direction.x + d.y * direction.y) * direction.x;
-				reflection.y = d.y - 2.0f * (d.x * direction.x + d.y * direction.y) * direction.y;
-				reflection.normalize();
+				if (p1.x <= p2.x || p1.x >= p2.w) { // balle droite ou gauche
+					direction.y *= -1;
+					SDL_Log("droite ou gauche");
+				}
 
-				SDL_Log("%d %d\n", reflection.x, reflection.y);
-				mc->direction = reflection;
+				SDL_Log("%f %f\n", direction.x, direction.y);
+				mc->direction = direction;
 			}
 		}
 

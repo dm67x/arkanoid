@@ -1,4 +1,8 @@
 CMakeLists.txt.user*
-extlibs/**
 build
 .vs
+external/**
+Makefile
+CMakeFiles
+Arkanoid
+./*.bmp

@@ -1,7 +1,7 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 #include "EventManager/event_manager.h"
 #include "Scene/scene.h"

@@ -1,6 +1,8 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
+#include <cmath>
+
 /**
  * @brief Vector2 classe permettant d'initialiser un vecteur 2D
  */
