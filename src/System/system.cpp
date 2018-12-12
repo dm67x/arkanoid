@@ -2,6 +2,7 @@
 
 Scene * System::current_scene = nullptr;
 EventManager * System::event_manager = Singleton<EventManager>::getInstance();
+ComponentManager * System::component_manager = Singleton<ComponentManager>::getInstance();
 
 System::System() {}
 void System::input(SDL_Event e) {}

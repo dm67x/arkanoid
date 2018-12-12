@@ -1,19 +1,24 @@
-#ifndef ENTITY_BALL_H
-#define ENTITY_BALL_H
+#ifndef BALL_ENTITY_H
+#define BALL_ENTITY_H
 
-#include "Entity/entity.h"
-#include "Component/render_component.h"
-#include "Component/collision_component.h"
-#include "Component/movement_component.h"
+#include "EntityManager/entity_manager.h"
 
-class Ball : public Entity
+namespace Entities
 {
-public:
-	Ball(uint32_t id, EntityPool * pool);
+    class Ball
+    {
+    private:
+        Entity id;
+        EntityManager * manager;
 
-	RenderComponent * render;
-	CollisionComponent * collision;
-	MovementComponent * movement;
-};
+    public:
+        Ball(EntityManager * manager);
+        ~Ball();
+
+        Components::Transform * transform;
+        Components::Sprite * sprite;
+
+    };
+}
 
 #endif

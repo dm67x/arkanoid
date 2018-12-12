@@ -12,9 +12,6 @@ namespace Scenes
 		~GameScene() override;
 
 		void load() override;
-		void update(float deltaTime) override;
-		void draw(SDL_Surface & surface) override;
-		void input(SDL_Event e) override;
 	};
 }
 

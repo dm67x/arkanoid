@@ -5,11 +5,8 @@
 
 class Component
 {
-protected:
-	Component() {}
-
 public:
-	virtual std::string getName() = 0;
+	virtual std::string name() const = 0;
 };
 
 #endif

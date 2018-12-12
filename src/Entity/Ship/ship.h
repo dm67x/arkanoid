@@ -1,19 +1,23 @@
-#ifndef ENTITY_SHIP_H
-#define ENTITY_SHIP_H
+#ifndef SHIP_ENTITY_H
+#define SHIP_ENTITY_H
 
-#include "Entity/entity.h"
-#include "Component/render_component.h"
-#include "Component/collision_component.h"
-#include "Component/movement_component.h"
+#include "EntityManager/entity_manager.h"
 
-class Ship : public Entity
+namespace Entities
 {
-public:
-	Ship(uint32_t id, EntityPool * pool);
+    class Ship
+    {
+    private:
+        Entity id;
+        EntityManager * manager;
 
-	RenderComponent * render;
-	CollisionComponent * collision;
-	MovementComponent * movement;
-};
+    public:
+        Ship(EntityManager * manager);
+        ~Ship();
+
+        Components::Transform * transform;
+        Components::Sprite * sprite;
+    };
+}
 
 #endif

@@ -5,12 +5,14 @@
 
 #include "EventManager/event_manager.h"
 #include "Scene/scene.h"
+#include "ComponentManager/component_manager.h"
 
 class System
 {
 protected:
 	static Scene * current_scene;
     static EventManager * event_manager;
+    static ComponentManager * component_manager;
 
     System();
 

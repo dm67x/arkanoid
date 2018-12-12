@@ -1,15 +1,18 @@
 #include "ship.h"
 
-Ship::Ship(uint32_t id, EntityPool * pool) 
-	: Entity(id, pool, "ship")
-{
-	// Components
-	render = new RenderComponent({ 385, 192, 98, 16 });
-	movement = new MovementComponent();
-	collision = new CollisionComponent(transform, render);
-	movement->is_static = true;
+using namespace Entities;
 
-	pool->add(id, *render);
-	pool->add(id, *movement);
-	pool->add(id, *collision);
+Ship::Ship(EntityManager * manager) : manager(manager) {
+	id = manager->createEntity();
+	transform = static_cast<Components::Transform *>(manager->addComponent(id, "transform"));
+    sprite = static_cast<Components::Sprite *>(manager->addComponent(id, "sprite"));
+    manager->addComponent(id, "control");
+
+	transform->position = Vector2<float>(0, 0);
+	transform->scale = Vector2<float>(1.0f, 1.0f);	
+	sprite->src = { 385, 192, 98, 16 };	
+}
+
+Ship::~Ship() {
+    manager->removeEntity(id);
 }

@@ -14,7 +14,7 @@ void SceneManager::goTo(const std::string name) {
 	
 	// charger la scene voulue
 	current = scenes.at(name);
-	// charger les entités dans la pool d'entité
+	// charger la scene courante
 	if (current) {
 		System::setScene(*current);
 		current->load();

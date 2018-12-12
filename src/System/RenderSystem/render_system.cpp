@@ -1,6 +1,5 @@
 #include "render_system.h"
-#include "Component/transform_component.h"
-#include "Component/render_component.h"
+#include <iostream>
 
 RenderSystem::RenderSystem(SDL_Surface & sprite) 
 	: sprite(sprite) {
@@ -9,35 +8,23 @@ RenderSystem::RenderSystem(SDL_Surface & sprite)
 void RenderSystem::draw(SDL_Surface & surface) {
 	if (!current_scene) return;
 
-	EntityPool * pool = current_scene->getPool();
-	TransformComponent * tc = nullptr;
-	RenderComponent * rc = nullptr;
+	EntityManager * entity_manager = current_scene->getEntityManager();
 
-	for (auto entity : pool->getEntities()) {
-		for (auto comp : entity.second) {
-			if (comp->getName() == "transform") {
-				tc = static_cast<TransformComponent *>(comp);
-			}
-			else if (comp->getName() == "render") {
-				rc = static_cast<RenderComponent *>(comp);
-			}
-		}
+	for (auto entity : entity_manager->getEntities()) {
+		try {
+			Components::Transform * tc = component_manager->getTransforms().at(entity);
+			Components::Sprite * sc = component_manager->getSprites().at(entity);
 
-		if (tc && rc) {
 			SDL_Rect destination;
-			destination.x = static_cast<int>(tc->position.x) - rc->src.w / 2;
-			destination.y = static_cast<int>(tc->position.y) - rc->src.h / 2;
-			destination.w = static_cast<int>(tc->scale.x * rc->src.w);
-			destination.h = static_cast<int>(tc->scale.y * rc->src.h);
+			destination.x = static_cast<int>(tc->position.x) - sc->src.w / 2;
+			destination.y = static_cast<int>(tc->position.y) - sc->src.h / 2;
+			destination.w = static_cast<int>(tc->scale.x * sc->src.w);
+			destination.h = static_cast<int>(tc->scale.y * sc->src.h);
 
-			SDL_BlitSurface(
-				&sprite,
-				&rc->src,
-				&surface,
-				&destination);
+			SDL_BlitSurface(&sprite, &sc->src, &surface, &destination);
+		} catch (std::out_of_range ex) {
+			std::cerr << ex.what() << std::endl;
+			continue; // Entite ne correspond pas
 		}
-
-		tc = nullptr; // remise a zero pour la suite
-		rc = nullptr; // remise a zero pour la suite
 	}
 }
