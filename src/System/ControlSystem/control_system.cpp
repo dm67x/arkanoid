@@ -16,7 +16,21 @@ void ControlSystem::input(SDL_Event e) {
                 continue;
             }
         }
-    } /*else if (e.type == SDL_KEYDOWN) {
+    } else if (e.type == SDL_MOUSEBUTTONDOWN) {
+        for (auto entity : entity_manager->getEntities()) {
+            try {
+                component_manager->getControls().at(entity);
+                Components::Motion * mc = component_manager->getMotions().at(entity);
+            
+                mc->velocity.y = 5;
+                component_manager->removeComponent(entity, "control");
+            } catch (std::out_of_range) {
+                continue;
+            }
+        }
+    } 
+    
+    /*else if (e.type == SDL_KEYDOWN) {
         if (e.key.keysym.scancode == SDL_SCANCODE_LEFT) {
             for (auto entity : entity_manager->getEntities()) {
                 try {

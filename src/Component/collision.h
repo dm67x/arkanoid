@@ -9,8 +9,6 @@ namespace Components
     class Collision : public Component
     {
     public:
-        SDL_Rect box;
-
         std::string name() const override { return "collision"; }
     };
 }

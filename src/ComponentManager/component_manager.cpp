@@ -52,20 +52,20 @@ void ComponentManager::removeComponent(Entity e, std::string type) {
             delete transforms.at(e);
             transforms.erase(e);
         } else if (type == "motion") {
-            delete transforms.at(e);
-            transforms.erase(e);
+            delete motions.at(e);
+            motions.erase(e);
         } else if (type == "collision") {
-            delete transforms.at(e);
-            transforms.erase(e);
+            delete collisions.at(e);
+            collisions.erase(e);
         } else if (type == "sprite") {
-            delete transforms.at(e);
-            transforms.erase(e);
+            delete sprites.at(e);
+            sprites.erase(e);
         } else if (type == "health") {
-            delete transforms.at(e);
-            transforms.erase(e);
+            delete healths.at(e);
+            healths.erase(e);
         } else if (type == "control") {
-            delete transforms.at(e);
-            transforms.erase(e);
+            delete controls.at(e);
+            controls.erase(e);
         }
     } catch (std::out_of_range) {
     }

@@ -17,6 +17,7 @@ namespace Entities
 
         Components::Transform * transform;
         Components::Sprite * sprite;
+        Components::Motion * motion;
 
     };
 }

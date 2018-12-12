@@ -4,6 +4,8 @@
 #include "game_scene.h"
 #include "System/RenderSystem/render_system.h"
 #include "System/ControlSystem/control_system.h"
+#include "System/CollisionSystem/collision_system.h"
+#include "System/MovementSystem/movement_system.h"
 #include "Entity/Ship/ship.h"
 #include "Entity/Ball/ball.h"
 
@@ -27,6 +29,8 @@ void GameScene::load() {
 
 	systems.push_back(new RenderSystem(*sprite));
 	systems.push_back(new ControlSystem());
+	systems.push_back(new CollisionSystem());
+	systems.push_back(new MovementSystem());
 
 	// Creation de l'entite "ship"
 	Entities::Ship * ship = new Entities::Ship(entity_manager);
@@ -34,21 +38,5 @@ void GameScene::load() {
 
 	// Creation de l'entité balle
 	Entities::Ball * ball = new Entities::Ball(entity_manager);
-	ball->transform->position = Vector2<float>(getWidth() / 2, ship->transform->position.y - 25.0f);
-
-	/*Ship * ship = new Ship(pool);
-	ship->transform->position.y = getHeight() - 20.0f;
-
-	/*Ship * ship2 = new Ship(pool);
-	ship2->transform->position.y = 20.0f;*/
-
-	// Creation de l'entite "ball"
-	/*Ball * ball = new Ball(pool);
-	ball->transform->position.y = 
-		ship->collision->getBoundingBox().y - ball->render->src.h / 2.0f;
-
-	// Creation du texte pour le score
-	/*Text * score = new Text(pool, "Score: 0");
-	score->transform->position = Vector2<float>(10, 10);
-	score->transform->scale = Vector2<float>(0.6f, 0.6f);*/
+	ball->transform->position = Vector2<float>(getWidth() / 2, ship->transform->position.y - 40.0f);
 }
