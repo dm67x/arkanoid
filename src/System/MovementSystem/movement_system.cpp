@@ -9,8 +9,8 @@ void MovementSystem::update(float deltaTime) {
             Components::Transform * tc = component_manager->getTransforms().at(entity);
             Components::Motion * mc = component_manager->getMotions().at(entity);
         
-            tc->position.x += mc->velocity.x * 60.0f * deltaTime;
-            tc->position.y += mc->velocity.y * 60.0f * deltaTime;
+            tc->position.x += mc->velocity.x;
+            tc->position.y += mc->velocity.y;
         } catch (std::out_of_range) {
             continue;
         }

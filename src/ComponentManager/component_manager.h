@@ -7,6 +7,7 @@
 #include "Component/sprite.h"
 #include "Component/health.h"
 #include "Component/control.h"
+#include "Component/points.h"
 #include "Entity/entity.h"
 #include "singleton.h"
 #include <map>
@@ -20,6 +21,7 @@ private:
     std::map<Entity, Components::Sprite *> sprites;
     std::map<Entity, Components::Health *> healths;
     std::map<Entity, Components::Control *> controls;
+    std::map<Entity, Components::Points *> points;
 
 public:
     ComponentManager();
@@ -35,6 +37,7 @@ public:
     inline const std::map<Entity, Components::Sprite *> getSprites() { return sprites; }
     inline const std::map<Entity, Components::Health *> getHealths() { return healths; }
     inline const std::map<Entity, Components::Control *> getControls() { return controls; }
+    inline const std::map<Entity, Components::Points *> getPoints() { return points; }
 };
 
 #endif

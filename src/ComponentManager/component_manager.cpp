@@ -41,6 +41,9 @@ Component * ComponentManager::createComponent(Entity e, std::string type) {
     } else if (type == "control") {
         c = new Components::Control();
         controls.insert(std::make_pair(e, static_cast<Components::Control *>(c)));
+    } else if (type == "points") {
+        c = new Components::Points();
+        points.insert(std::make_pair(e, static_cast<Components::Points *>(c)));
     }
 
     return c;
@@ -66,6 +69,9 @@ void ComponentManager::removeComponent(Entity e, std::string type) {
         } else if (type == "control") {
             delete controls.at(e);
             controls.erase(e);
+        } else if (type == "points") {
+            delete points.at(e);
+            points.erase(e);
         }
     } catch (std::out_of_range) {
     }

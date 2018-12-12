@@ -22,7 +22,7 @@ void ControlSystem::input(SDL_Event e) {
                 component_manager->getControls().at(entity);
                 Components::Motion * mc = component_manager->getMotions().at(entity);
             
-                mc->velocity.y = 5;
+                mc->velocity.y = 7;
                 component_manager->removeComponent(entity, "control");
             } catch (std::out_of_range) {
                 continue;
