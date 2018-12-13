@@ -47,6 +47,14 @@ void CollisionSystem::update(double deltaTime) {
                             mc->velocity.y *= -1;
                             tc->position.y = box2.y - (sc->src.h / 2) * tc->scale.y;
                         }
+
+                        if (box1.w >= box2.x && box1.x <= box2.x) { // balle tape à gauche
+                            mc->velocity.x *= -1;
+                            tc->position.x = box2.x - (sc2->src.w / 2) * tc2->scale.x;
+                        } else if (box1.x <= box2.w && box1.w >= box2.w) { // balle tape à droite
+                            mc->velocity.x *= -1;
+                            tc->position.x = box2.w + (sc2->src.w / 2) * tc2->scale.x;
+                        }
                     }
                 }
                 catch (std::out_of_range) {

@@ -11,6 +11,13 @@ void MovementSystem::update(double deltaTime) {
         
             tc->position.x += mc->velocity.x * deltaTime * 60.0f;
             tc->position.y += mc->velocity.y * deltaTime * 60.0f;
+
+            if (tc->position.x > current_scene->getWidth()) {
+                tc->position.x = 0;
+            } else if (tc->position.x < 0) {
+                tc->position.x = current_scene->getWidth();
+            }
+
         } catch (std::out_of_range) {
             continue;
         }
