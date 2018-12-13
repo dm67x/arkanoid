@@ -13,9 +13,14 @@
 using namespace Scenes;
 
 GameScene::GameScene() : Scene("game") {
+	event_manager->attach("destroy_entity", [this](void * param) {
+		Entity id = *(static_cast<Entity *>(param));
+		entity_manager->removeEntity(id);
+	});
 }
 
 GameScene::~GameScene() {
+	event_manager->detach("destroy_entity");
 }
 
 void GameScene::load() {

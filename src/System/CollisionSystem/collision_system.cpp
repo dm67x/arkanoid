@@ -39,21 +39,30 @@ void CollisionSystem::update(double deltaTime) {
                     if (box1.x <= box2.w && box1.w >= box2.x 
                         && box1.y <= box2.h && box1.h >= box2.y) 
                     {
+                        try {
+                            Components::Health * hc = component_manager->getHealths().at(entity2);
+
+                            hc->life--;
+                            if (hc->life <= 0) {
+                                event_manager->trigger("destroy_entity", &entity2);
+                            }
+                        } catch (std::out_of_range) {}
+
                         SDL_Log("collision");
                         if (box1.y <= box2.h && box1.h >= box2.h) { // balle tape le bas
                             mc->velocity.y *= -1;
-                            tc->position.y = box2.h + (sc->src.h / 2) * tc->scale.y;
+                            //tc->position.y = box2.h + (sc->src.h / 2) * tc->scale.y;
                         } else if (box1.y <= box2.y && box1.h >= box2.y) { // balle tape le haut
                             mc->velocity.y *= -1;
-                            tc->position.y = box2.y - (sc->src.h / 2) * tc->scale.y;
-                        }
-
+                            //tc->position.y = box2.y - (sc->src.h / 2) * tc->scale.y;
+                        } 
+                        
                         if (box1.w >= box2.x && box1.x <= box2.x) { // balle tape à gauche
                             mc->velocity.x *= -1;
-                            tc->position.x = box2.x - (sc2->src.w / 2) * tc2->scale.x;
+                            //tc->position.x = box2.x - (sc2->src.w / 2) * tc2->scale.x;
                         } else if (box1.x <= box2.w && box1.w >= box2.w) { // balle tape à droite
                             mc->velocity.x *= -1;
-                            tc->position.x = box2.w + (sc2->src.w / 2) * tc2->scale.x;
+                            //tc->position.x = box2.w + (sc2->src.w / 2) * tc2->scale.x;
                         }
                     }
                 }
