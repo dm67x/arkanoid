@@ -1,6 +1,6 @@
 #include "collision_system.h"
 
-void CollisionSystem::update(float deltaTime) {
+void CollisionSystem::update(double deltaTime) {
     if (!current_scene) return;
     EntityManager * entity_manager = current_scene->getEntityManager();
 

@@ -25,7 +25,7 @@ protected:
 public:
 	virtual ~Scene();
 	virtual void load() = 0;
-	virtual void update(float deltaTime);
+	virtual void update(double deltaTime);
 	virtual void draw(SDL_Surface & surface);
 	virtual void input(SDL_Event e);
 

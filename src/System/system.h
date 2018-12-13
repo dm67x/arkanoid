@@ -18,7 +18,7 @@ protected:
 
 public:
     virtual void input(SDL_Event e);
-    virtual void update(float deltaTime);
+    virtual void update(double deltaTime);
     virtual void draw(SDL_Surface & surface);
 
 	static void setScene(Scene & s);

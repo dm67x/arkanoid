@@ -31,11 +31,9 @@ void Game::init() {
 void Game::run() {
     init();
 
-	Uint64 time_now = SDL_GetPerformanceCounter();
-	Uint64 time_last = 0;
-	Uint64 passed_time = 0;
-	float deltaTime = 0;
-	const int FPS = 30;
+	Uint64 now = SDL_GetPerformanceCounter();
+	Uint64 prev;
+	double deltaTime;
 
     while (!quit) {
         if (SDL_PollEvent(&event)) {
@@ -49,20 +47,20 @@ void Game::run() {
 			scene_manager->getScene()->input(event);
         }
 
-		time_last = time_now;
-		time_now = SDL_GetPerformanceCounter();
-		passed_time = (time_now - time_last) * 1000 / SDL_GetPerformanceFrequency();
-		deltaTime = static_cast<float>(passed_time * 0.001f);
-
-		/*if (passed_time < (1000/FPS)) {
-			SDL_Delay((1000/FPS) - passed_time);
-		}*/
+		prev = now;
+		now = SDL_GetPerformanceCounter();
+		deltaTime = (double)((now - prev)*1000 / (double)SDL_GetPerformanceFrequency() * 0.001);
 
 		scene_manager->getScene()->update(deltaTime);
+
+		if (deltaTime < 0.02) {
+			SDL_Delay(0.02 - deltaTime);
+			now = SDL_GetPerformanceCounter();
+			deltaTime = (double)((now - prev)*1000 / (double)SDL_GetPerformanceFrequency() * 0.001);
+		}
+
 		scene_manager->getScene()->draw(*window->getSurface());
 
-        window->update();
-
-		SDL_Delay(20);
+		window->update();
     }
 }

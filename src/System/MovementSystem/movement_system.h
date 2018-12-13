@@ -6,7 +6,7 @@
 class MovementSystem : public System
 {
 public:
-    void update(float deltaTime) override;
+    void update(double deltaTime) override;
 };
 
 #endif

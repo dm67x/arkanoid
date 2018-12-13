@@ -6,7 +6,7 @@ ComponentManager * System::component_manager = Singleton<ComponentManager>::getI
 
 System::System() {}
 void System::input(SDL_Event e) {}
-void System::update(float deltaTime) {}
+void System::update(double deltaTime) {}
 void System::draw(SDL_Surface & surface) {}
 
 void System::setScene(Scene & s) {

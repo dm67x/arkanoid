@@ -23,7 +23,7 @@ void Scene::setSize(int w, int h) {
 	height = h;
 }
 
-void Scene::update(float deltaTime) {
+void Scene::update(double deltaTime) {
 	for (auto s : systems) s->update(deltaTime);
 }
 
