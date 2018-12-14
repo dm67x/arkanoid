@@ -41,8 +41,8 @@ GameScene::GameScene() : Scene("game") {
 		}
 	});
 	
-	/*Level * niveau1 = new Level("level1.txt");
-	entity_manager = niveau1->getManager();*/
+	Level * niveau1 = new Level("level1.txt");
+	entity_manager = niveau1->getManager();
 }
 
 GameScene::~GameScene() {
