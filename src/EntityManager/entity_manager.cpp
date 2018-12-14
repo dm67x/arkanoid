@@ -16,8 +16,9 @@ void EntityManager::add(Entity * e) {
 void EntityManager::remove(unsigned int id) {
     for (auto it = entities.begin(); it != entities.end(); it++) {
         if ((*it)->getID() == id) {
-            delete *it;
-            entities.erase(it); 
+            entities.erase(it);
+            delete (*it);
+            break; 
         }
     }
 }

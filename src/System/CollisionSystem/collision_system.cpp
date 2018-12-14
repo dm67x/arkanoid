@@ -49,7 +49,7 @@ void CollisionSystem::update(double deltaTime) {
                 if (hc) {
                     hc->life--;
                     if (hc->life <= 0) {
-                        event_manager->trigger("destroy_entity", &entity2);
+                        event_manager->trigger("destroy_entity", entity2);
                     }
                 }
 

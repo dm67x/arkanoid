@@ -4,6 +4,7 @@
 #include "Component/health.h"
 #include "Component/collision.h"
 #include "Component/points.h"
+#include "Component/bonus.h"
 
 using namespace Entities;
 
@@ -16,4 +17,5 @@ Brick::Brick(EntityManager * manager) : Entity(manager) {
     add(new Components::Health());
     add(new Components::Points());
     add(new Components::Collision());
+    add(new Components::Bonus());
 }
