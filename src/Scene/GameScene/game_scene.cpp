@@ -32,8 +32,8 @@ GameScene::GameScene() : Scene("game") {
 		entity_manager->remove(entity->getID());
 	});
 	
-	/*Level * niveau1 = new Level("level1.txt");
-	entity_manager = niveau1->getManager();*/
+	Level * niveau1 = new Level("level1.txt");
+	entity_manager = niveau1->getManager();
 }
 
 GameScene::~GameScene() {
