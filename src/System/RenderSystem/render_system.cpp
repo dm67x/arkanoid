@@ -4,6 +4,8 @@
 #include "Component/sprite.h"
 #include <iostream>
 
+using namespace Components;
+
 RenderSystem::RenderSystem(SDL_Surface & sprite) 
 	: sprite(sprite) {
 }
@@ -14,8 +16,8 @@ void RenderSystem::draw(SDL_Surface & surface) {
 	EntityManager * entity_manager = current_scene->getEntityManager();
 
 	for (auto entity : entity_manager->get()) {
-		Components::Transform * tc = static_cast<Components::Transform *>(entity->get("transform"));
-		Components::Sprite * sc = static_cast<Components::Sprite *>(entity->get("sprite"));
+		Transform * tc = entity->get<Transform>("transform");
+		Sprite * sc = entity->get<Sprite>("sprite");
 
 		if (!tc || !sc) continue;
 

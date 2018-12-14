@@ -5,24 +5,26 @@
 #include "Component/motion.h"
 #include "Component/health.h"
 
+using namespace Components;
+
 void CollisionSystem::update(double deltaTime) {
     if (!current_scene) return;
     EntityManager * entity_manager = current_scene->getEntityManager();
 
     for (auto entity : entity_manager->get()) {
-        Components::Transform * tc = static_cast<Components::Transform *>(entity->get("transform"));
-        Components::Sprite * sc = static_cast<Components::Sprite *>(entity->get("sprite"));
-        Components::Motion * mc = static_cast<Components::Motion *>(entity->get("motion"));
+        Transform * tc = entity->get<Transform>("transform");
+        Sprite * sc = entity->get<Sprite>("sprite");
+        Motion * mc = entity->get<Motion>("motion");
 
-        if (!mc || !sc || !tc || entity->get("collision")) continue;
+        if (!mc || !sc || !tc || !entity->get<Component>("collision")) continue;
 
         for (auto entity2 : entity_manager->get()) {
             if (entity == entity2) continue;
-            Components::Transform * tc2 = static_cast<Components::Transform *>(entity2->get("transform"));
-            Components::Sprite * sc2 = static_cast<Components::Sprite *>(entity2->get("sprite"));
-            Components::Health * hc = static_cast<Components::Health *>(entity2->get("health"));
+            Transform * tc2 = entity2->get<Transform>("transform");
+            Sprite * sc2 = entity2->get<Sprite>("sprite");
+            Health * hc = entity2->get<Health>("health");
 
-            if (!sc2 || !tc2 || entity->get("collision")) continue;
+            if (!sc2 || !tc2 || !entity->get<Component>("collision")) continue;
 
             // prevision de collision au prochain frame
             Vector2<float> next_position = Vector2<float>(

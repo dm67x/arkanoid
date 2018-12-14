@@ -19,15 +19,6 @@ void Entity::add(Component * c) {
     components.push_back(c);
 }
 
-Component * Entity::get(std::string name) {
-    for (auto it = components.begin(); it != components.end(); it++) {
-        if ((*it)->name() == name) {
-            return *it;
-        }
-    }
-    return nullptr;
-}
-
 void Entity::remove(std::string name) {
     for (auto it = components.begin(); it != components.end(); it++) {
         if ((*it)->name() == name) {

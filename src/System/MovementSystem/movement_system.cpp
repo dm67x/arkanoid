@@ -3,13 +3,15 @@
 #include "Component/transform.h"
 #include "Component/motion.h"
 
+using namespace Components;
+
 void MovementSystem::update(double deltaTime) {
     if (!current_scene) return;
     EntityManager * entity_manager = current_scene->getEntityManager();
 
     for (auto entity : entity_manager->get()) {
-        Components::Transform * tc = static_cast<Components::Transform *>(entity->get("transform"));
-        Components::Motion * mc = static_cast<Components::Motion *>(entity->get("motion"));
+        Transform * tc = entity->get<Transform>("transform");
+        Motion * mc = entity->get<Motion>("motion");
 
         if (!tc || !mc) continue;
 

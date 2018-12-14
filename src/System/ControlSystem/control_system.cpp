@@ -4,6 +4,8 @@
 #include "Component/transform.h"
 #include "Component/motion.h"
 
+using namespace Components;
+
 void ControlSystem::input(SDL_Event e) {
     if (!current_scene) return;
 
@@ -11,14 +13,14 @@ void ControlSystem::input(SDL_Event e) {
     
     if (e.type == SDL_MOUSEMOTION) {
         for (auto entity : entity_manager->get()) {
-            Components::Transform * tc = static_cast<Components::Transform *>(entity->get("transform"));
-            if (!tc || !entity->get("control")) continue;
+            Transform * tc = entity->get<Transform>("transform");
+            if (!tc || !entity->get<Component>("control")) continue;
             tc->position.x = e.motion.x;
         }
     } else if (e.type == SDL_MOUSEBUTTONDOWN) {
         for (auto entity : entity_manager->get()) {
-            Components::Motion * mc = static_cast<Components::Motion *>(entity->get("motion"));
-            if (!mc || !entity->get("control")) continue;
+            Motion * mc = entity->get<Motion>("motion");
+            if (!mc || !entity->get<Component>("control")) continue;
             mc->velocity.y = 7;
             mc->velocity.x = 5;
             entity->remove("control");

@@ -9,12 +9,12 @@ Player::Player(const std::string name, Vector2<float> position, EntityManager * 
 {
     // Creation de l'entite "ship"
 	ship = new Entities::Ship(manager);
-    Components::Transform * tc = static_cast<Components::Transform *>(ship->get("transform"));
+    Components::Transform * tc = ship->get<Components::Transform>("transform");
 	tc->position = position;
 
     // Creation de l'entité balle
 	Entities::Ball * ball = new Entities::Ball(manager);
-    Components::Transform * ball_tc = static_cast<Components::Transform *>(ball->get("transform"));
+    Components::Transform * ball_tc = ball->get<Components::Transform>("transform");
 	ball_tc->position = Vector2<float>(position.x, position.y - 30.0f);
     balls.push_back(ball);
 
