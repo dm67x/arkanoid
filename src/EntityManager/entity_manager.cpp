@@ -2,6 +2,8 @@
 #include "EventManager/event_manager.h"
 #include "Entity/entity.h"
 
+#include <iostream>
+
 EntityManager::EntityManager() {
 }
 
@@ -14,11 +16,11 @@ void EntityManager::add(Entity * e) {
 }
 
 void EntityManager::remove(unsigned int id) {
+    std::cout << id << std::endl;
     for (auto it = entities.begin(); it != entities.end(); it++) {
         if ((*it)->getID() == id) {
             entities.erase(it);
-            delete (*it);
-            break; 
+            return; 
         }
     }
 }

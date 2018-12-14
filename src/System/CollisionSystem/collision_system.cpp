@@ -4,6 +4,8 @@
 #include "Component/sprite.h"
 #include "Component/motion.h"
 #include "Component/health.h"
+#include "Component/bonus.h"
+#include "Entity/Bonus/bonus.h"
 
 using namespace Components;
 
@@ -32,7 +34,7 @@ void CollisionSystem::update(double deltaTime) {
                 tc->position.y + mc->velocity.y * deltaTime * 60.0f
             );
         
-            SDL_Rect box1, box2, nbox1;
+            SDL_Rect box1, box2;
             box1.x = static_cast<int>(next_position.x - (sc->src.w / 2) * tc->scale.x);
             box1.y = static_cast<int>(next_position.y - (sc->src.h / 2) * tc->scale.y);
             box1.w = static_cast<int>(next_position.x + (sc->src.w / 2) * tc->scale.x);
@@ -48,26 +50,28 @@ void CollisionSystem::update(double deltaTime) {
             {
                 if (hc && !hc->invicible) {
                     hc->life--;
-                    if (hc->life <= 0) {
-                        event_manager->trigger("destroy_entity", entity2);
+                    if (hc->life <= 0) { // si nombre de vie du bloc = 0 alors creer bonus contenue dans le bloc et supprimer bloc
+                        Components::Bonus * bonus = entity2->get<Components::Bonus>("bonus");
+                        if (bonus && bonus->bonus != 0) {
+                            Entities::Bonus * b = new Entities::Bonus(entity_manager);
+                            b->get<Components::Transform>("transform")->position = tc2->position;
+                            b->get<Components::Motion>("motion")->velocity = Vector2<float>(0, 1);
+                        }
+                        delete entity2;
                     }
                 }
 
                 SDL_Log("collision");
                 if (box1.y <= box2.h && box1.h >= box2.h) { // balle tape le bas
                     mc->velocity.y *= -1;
-                    //tc->position.y = box2.h + (sc->src.h / 2) * tc->scale.y;
                 } else if (box1.y <= box2.y && box1.h >= box2.y) { // balle tape le haut
                     mc->velocity.y *= -1;
-                    //tc->position.y = box2.y - (sc->src.h / 2) * tc->scale.y;
                 } 
                 
                 if (box1.w >= box2.x && box1.x <= box2.x) { // balle tape à gauche
                     mc->velocity.x *= -1;
-                    //tc->position.x = box2.x - (sc2->src.w / 2) * tc2->scale.x;
                 } else if (box1.x <= box2.w && box1.w >= box2.w) { // balle tape à droite
                     mc->velocity.x *= -1;
-                    //tc->position.x = box2.w + (sc2->src.w / 2) * tc2->scale.x;
                 }
             }
         }

@@ -26,7 +26,7 @@ Player::Player(const std::string name, Vector2<float> position, EntityManager * 
 
 Player::~Player() {
     delete ship;
-    for (auto ball : balls) delete ball;
+    //for (auto ball : balls) delete ball;
 
     balls.clear();
 }
