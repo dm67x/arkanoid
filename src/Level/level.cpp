@@ -43,7 +43,7 @@ Level::Level(std::string filename)
 		
 		points->points = points 
 		hc->life = hit
-		b.bonus = bonus
+		b->bonus = bonus
 	}
  }
  
