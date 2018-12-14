@@ -8,6 +8,8 @@ namespace Components
     class Points : public Component
     {
     public:
+        Points() : points(0) {}
+
         int points;
 
         std::string name() const override { return "points"; }

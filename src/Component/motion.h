@@ -9,6 +9,8 @@ namespace Components
     class Motion : public Component
     {
     public:
+        Motion() : velocity(Vector2<float>(0, 0)) {}
+
         Vector2<float> velocity;
 
         std::string name() const override { return "motion"; }

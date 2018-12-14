@@ -8,6 +8,8 @@ namespace Components
     class BallNumber : public Component
     {
     public:
+        BallNumber() : number(0) { }
+
         int number;
 
         std::string name() const override { return "ball_number"; }
