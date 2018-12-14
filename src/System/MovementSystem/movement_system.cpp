@@ -1,30 +1,30 @@
 #include "movement_system.h"
+#include "Entity/entity.h"
+#include "Component/transform.h"
+#include "Component/motion.h"
 
 void MovementSystem::update(double deltaTime) {
     if (!current_scene) return;
     EntityManager * entity_manager = current_scene->getEntityManager();
 
-    for (auto entity : entity_manager->getEntities()) {
-        try {
-            Components::Transform * tc = component_manager->getTransforms().at(entity);
-            Components::Motion * mc = component_manager->getMotions().at(entity);
-        
-            tc->position.x += mc->velocity.x * deltaTime * 60.0f;
-            tc->position.y += mc->velocity.y * deltaTime * 60.0f;
+    for (auto entity : entity_manager->get()) {
+        Components::Transform * tc = static_cast<Components::Transform *>(entity->get("transform"));
+        Components::Motion * mc = static_cast<Components::Motion *>(entity->get("motion"));
 
-            if (tc->position.x > current_scene->getWidth()) {
-                tc->position.x = 0;
-            } else if (tc->position.x < 0) {
-                tc->position.x = current_scene->getWidth();
-            }
+        if (!tc || !mc) continue;
 
-            if (tc->position.y < 0) {
-                tc->position.y = 0;
-                mc->velocity.y *= -1;
-            }
+        tc->position.x += mc->velocity.x * deltaTime * 60.0f;
+        tc->position.y += mc->velocity.y * deltaTime * 60.0f;
 
-        } catch (std::out_of_range) {
-            continue;
+        if (tc->position.x > current_scene->getWidth()) {
+            tc->position.x = 0;
+        } else if (tc->position.x < 0) {
+            tc->position.x = current_scene->getWidth();
+        }
+
+        if (tc->position.y < 0) {
+            tc->position.y = 0;
+            mc->velocity.y *= -1;
         }
     }
 }

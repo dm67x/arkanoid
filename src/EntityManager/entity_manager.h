@@ -1,27 +1,22 @@
 #ifndef ENTITY_MANAGER_H
 #define ENTITY_MANAGER_H
 
-#include "Entity/entity.h"
-#include "ComponentManager/component_manager.h"
-
 #include <vector>
+
+class Entity;
 
 class EntityManager
 {
 private:
-    std::vector<Entity> entities;
-    Entity id;
-    ComponentManager * component_manager;
+    std::vector<Entity *> entities;
 
 public:
     EntityManager();
     ~EntityManager();
 
-    Entity createEntity();
-    void removeEntity(Entity id);
-    Component * addComponent(Entity id, std::string type);
-
-    inline const std::vector<Entity> getEntities() const { return entities; }
+    void add(Entity * e);
+    void remove(unsigned int id);
+    inline const std::vector<Entity *> get() const { return entities; }
 };
 
 #endif

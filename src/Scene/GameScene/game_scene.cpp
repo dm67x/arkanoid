@@ -6,22 +6,22 @@
 #include "System/ControlSystem/control_system.h"
 #include "System/CollisionSystem/collision_system.h"
 #include "System/MovementSystem/movement_system.h"
-#include "Entity/Ship/ship.h"
-#include "Entity/Ball/ball.h"
+#include "Entity/Player/player.h"
 #include "Entity/Brick/brick.h"
-
 #include "Level/level.h"
 
 using namespace Scenes;
 
 GameScene::GameScene() : Scene("game") {
 	event_manager->attach("destroy_entity", [this](void * param) {
-		Entity id = *(static_cast<Entity *>(param));
-		entity_manager->removeEntity(id);
+		unsigned int id = *(static_cast<unsigned int *>(param));
+		entity_manager->remove(id);
 	});
 	
-	Level * niveau1 = new Level("level1.txt");
-	entity_manager = niveau1->getManager();
+	/*Level * niveau1 = new Level("level1.txt");
+	entity_manager = niveau1->getManager();*/
+
+	entity_manager = new EntityManager();
 }
 
 GameScene::~GameScene() {
@@ -42,11 +42,5 @@ void GameScene::load() {
 	systems.push_back(new CollisionSystem());
 	systems.push_back(new MovementSystem());
 
-	// Creation de l'entite "ship"
-	Entities::Ship * ship = new Entities::Ship(entity_manager);
-	ship->transform->position = Vector2<float>(getWidth() / 2, getHeight() - 20.0f);
-
-	// Creation de l'entité balle
-	Entities::Ball * ball = new Entities::Ball(entity_manager);
-	ball->transform->position = Vector2<float>(getWidth() / 2, ship->transform->position.y - 40.0f);
+	new Entities::Player("Joueur 1", Vector2<float>(getWidth() / 2, getHeight() - 20.0f), entity_manager);
 }

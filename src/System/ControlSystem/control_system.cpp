@@ -1,4 +1,8 @@
 #include "control_system.h"
+#include "Entity/entity.h"
+#include "Component/control.h"
+#include "Component/transform.h"
+#include "Component/motion.h"
 
 void ControlSystem::input(SDL_Event e) {
     if (!current_scene) return;
@@ -6,28 +10,18 @@ void ControlSystem::input(SDL_Event e) {
     EntityManager * entity_manager = current_scene->getEntityManager();
     
     if (e.type == SDL_MOUSEMOTION) {
-        for (auto entity : entity_manager->getEntities()) {
-            try {
-                component_manager->getControls().at(entity);
-                Components::Transform * tc = component_manager->getTransforms().at(entity);
-
-                tc->position.x = e.motion.x;
-            } catch (std::out_of_range) {
-                continue;
-            }
+        for (auto entity : entity_manager->get()) {
+            Components::Transform * tc = static_cast<Components::Transform *>(entity->get("transform"));
+            if (!tc || !entity->get("control")) continue;
+            tc->position.x = e.motion.x;
         }
     } else if (e.type == SDL_MOUSEBUTTONDOWN) {
-        for (auto entity : entity_manager->getEntities()) {
-            try {
-                component_manager->getControls().at(entity);
-                Components::Motion * mc = component_manager->getMotions().at(entity);
-            
-                mc->velocity.y = 7;
-                mc->velocity.x = 5;
-                component_manager->removeComponent(entity, "control");
-            } catch (std::out_of_range) {
-                continue;
-            }
+        for (auto entity : entity_manager->get()) {
+            Components::Motion * mc = static_cast<Components::Motion *>(entity->get("motion"));
+            if (!mc || !entity->get("control")) continue;
+            mc->velocity.y = 7;
+            mc->velocity.x = 5;
+            entity->remove("control");
         }
     } 
     

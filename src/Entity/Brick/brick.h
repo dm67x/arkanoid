@@ -1,24 +1,14 @@
 #ifndef BRICK_ENTITY_H
 #define BRICK_ENTITY_H
 
-#include "EntityManager/entity_manager.h"
+#include "Entity/entity.h"
 
 namespace Entities
 {
-    class Brick
+    class Brick : public Entity
     {
-    private:
-        Entity id;
-        EntityManager * manager;
-
     public:
         Brick(EntityManager * manager);
-        ~Brick();
-
-        Components::Transform * transform;
-        Components::Sprite * sprite;
-        Components::Health * health;
-        Components::Points * points;
     };
 }
 

@@ -8,7 +8,7 @@ using namespace std;
 
 Level::Level(std::string filename)
 {
-	manager = new EntityManager();
+	/*manager = new EntityManager();
 	
 	string ligne;
 	ifstream fichier(filename, ios::in);  // on ouvre le fichier en lecture
@@ -31,10 +31,10 @@ Level::Level(std::string filename)
 		brick = new Entities::Brick(manager);
 		brick->transform->position.x = x * (brick->sprite->src.w );
 		brick->transform->position.y = y * (brick->sprite->src.h);
-	}
+	}*/
  }
  
 
  Level::~Level() {
-	 delete manager;
+	// delete manager;
  }

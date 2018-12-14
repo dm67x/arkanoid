@@ -1,19 +1,21 @@
 #include "ship.h"
+#include "Component/transform.h"
+#include "Component/sprite.h"
+#include "Component/control.h"
+#include "Component/collision.h"
 
 using namespace Entities;
 
-Ship::Ship(EntityManager * manager) : manager(manager) {
-	id = manager->createEntity();
-	transform = static_cast<Components::Transform *>(manager->addComponent(id, "transform"));
-    sprite = static_cast<Components::Sprite *>(manager->addComponent(id, "sprite"));
-    manager->addComponent(id, "control");
-	manager->addComponent(id, "collision");
+Ship::Ship(EntityManager * manager) : Entity(manager) {
+	Components::Transform * tc = new Components::Transform();
+	tc->position = Vector2<float>(0, 0);
+	tc->scale = Vector2<float>(1.0f, 1.0f);
 
-	transform->position = Vector2<float>(0, 0);
-	transform->scale = Vector2<float>(1.0f, 1.0f);	
-	sprite->src = { 385, 192, 98, 16 };	
-}
+	Components::Sprite * sc = new Components::Sprite();
+	sc->src = { 385, 192, 98, 16 };
 
-Ship::~Ship() {
-    manager->removeEntity(id);
+	add(tc);
+	add(sc);
+	add(new Components::Control());
+	add(new Components::Collision());
 }
