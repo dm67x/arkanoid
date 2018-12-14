@@ -46,7 +46,7 @@ void CollisionSystem::update(double deltaTime) {
             if (box1.x <= box2.w && box1.w >= box2.x 
                 && box1.y <= box2.h && box1.h >= box2.y) 
             {
-                if (hc) {
+                if (hc && !hc->invicible) {
                     hc->life--;
                     if (hc->life <= 0) {
                         event_manager->trigger("destroy_entity", entity2);

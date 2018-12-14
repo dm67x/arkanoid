@@ -28,5 +28,8 @@ void MovementSystem::update(double deltaTime) {
             tc->position.y = 0;
             mc->velocity.y *= -1;
         }
+        else if (tc->position.y > current_scene->getHeight()) {
+            event_manager->trigger("remove_ball_from_player", nullptr);
+        }
     }
 }

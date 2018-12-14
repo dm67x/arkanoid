@@ -8,8 +8,9 @@ namespace Components
     class Health : public Component
     {
     public:
-        Health() : life(1) {}
+        Health() : life(1), invicible(false) {}
         int life;
+        bool invicible;
 
         std::string name() const override { return "health"; }
     };

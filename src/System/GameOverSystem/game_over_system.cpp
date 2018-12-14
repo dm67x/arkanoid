@@ -12,6 +12,6 @@ void GameOverSystem::update(double deltaTime) {
     for (auto entity : manager->get()) {
         BallNumber * ball_number = entity->get<BallNumber>("ball_number");
         if (!ball_number) continue;
-        if (ball_number <= 0) exit(0);
+        if (ball_number->number <= 0) exit(0);
     }
 }
