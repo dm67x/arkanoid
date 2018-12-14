@@ -6,7 +6,6 @@ EventManager * Scene::event_manager = Singleton<EventManager>::getInstance();
 Scene::Scene(const std::string name) 
 	: name(name), width(0), height(0) 
 {
-	entity_manager = new EntityManager();
 }
 
 Scene::~Scene() {
@@ -14,8 +13,6 @@ Scene::~Scene() {
 		delete system;
 	}
 	systems.clear();
-
-	delete entity_manager;
 }
 
 void Scene::setSize(int w, int h) {

@@ -10,6 +10,8 @@
 #include "Entity/Ball/ball.h"
 #include "Entity/Brick/brick.h"
 
+#include "Level/level.h"
+
 using namespace Scenes;
 
 GameScene::GameScene() : Scene("game") {
@@ -17,6 +19,9 @@ GameScene::GameScene() : Scene("game") {
 		Entity id = *(static_cast<Entity *>(param));
 		entity_manager->removeEntity(id);
 	});
+	
+	Level * niveau1 = new Level("level1.txt");
+	entity_manager = niveau1->getManager();
 }
 
 GameScene::~GameScene() {
@@ -44,15 +49,4 @@ void GameScene::load() {
 	// Creation de l'entité balle
 	Entities::Ball * ball = new Entities::Ball(entity_manager);
 	ball->transform->position = Vector2<float>(getWidth() / 2, ship->transform->position.y - 40.0f);
-
-	// Creation des bricks
-	Entities::Brick * brick;
-	int j = 10;
-	for (int i = 0; i < 10; i++) {
-		for (int k = j; k > 0; k--) {
-			brick = new Entities::Brick(entity_manager);
-			brick->transform->position = Vector2<float>(150 + 30 * i, 150 + 30 * k);
-		}
-		j--;
-	}
 }
