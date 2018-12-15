@@ -2,7 +2,7 @@
 
 Window::Window() {
 	title = "Arkanoid";
-	width =362;
+	width = 362;
 	height = 500;
 	window = SDL_CreateWindow(title.c_str(),
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,

@@ -51,12 +51,12 @@ void CollisionSystem::update(double deltaTime) {
                 if (hc && !hc->invicible) {
                     hc->life--;
                     if (hc->life <= 0) { // si nombre de vie du bloc = 0 alors creer bonus contenue dans le bloc et supprimer bloc
-                        Components::Bonus * bonus = entity2->get<Components::Bonus>("bonus");
+                        /*Components::Bonus * bonus = entity2->get<Components::Bonus>("bonus");
                         if (bonus && bonus->bonus != 0) {
                             Entities::Bonus * b = new Entities::Bonus(entity_manager);
                             b->get<Components::Transform>("transform")->position = tc2->position;
                             b->get<Components::Motion>("motion")->velocity = Vector2<float>(0, 1);
-                        }
+                        }*/
                         delete entity2;
                     }
                 }

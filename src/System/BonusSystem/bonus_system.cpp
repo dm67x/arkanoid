@@ -1,5 +1,6 @@
 #include "bonus_system.h"
 #include "Component/bonus.h"
+#include "Entity/entity.h"
 
 using namespace Components;
 

@@ -7,6 +7,7 @@
 #include "System/CollisionSystem/collision_system.h"
 #include "System/MovementSystem/movement_system.h"
 #include "System/GameOverSystem/game_over_system.h"
+#include "System/PointsBlockSystem/points_block_system.h"
 #include "Entity/Brick/brick.h"
 #include "Component/transform.h"
 #include "Component/motion.h"
@@ -43,6 +44,7 @@ void GameScene::load() {
 	systems.push_back(new CollisionSystem());
 	systems.push_back(new MovementSystem());
 	systems.push_back(new GameOverSystem());
+	systems.push_back(new PointsBlockSystem());
 	
 	Level * niveau1 = new Level("level4.txt");
 	entity_manager = niveau1->getManager();
