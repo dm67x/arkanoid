@@ -25,7 +25,7 @@ void Game::init() {
 	Scene * gameScene = new Scenes::GameScene();
 	gameScene->setSize(window->getSize().x, window->getSize().y);
 	scene_manager->add(*gameScene);
-	scene_manager->goTo("game");
+	scene_manager->load("game");
 }
 
 void Game::run() {
@@ -44,14 +44,14 @@ void Game::run() {
 					this->quit = true;
             }
 
-			scene_manager->getScene()->input(event);
+			scene_manager->getCurrent()->input(event);
         }
 
 		prev = now;
 		now = SDL_GetPerformanceCounter();
 		deltaTime = (double)((now - prev)*1000 / (double)SDL_GetPerformanceFrequency() * 0.001);
 
-		scene_manager->getScene()->update(deltaTime);
+		scene_manager->getCurrent()->update(deltaTime);
 
 		if (deltaTime < 0.02) {
 			SDL_Delay(0.02 - deltaTime);
@@ -59,7 +59,7 @@ void Game::run() {
 			deltaTime = (double)((now - prev)*1000 / (double)SDL_GetPerformanceFrequency() * 0.001);
 		}
 
-		scene_manager->getScene()->draw(*window->getSurface());
+		scene_manager->getCurrent()->draw(*window->getSurface());
 
 		window->update();
     }

@@ -17,8 +17,10 @@ PointsBlockSystem::PointsBlockSystem() {
 }
 
 void PointsBlockSystem::update(double deltaTime) {
-    if (!current_scene) return;
-    EntityManager * manager = current_scene->getEntityManager();
+    System::update(deltaTime);
+
+    EntityManager * manager = current->getManager();
+
     for (auto entity : manager->get()) {
         Points * p = entity->get<Points>("points");
         Sprite * s = entity->get<Sprite>("sprite");

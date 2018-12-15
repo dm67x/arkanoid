@@ -10,8 +10,9 @@
 using namespace Components;
 
 void CollisionSystem::update(double deltaTime) {
-    if (!current_scene) return;
-    EntityManager * entity_manager = current_scene->getEntityManager();
+    System::update(deltaTime);
+
+    EntityManager * entity_manager = current->getManager();
 
     for (auto entity : entity_manager->get()) {
         Transform * tc = entity->get<Transform>("transform");

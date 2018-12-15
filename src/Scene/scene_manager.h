@@ -14,10 +14,10 @@ private:
 public:
 	void add(Scene & s);
 	void remove(const std::string name);
-	void goTo(const std::string name);
+	void load(const std::string name);
 	void clean();
 
-	inline Scene * getScene() const { return current; }
+	inline Scene * getCurrent() const { return current; }
 };
 
 #endif

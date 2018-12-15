@@ -6,8 +6,9 @@
 using namespace Components;
 
 void GameOverSystem::update(double deltaTime) {
-    if (!current_scene) return;
-    EntityManager * manager = current_scene->getEntityManager();
+    System::update(deltaTime);
+
+    EntityManager * manager = current->getManager();
 
     for (auto entity : manager->get()) {
         BallNumber * ball_number = entity->get<BallNumber>("ball_number");

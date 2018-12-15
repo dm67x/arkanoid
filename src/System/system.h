@@ -9,7 +9,7 @@
 class System
 {
 protected:
-	static Scene * current_scene;
+	Scene * current;
     static EventManager * event_manager;
 
     System();
@@ -18,8 +18,6 @@ public:
     virtual void input(SDL_Event e);
     virtual void update(double deltaTime);
     virtual void draw(SDL_Surface & surface);
-
-	static void setScene(Scene & s);
 };
 
 #endif

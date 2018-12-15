@@ -50,7 +50,4 @@ void GameScene::load() {
 	entity_manager = niveau1->getManager();
 	
 	player = new Entities::Player("Joueur 1", Vector2<float>(getWidth() / 2, getHeight() - 20.0f), entity_manager);
-	
-	
-	
 }

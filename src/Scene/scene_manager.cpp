@@ -9,16 +9,13 @@ void SceneManager::remove(const std::string name) {
 	scenes.erase(name);
 }
 
-void SceneManager::goTo(const std::string name) {
+void SceneManager::load(const std::string name) {
 	// transition
 	
 	// charger la scene voulue
 	current = scenes.at(name);
 	// charger la scene courante
-	if (current) {
-		System::setScene(*current);
-		current->load();
-	}
+	if (current) current->load();
 }
 
 void SceneManager::clean() {
