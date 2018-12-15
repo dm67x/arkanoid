@@ -15,10 +15,11 @@ using namespace Components;
 Level::Level(std::string filename)
 {
 	manager = new EntityManager();
+	board = new Board(25, 13);
 
 	string ligne;
 	ifstream fichier(filename, ios::in);  // on ouvre le fichier en lecture
-	int pts, x, y, bonus, hit;
+	int pts, line, column, bonus, hit;
 	Entities::Brick * brick = nullptr;
 
 	while(getline(fichier,ligne))
@@ -28,8 +29,8 @@ Level::Level(std::string filename)
 		string token;
 		for (int i = 0; getline(iss, token, ';'); i++) {
 			if (i == 0) pts = std::stoi(token, nullptr);
-			else if (i == 1) x = std::stoi(token, nullptr);
-			else if (i == 2) y = std::stoi(token, nullptr);
+			else if (i == 1) line = std::stoi(token, nullptr);
+			else if (i == 2) column = std::stoi(token, nullptr);
 			else if (i == 3) hit = std::stoi(token, nullptr);
 			else bonus = std::stoi(token, nullptr);
 		}
@@ -41,8 +42,8 @@ Level::Level(std::string filename)
 		Health * hc = brick->get<Health>("health");
 		Bonus * b = brick->get<Bonus>("bonus");
 		
-		tc->position.x = x * (sc->src.w);
-		tc->position.y = y * (sc->src.h);
+		tc->position = board->getPosition(line, column);
+		tc->scale = board->getBrickScale();
 		
 		points->points = pts;
 		hc->life = hit;
@@ -52,5 +53,6 @@ Level::Level(std::string filename)
 }
  
  Level::~Level() {
-	 delete manager;
+	delete manager;
+	delete board;
  }

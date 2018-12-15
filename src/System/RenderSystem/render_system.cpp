@@ -27,6 +27,6 @@ void RenderSystem::draw(SDL_Surface & surface) {
 		destination.w = static_cast<int>(tc->scale.x * sc->src.w);
 		destination.h = static_cast<int>(tc->scale.y * sc->src.h);
 
-		SDL_BlitSurface(&sprite, &sc->src, &surface, &destination);
+		SDL_BlitScaled(&sprite, &sc->src, &surface, &destination);
 	}
 }
