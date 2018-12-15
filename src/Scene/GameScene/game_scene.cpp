@@ -23,9 +23,6 @@ GameScene::GameScene() : Scene("game") {
 			number->number -= 1;
 		}
 	});
-	
-	Level * niveau1 = new Level("level1.txt");
-	entity_manager = niveau1->getManager();
 }
 
 GameScene::~GameScene() {
@@ -46,6 +43,12 @@ void GameScene::load() {
 	systems.push_back(new CollisionSystem());
 	systems.push_back(new MovementSystem());
 	systems.push_back(new GameOverSystem());
-
+	
+	Level * niveau1 = new Level("level4.txt");
+	entity_manager = niveau1->getManager();
+	
 	player = new Entities::Player("Joueur 1", Vector2<float>(getWidth() / 2, getHeight() - 20.0f), entity_manager);
+	
+	
+	
 }
