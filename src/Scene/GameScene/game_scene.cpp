@@ -31,8 +31,8 @@ GameScene::~GameScene() {
 }
 
 void GameScene::load() {
-	SDL_Surface * sprite = SDL_LoadBMP("./Arkanoid_sprites.bmp");
-	SDL_Surface * font = SDL_LoadBMP("./Arkanoid_ascii.bmp");
+	SDL_Surface * sprite = SDL_LoadBMP("./assets/Arkanoid_sprites.bmp");
+	SDL_Surface * font = SDL_LoadBMP("./assets/Arkanoid_ascii.bmp");
 
 	if (!sprite || !font) {
 		std::cerr << "error on reading assets files" << std::endl;
@@ -46,7 +46,7 @@ void GameScene::load() {
 	systems.push_back(new GameOverSystem());
 	systems.push_back(new PointsBlockSystem());
 	
-	Level * niveau1 = new Level("level4.txt");
+	Level * niveau1 = new Level("./assets/levels/level4.txt");
 	entity_manager = niveau1->getManager();
 	
 	player = new Entities::Player("Joueur 1", Vector2<float>(getWidth() / 2, getHeight() - 20.0f), entity_manager);

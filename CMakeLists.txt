@@ -34,8 +34,8 @@ endif ()
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_nullptr)
 
 # Copier les assets
-file (GLOB ASSETS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/*.bmp)
-file(COPY ${ASSETS_FILES} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+file (GLOB ASSETS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/*)
+file(COPY ${ASSETS_FILES} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets)
 
 if (MSVC)
 	source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files}) 

@@ -62,15 +62,13 @@ void CollisionSystem::update(double deltaTime) {
                 }
 
                 SDL_Log("collision");
-                if (box1.y <= box2.h && box1.h >= box2.h) { // balle tape le bas
+                if ((box1.y <= box2.h && box1.h >= box2.h) 
+                    || (box1.y <= box2.y && box1.h >= box2.y)) { // balle tape le bas ou le haut
                     mc->velocity.y *= -1;
-                } else if (box1.y <= box2.y && box1.h >= box2.y) { // balle tape le haut
-                    mc->velocity.y *= -1;
-                } 
+                }
                 
-                if (box1.w >= box2.x && box1.x <= box2.x) { // balle tape à gauche
-                    mc->velocity.x *= -1;
-                } else if (box1.x <= box2.w && box1.w >= box2.w) { // balle tape à droite
+                if ((box1.w >= box2.x && box1.x <= box2.x) 
+                    || (box1.x <= box2.w && box1.w >= box2.w)) { // balle tape à gauche ou à droite
                     mc->velocity.x *= -1;
                 }
             }
