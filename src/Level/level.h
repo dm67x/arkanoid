@@ -22,7 +22,7 @@ public:
 	void unload();
 	
 	inline const std::vector<Entities::Brick *> getBricks() { return bricks; }
-	inline const getID() { return id; }
+	inline const unsigned int getID() { return id; }
 };
  
 #endif
