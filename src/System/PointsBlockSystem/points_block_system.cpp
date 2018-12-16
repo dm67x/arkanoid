@@ -1,6 +1,6 @@
 #include "points_block_system.h"
 #include "Component/points.h"
-#include "Component/Sprite.h"
+#include "Component/sprite.h"
 #include "Entity/entity.h"
 
 using namespace Components;
