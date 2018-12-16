@@ -11,8 +11,11 @@
 using namespace std;
 using namespace Components;
 
+unsigned int Level::next_id = 0;
+
 Level::Level(std::string filename)
 {
+	id = next_id++;
 	board = new Board(25, 13);
 
 	string ligne;
@@ -51,7 +54,16 @@ Level::Level(std::string filename)
 		bricks.push_back(brick);
 	}
 }
- 
- Level::~Level() {
+
+Level::~Level() {
 	delete board;
- }
+}
+
+void Level::load() {
+	for (auto b : bricks) b->setActive(true);
+}
+
+void Level::unload() {
+	for (auto b : bricks) b->setActive(false);
+}
+

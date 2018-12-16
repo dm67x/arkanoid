@@ -1,34 +1,33 @@
 #include "level_manager.h"
 
+int LevelManager::next_id = 0;
 
-void LevelManager::go_to_next_level(int lvl)
-{
-	if(!loadFileLevel(lvl))
-	{
-		//quelle truc qui verife qu'il ya plus de bmoc
+LevelManager::~LevelManager() {
+	for (auto l : levels) delete l;
+	levels.clear();
+}
+
+void LevelManager::add(Level * l) {
+	levels.push_back(l);
+	if (levels.size() == 1) 
+		current = levels[0];
+}
+
+void LevelManager::remove(Level * l) {
+	for (auto it = levels.begin(); it != levels.end(); it++) {
+		if ((*it)->getID() == l->getID()) {
+			delete *it;
+			levels.erase(it);
+		}
 	}
 }
 
-void LevelManager::loadFileLevel( int lvl) // charger un fichier en foncionde son lvl
-{
-	Niveau.push("level1.txt");
-	Niveau.push("level2.txt");
-	Niveau.push("level3.txt");
-	Niveau.push("level4.txt");
-	
-	if(lvl <1 && lvl >4 )
-	{
-		std::cout<<"Level inconnu, lvl<1..4>" <<std::endl;
+bool LevelManager::next() {
+	if (levels.size() > next_id) {
+		if (current) current->unload();
+		current = levels[next_id++];
+		if (current) current->load();
+		return true;
 	}
-	switch(lvl)
-	{
-		case 1 : return Niveau.get(1);
-		break;
-		case 2 : return Niveau.get(2);
-		break;
-		case 3 : return Niveau.get(3);
-		break;
-		case 4 : return Niveau.get(4);
-		break;
-	}
+	return false;
 }

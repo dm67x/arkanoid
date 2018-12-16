@@ -28,8 +28,15 @@ GameOverScene::~GameOverScene() {
 void GameOverScene::load() {
     text_system->setActive(true);
 
-    game_over_text->get<Components::Transform>("transform")->position =
-        Vector2<float>(getWidth() / 2, getHeight() / 2);
+    Components::Text * tc = game_over_text->get<Components::Text>("text");
+    Components::Sprite * sp = tc->sprites[0];
+    if (!sp) return;
+    Components::Transform * trc = game_over_text->get<Components::Transform>("transform");
+    int tw = sp->src.w * trc->scale.x * tc->sprites.size();
+    int th = sp->src.h * trc->scale.y;
+
+    trc->position.x = (getWidth() - tw) * 0.5f;
+    trc->position.y = (getHeight() - th) * 0.5f;
 
     game_over_text->setActive(true);
 }

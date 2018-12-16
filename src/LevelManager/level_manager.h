@@ -2,18 +2,21 @@
 #define LEVEL_MANAGER_H
 
 #include "singleton.h"
-#include "Entity/Brick/brick.h"
-#include "Level/level.h.h"
+#include "Level/level.h"
 
-class LevelManager : public Level<LevelManager>
+class LevelManager : public Singleton<LevelManager>
 {
 private:
-    std::vector<std::string *> Niveau;// conitent les fichier lvl
+    static int next_id;
+    Level * current;
+    std::vector<Level *> levels; // contient les niveaux
 
 public:
-    void go_to_next_level(Level * lvl);
-    void reset_level();
-      ~LevelManager();
+    ~LevelManager();
+    void add(Level * l);
+    void remove(Level * l);
+    bool next();
+    inline Level * get() { return current; }
 };
 
 

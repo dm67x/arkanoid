@@ -2,7 +2,6 @@
 #include <cassert>
 
 #include "game_scene.h"
-#include "Entity/Brick/brick.h"
 #include "Component/transform.h"
 #include "Component/motion.h"
 #include "Component/ball_number.h"
@@ -27,6 +26,7 @@ GameScene::GameScene() : Scene("game") {
 	gameover_system = new GameOverSystem();
 	points_block_system = new PointsBlockSystem();
 	text_system = new TextSystem(*font);
+	win_system = new WinSystem();
 
 	system_manager->add("gamescene_render", *render_system);
 	system_manager->add("gamescene_control", *control_system);
@@ -35,9 +35,10 @@ GameScene::GameScene() : Scene("game") {
 	system_manager->add("gamescene_gameover", *gameover_system);
 	system_manager->add("gamescene_pointsblock", *points_block_system);
 	system_manager->add("gamescene_text", *text_system);
+	system_manager->add("gamescene_win", *win_system);
 
-	Level * level4 = new Level("./assets/levels/level4.txt");
-	bricks = level4->getBricks();
+	level_manager = Singleton<LevelManager>::getInstance();
+	level_manager->add(new Level("./assets/levels/level4.txt"));
 	
 	player = new Entities::Player("Joueur 1");
 
@@ -73,6 +74,7 @@ GameScene::~GameScene() {
 	system_manager->remove("gamescene_gameover");
 	system_manager->remove("gamescene_pointsblock");
 	system_manager->remove("gamescene_text");
+	system_manager->remove("gamescene_win");
 }
 
 void GameScene::load() {
@@ -87,7 +89,7 @@ void GameScene::load() {
 	player->setPosition(Vector2<float>(getWidth() / 2, getHeight() - 20.0f));
 	player->setActive(true);
 	score->setActive(true);
-	for (auto b : bricks) b->setActive(true);
+	level_manager->get()->load();
 }
 
 void GameScene::unload() {
@@ -100,5 +102,5 @@ void GameScene::unload() {
 	gameover_system->setActive(false);
 	points_block_system->setActive(false);
 	text_system->setActive(false);
-	for (auto b : bricks) b->setActive(false);
+	level_manager->get()->unload();
 }
