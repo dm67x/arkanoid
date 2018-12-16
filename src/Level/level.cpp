@@ -30,8 +30,8 @@ Level::Level(std::string filename)
 		string token;
 		for (int i = 0; getline(iss, token, ';'); i++) {
 			if (i == 0) pts = std::stoi(token, nullptr);
-			else if (i == 1) line = std::stoi(token, nullptr);
-			else if (i == 2) column = std::stoi(token, nullptr);
+			else if (i == 1) column = std::stoi(token, nullptr);
+			else if (i == 2) line = std::stoi(token, nullptr);
 			else if (i == 3) hit = std::stoi(token, nullptr);
 			else bonus = std::stoi(token, nullptr);
 		}

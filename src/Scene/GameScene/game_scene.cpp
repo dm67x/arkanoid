@@ -38,7 +38,7 @@ GameScene::GameScene() : Scene("game") {
 	system_manager->add("gamescene_win", *win_system);
 
 	level_manager = Singleton<LevelManager>::getInstance();
-	level_manager->add(new Level("./assets/levels/level4.txt"));
+	level_manager->add(new Level("./assets/levels/level2.txt"));
 	
 	player = new Entities::Player("Joueur 1");
 
