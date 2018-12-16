@@ -5,11 +5,13 @@
 
 #include "EventManager/event_manager.h"
 #include "Scene/scene.h"
+#include "EntityManager/entity_manager.h"
 
 class System
 {
 protected:
 	Scene * current;
+    static EntityManager * entity_manager;
     static EventManager * event_manager;
 
     System();

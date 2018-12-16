@@ -6,7 +6,7 @@
 
 using namespace Entities;
 
-Ship::Ship(EntityManager * manager) : Entity(manager) {
+Ship::Ship() : Entity() {
 	Components::Sprite * sc = new Components::Sprite();
 	sc->src = { 385, 192, 98, 16 };
 

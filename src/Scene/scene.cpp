@@ -4,7 +4,7 @@
 EventManager * Scene::event_manager = Singleton<EventManager>::getInstance();
 
 Scene::Scene(const std::string name) 
-	: name(name), width(0), height(0) 
+	: name(name), width(0), height(0)
 {
 }
 

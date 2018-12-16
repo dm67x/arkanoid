@@ -1,21 +1,22 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include "EntityManager/entity_manager.h"
+#include "Entity/Brick/brick.h"
 #include "Board/board.h"
 #include <string>
+#include <vector>
 
 class Level 
 {
 private:
-	EntityManager * manager;
 	Board * board;
-	
+	std::vector<Entities::Brick *> bricks;
+
 public:
 	Level(std::string filename);
 	~Level();
 	
-	inline EntityManager * getManager() { return manager; }
+	inline const std::vector<Entities::Brick *> getBricks() { return bricks; }
 };
  
 #endif

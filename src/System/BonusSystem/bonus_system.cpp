@@ -7,8 +7,7 @@ using namespace Components;
 void BonusSystem::update(double deltaTime) {
     System::update(deltaTime);
 
-    EntityManager * manager = current->getManager();
-    for (auto entity : manager->get()) {
+    for (auto entity : entity_manager->get()) {
         Bonus * bonus = entity->get<Bonus>("bonus");
         if (!bonus) continue;
     }

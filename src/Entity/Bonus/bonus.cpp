@@ -6,7 +6,7 @@
 
 using namespace Entities;
 
-Bonus::Bonus(EntityManager * manager) : Entity(manager) {
+Bonus::Bonus() : Entity() {
     add(new Components::Bonus());
     add(new Components::Motion());
     add(new Components::Transform());

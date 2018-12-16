@@ -12,8 +12,6 @@ using namespace Components;
 void CollisionSystem::update(double deltaTime) {
     System::update(deltaTime);
 
-    EntityManager * entity_manager = current->getManager();
-
     for (auto entity : entity_manager->get()) {
         Transform * tc = entity->get<Transform>("transform");
         Sprite * sc = entity->get<Sprite>("sprite");

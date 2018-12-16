@@ -12,6 +12,8 @@ void SceneManager::remove(const std::string name) {
 void SceneManager::load(const std::string name) {
 	// transition
 	
+	// rendre inactif les entites actifs
+	if (current) current->unload();
 	// charger la scene voulue
 	current = scenes.at(name);
 	// charger la scene courante

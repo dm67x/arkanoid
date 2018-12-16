@@ -16,8 +16,11 @@ namespace Entities
         std::string name;
 
     public:
-        Player(const std::string name, Vector2<float> position, EntityManager * manager);
+        Player(const std::string name);
         ~Player() override;
+
+        void setActive(bool active) override;
+        void setPosition(Vector2<float> position);
     };
 }
 

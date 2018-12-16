@@ -7,7 +7,7 @@
 
 using namespace Entities;
 
-Ball::Ball(EntityManager * manager) : Entity(manager) {
+Ball::Ball() : Entity() {
     Components::Sprite * sprite = new Components::Sprite();
     sprite->src = { 80, 64, 16, 16 };
 

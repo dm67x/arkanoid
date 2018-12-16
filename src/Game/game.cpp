@@ -1,5 +1,6 @@
 #include "game.h"
 #include "Scene/GameScene/game_scene.h"
+#include "Scene/GameOverScene/game_over_scene.h"
 
 #include <iostream>
 
@@ -25,6 +26,11 @@ void Game::init() {
 	Scene * gameScene = new Scenes::GameScene();
 	gameScene->setSize(window->getSize().x, window->getSize().y);
 	scene_manager->add(*gameScene);
+
+	Scene * gameOverScene = new Scenes::GameOverScene();
+	gameOverScene->setSize(window->getSize().x, window->getSize().y);
+	scene_manager->add(*gameOverScene);
+
 	scene_manager->load("game");
 }
 

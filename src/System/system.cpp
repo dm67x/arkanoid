@@ -2,8 +2,9 @@
 #include "Scene/scene_manager.h"
 
 EventManager * System::event_manager = Singleton<EventManager>::getInstance();
+EntityManager * System::entity_manager = Singleton<EntityManager>::getInstance();
 
-System::System() : current(nullptr) {
+System::System() {
 }
 
 void System::input(SDL_Event e) {

@@ -17,20 +17,6 @@
 using namespace Scenes;
 
 GameScene::GameScene() : Scene("game") {
-	event_manager->attach("remove_ball_from_player", [this](void * param) {
-		if (!player) return;
-		Components::BallNumber * number = player->get<Components::BallNumber>("ball_number");
-		if (number) {
-			number->number -= 1;
-		}
-	});
-}
-
-GameScene::~GameScene() {
-	event_manager->detach("remove_ball_from_player");
-}
-
-void GameScene::load() {
 	SDL_Surface * sprite = SDL_LoadBMP("./assets/Arkanoid_sprites.bmp");
 	SDL_Surface * font = SDL_LoadBMP("./assets/Arkanoid_ascii.bmp");
 
@@ -45,9 +31,32 @@ void GameScene::load() {
 	systems.push_back(new MovementSystem());
 	systems.push_back(new GameOverSystem());
 	systems.push_back(new PointsBlockSystem());
+
+	Level * level4 = new Level("./assets/levels/level4.txt");
+	bricks = level4->getBricks();
 	
-	Level * niveau1 = new Level("./assets/levels/level4.txt");
-	entity_manager = niveau1->getManager();
-	
-	player = new Entities::Player("Joueur 1", Vector2<float>(getWidth() / 2, getHeight() - 20.0f), entity_manager);
+	player = new Entities::Player("Joueur 1");
+
+	event_manager->attach("remove_ball_from_player", [this](void * param) {
+		if (!player) return;
+		Components::BallNumber * number = player->get<Components::BallNumber>("ball_number");
+		if (number) {
+			number->number -= 1;
+		}
+	});
+}
+
+GameScene::~GameScene() {
+	event_manager->detach("remove_ball_from_player");
+}
+
+void GameScene::load() {
+	player->setPosition(Vector2<float>(getWidth() / 2, getHeight() - 20.0f));
+	player->setActive(true);
+	for (auto b : bricks) b->setActive(true);
+}
+
+void GameScene::unload() {
+	player->setActive(false);
+	for (auto b : bricks) b->setActive(false);
 }

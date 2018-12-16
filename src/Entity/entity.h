@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-#include "EntityManager/entity_manager.h"
 #include "Component/component.h"
 
 class Entity
@@ -12,11 +11,11 @@ class Entity
 private:
     static unsigned int next_id;
     unsigned int id;
-    EntityManager * manager;
     std::vector<Component *> components;
+    bool active;
 
 public:
-    Entity(EntityManager * manager);
+    Entity();
     virtual ~Entity();
 
     void add(Component * c);
@@ -34,6 +33,8 @@ public:
 
     inline std::vector<Component *> getComponents() { return components; }
     inline const unsigned int getID() { return id; }
+    virtual void setActive(bool active);
+    inline const bool isActive() { return active; }
 };
 
 #endif

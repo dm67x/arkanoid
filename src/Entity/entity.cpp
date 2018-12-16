@@ -1,16 +1,17 @@
 #include "entity.h"
+#include "EntityManager/entity_manager.h"
 
 unsigned int Entity::next_id = 0;
 
-Entity::Entity(EntityManager * manager)
-    : manager(manager)
+Entity::Entity()
 {
     id = next_id++;
-    manager->add(this);
+    Singleton<EntityManager>::getInstance()->add(this);
+    active = false;
 }
 
 Entity::~Entity() {
-    manager->remove(id);
+    Singleton<EntityManager>::getInstance()->remove(id);
     for (auto c : components) delete c;
     components.clear();
 }
@@ -27,4 +28,8 @@ void Entity::remove(std::string name) {
             break;
         }
     }
+}
+
+void Entity::setActive(bool active) {
+    this->active = active;
 }

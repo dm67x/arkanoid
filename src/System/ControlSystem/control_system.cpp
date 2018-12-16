@@ -6,11 +6,9 @@
 
 using namespace Components;
 
-void ControlSystem::input(SDL_Event e) {
+void ControlSystem::input(SDL_Event e) {  
     System::input(e);
 
-    EntityManager * entity_manager = current->getManager();
-    
     if (e.type == SDL_MOUSEMOTION) {
         for (auto entity : entity_manager->get()) {
             Transform * tc = entity->get<Transform>("transform");

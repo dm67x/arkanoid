@@ -8,8 +8,6 @@ using namespace Components;
 void MovementSystem::update(double deltaTime) {
     System::update(deltaTime);
 
-    EntityManager * entity_manager = current->getManager();
-
     for (auto entity : entity_manager->get()) {
         Transform * tc = entity->get<Transform>("transform");
         Motion * mc = entity->get<Motion>("motion");

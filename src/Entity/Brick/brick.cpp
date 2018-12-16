@@ -8,7 +8,7 @@
 
 using namespace Entities;
 
-Brick::Brick(EntityManager * manager) : Entity(manager) {
+Brick::Brick() : Entity() {
     Components::Sprite * sprite = new Components::Sprite();
     sprite->src = { 0, 0, 30, 14 };
 

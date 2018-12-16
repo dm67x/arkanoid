@@ -4,9 +4,6 @@
 
 #include <iostream>
 
-EntityManager::EntityManager() {
-}
-
 EntityManager::~EntityManager() {
     for (auto entity : entities) delete entity;
 }
@@ -23,4 +20,13 @@ void EntityManager::remove(unsigned int id) {
             return; 
         }
     }
+}
+
+std::vector<Entity *> EntityManager::get() const {
+    std::vector<Entity *> active_entities;
+    for (auto entity : entities) {
+        if (entity->isActive())
+            active_entities.push_back(entity);
+    }
+    return active_entities;
 }

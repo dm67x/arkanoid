@@ -8,7 +8,7 @@ namespace Entities
     class Ship : public Entity
     {
     public:
-        Ship(EntityManager * manager);
+        Ship();
     };
 }
 

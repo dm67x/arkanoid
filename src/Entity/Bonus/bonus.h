@@ -8,7 +8,7 @@ namespace Entities
     class Bonus : public Entity
     {
     public:
-        Bonus(EntityManager * manager);
+        Bonus();
     };
 }
 

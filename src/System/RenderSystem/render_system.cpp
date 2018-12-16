@@ -12,8 +12,6 @@ RenderSystem::RenderSystem(SDL_Surface & sprite)
 
 void RenderSystem::draw(SDL_Surface & surface) {
 	System::draw(surface);
-	
-	EntityManager * entity_manager = current->getManager();
 
 	for (auto entity : entity_manager->get()) {
 		Transform * tc = entity->get<Transform>("transform");

@@ -8,7 +8,7 @@ namespace Entities
     class Ball : public Entity
     {
     public:
-        Ball(EntityManager * manager);
+        Ball();
     };
 }
 

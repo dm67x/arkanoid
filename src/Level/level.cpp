@@ -2,7 +2,6 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include "Entity/Brick/brick.h"
 #include "Component/transform.h"
 #include "Component/sprite.h"
 #include "Component/points.h"
@@ -14,7 +13,6 @@ using namespace Components;
 
 Level::Level(std::string filename)
 {
-	manager = new EntityManager();
 	board = new Board(25, 13);
 
 	string ligne;
@@ -35,7 +33,7 @@ Level::Level(std::string filename)
 			else bonus = std::stoi(token, nullptr);
 		}
 
-		brick = new Entities::Brick(manager);
+		brick = new Entities::Brick();
 		Transform * tc = brick->get<Transform>("transform");
 		Sprite * sc = brick->get<Sprite>("sprite");
 		Points * points = brick->get<Points>("points");
@@ -49,10 +47,11 @@ Level::Level(std::string filename)
 		hc->life = hit;
 		if (hit < 0) hc->invicible = true;
 		b->bonus = bonus;
+
+		bricks.push_back(brick);
 	}
 }
  
  Level::~Level() {
-	delete manager;
 	delete board;
  }

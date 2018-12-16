@@ -3,6 +3,7 @@
 
 #include "Scene/scene.h"
 #include "Entity/Player/player.h"
+#include "Entity/Brick/brick.h"
 
 namespace Scenes
 {
@@ -10,12 +11,14 @@ namespace Scenes
 	{
 	private:
 		Entities::Player * player;
+		std::vector<Entities::Brick *> bricks;
 
 	public:
 		GameScene();
 		~GameScene() override;
 
 		void load() override;
+		void unload() override;
 	};
 }
 

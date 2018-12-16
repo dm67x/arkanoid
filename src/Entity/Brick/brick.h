@@ -8,7 +8,7 @@ namespace Entities
     class Brick : public Entity
     {
     public:
-        Brick(EntityManager * manager);
+        Brick();
     };
 }
 
