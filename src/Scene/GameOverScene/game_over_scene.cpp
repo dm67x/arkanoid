@@ -29,9 +29,10 @@ void GameOverScene::load() {
     text_system->setActive(true);
 
     Components::Text * tc = game_over_text->get<Components::Text>("text");
+    if (!tc || tc->sprites.size() == 0) return;
     Components::Sprite * sp = tc->sprites[0];
-    if (!sp) return;
     Components::Transform * trc = game_over_text->get<Components::Transform>("transform");
+    if (!trc) return;
     int tw = sp->src.w * trc->scale.x * tc->sprites.size();
     int th = sp->src.h * trc->scale.y;
 
