@@ -42,7 +42,9 @@ GameScene::GameScene() : Scene("game") {
 	player = new Entities::Player("Joueur 1");
 
 	score = new Entities::Text(std::to_string(player->getScore()));
-	score->get<Components::Transform>("transform")->position = Vector2<float>(10, 10);
+	Components::Transform * score_tc = score->get<Components::Transform>("transform");
+	score_tc->position = Vector2<float>(10, 10);
+	score_tc->scale = Vector2<float>(0.5f, 0.5f);
 
 	event_manager->attach("remove_ball_from_player", [this](void * param) {
 		if (!player) return;

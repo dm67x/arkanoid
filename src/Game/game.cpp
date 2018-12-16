@@ -1,6 +1,7 @@
 #include "game.h"
 #include "Scene/GameScene/game_scene.h"
 #include "Scene/GameOverScene/game_over_scene.h"
+#include "Scene/MenuScene/menu_scene.h"
 
 #include <iostream>
 
@@ -31,7 +32,11 @@ void Game::init() {
 	gameOverScene->setSize(window->getSize().x, window->getSize().y);
 	scene_manager->add(*gameOverScene);
 
-	scene_manager->load("game");
+	Scene * menuScene = new Scenes::MenuScene();
+	menuScene->setSize(window->getSize().x, window->getSize().y);
+	scene_manager->add(*menuScene);
+
+	scene_manager->load("menu");
 }
 
 void Game::run() {
