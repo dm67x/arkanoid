@@ -5,6 +5,7 @@
 #include "Component/motion.h"
 #include "Component/health.h"
 #include "Component/bonus.h"
+#include "Component/points.h"
 #include "Entity/Bonus/bonus.h"
 
 using namespace Components;
@@ -24,6 +25,7 @@ void CollisionSystem::update(double deltaTime) {
             Transform * tc2 = entity2->get<Transform>("transform");
             Sprite * sc2 = entity2->get<Sprite>("sprite");
             Health * hc = entity2->get<Health>("health");
+            Points * pc = entity2->get<Points>("points");
 
             if (!sc2 || !tc2 || !entity->get<Component>("collision")) continue;
 
@@ -56,6 +58,7 @@ void CollisionSystem::update(double deltaTime) {
                             b->get<Components::Transform>("transform")->position = tc2->position;
                             b->get<Components::Motion>("motion")->velocity = Vector2<float>(0, 1);
                         }*/
+                        if (pc) event_manager->trigger("add_points", &pc->points);
                         delete entity2;
                     }
                 }

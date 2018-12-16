@@ -7,6 +7,7 @@
 #include <vector>
 
 class System;
+class SystemManager;
 
 class Scene
 {
@@ -16,8 +17,8 @@ private:
 
 protected:
 	Scene(const std::string name);
+	SystemManager * system_manager;
 
-	std::vector<System *> systems;
 	static EventManager * event_manager;
 
 public:

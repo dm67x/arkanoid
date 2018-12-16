@@ -2,17 +2,12 @@
 #include <cassert>
 
 #include "game_scene.h"
-#include "System/RenderSystem/render_system.h"
-#include "System/ControlSystem/control_system.h"
-#include "System/CollisionSystem/collision_system.h"
-#include "System/MovementSystem/movement_system.h"
-#include "System/GameOverSystem/game_over_system.h"
-#include "System/PointsBlockSystem/points_block_system.h"
 #include "Entity/Brick/brick.h"
 #include "Component/transform.h"
 #include "Component/motion.h"
 #include "Component/ball_number.h"
 #include "Level/level.h"
+#include "System/system_manager.h"
 
 using namespace Scenes;
 
@@ -25,17 +20,29 @@ GameScene::GameScene() : Scene("game") {
 		exit(1);
 	}
 
-	systems.push_back(new RenderSystem(*sprite));
-	systems.push_back(new ControlSystem());
-	systems.push_back(new CollisionSystem());
-	systems.push_back(new MovementSystem());
-	systems.push_back(new GameOverSystem());
-	systems.push_back(new PointsBlockSystem());
+	render_system = new RenderSystem(*sprite);
+	control_system = new ControlSystem();
+	collision_system = new CollisionSystem();
+	movement_system = new MovementSystem();
+	gameover_system = new GameOverSystem();
+	points_block_system = new PointsBlockSystem();
+	text_system = new TextSystem(*font);
+
+	system_manager->add("gamescene_render", *render_system);
+	system_manager->add("gamescene_control", *control_system);
+	system_manager->add("gamescene_collision", *collision_system);
+	system_manager->add("gamescene_movement", *movement_system);
+	system_manager->add("gamescene_gameover", *gameover_system);
+	system_manager->add("gamescene_pointsblock", *points_block_system);
+	system_manager->add("gamescene_text", *text_system);
 
 	Level * level4 = new Level("./assets/levels/level4.txt");
 	bricks = level4->getBricks();
 	
 	player = new Entities::Player("Joueur 1");
+
+	score = new Entities::Text(std::to_string(player->getScore()));
+	score->get<Components::Transform>("transform")->position = Vector2<float>(10, 10);
 
 	event_manager->attach("remove_ball_from_player", [this](void * param) {
 		if (!player) return;
@@ -44,19 +51,52 @@ GameScene::GameScene() : Scene("game") {
 			number->number -= 1;
 		}
 	});
+
+	event_manager->attach("add_points", [this](void * param) {
+		int points = *(static_cast<int *>(param));
+		if (!player) return;
+		player->addScore(points);
+		score->setText(std::to_string(player->getScore()));
+	});
 }
 
 GameScene::~GameScene() {
 	event_manager->detach("remove_ball_from_player");
+	event_manager->detach("add_points");
+
+	system_manager->remove("gamescene_render");
+	system_manager->remove("gamescene_control");
+	system_manager->remove("gamescene_collision");
+	system_manager->remove("gamescene_movement");
+	system_manager->remove("gamescene_gameover");
+	system_manager->remove("gamescene_pointsblock");
+	system_manager->remove("gamescene_text");
 }
 
 void GameScene::load() {
+	render_system->setActive(true);
+	control_system->setActive(true);
+	collision_system->setActive(true);
+	movement_system->setActive(true);
+	gameover_system->setActive(true);
+	points_block_system->setActive(true);
+	text_system->setActive(true);
+
 	player->setPosition(Vector2<float>(getWidth() / 2, getHeight() - 20.0f));
 	player->setActive(true);
+	score->setActive(true);
 	for (auto b : bricks) b->setActive(true);
 }
 
 void GameScene::unload() {
 	player->setActive(false);
+	score->setActive(false);
+	render_system->setActive(false);
+	control_system->setActive(false);
+	collision_system->setActive(false);
+	movement_system->setActive(false);
+	gameover_system->setActive(false);
+	points_block_system->setActive(false);
+	text_system->setActive(false);
 	for (auto b : bricks) b->setActive(false);
 }
