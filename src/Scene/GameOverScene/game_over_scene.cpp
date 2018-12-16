@@ -1,27 +1,34 @@
 #include "game_over_scene.h"
+#include "System/TextSystem/text_system.h"
+#include "Component/transform.h"
 #include <iostream>
 
 using namespace Scenes;
 
 GameOverScene::GameOverScene() : Scene("game_over") {
-    game_over_img = SDL_LoadBMP("./assets/gameover.bmp");
+    game_over_text = new Entities::Text("Game Over");
+
+    SDL_Surface * font = SDL_LoadBMP("./assets/Arkanoid_ascii.bmp");
+
+	if (!font) {
+		std::cerr << "error on reading assets files" << std::endl;
+		exit(1);
+	}
+
+	systems.push_back(new TextSystem(*font));
 }
 
 GameOverScene::~GameOverScene() {
+    delete game_over_text;
 }
 
 void GameOverScene::load() {
+    game_over_text->get<Components::Transform>("transform")->position =
+        Vector2<float>(getWidth() / 2, getHeight() / 2);
+
+    game_over_text->setActive(true);
 }
 
 void GameOverScene::unload() {
-}
-
-void GameOverScene::draw(SDL_Surface & surface) {
-    SDL_FillRect(&surface, nullptr, 0x000000);
-    SDL_Rect dest;
-    dest.x = 0;
-    dest.y = 0;
-    dest.w = getWidth();
-    dest.h = getHeight();
-    SDL_BlitScaled(game_over_img, nullptr, &surface, &dest);
+    game_over_text->setActive(false);
 }

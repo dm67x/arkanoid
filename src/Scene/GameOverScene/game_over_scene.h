@@ -2,13 +2,14 @@
 #define GAME_OVER_SCENE_H
 
 #include "Scene/scene.h"
+#include "Entity/Text/text.h"
 
 namespace Scenes
 {
     class GameOverScene : public Scene
     {
     private:
-        SDL_Surface * game_over_img;
+        Entities::Text * game_over_text;
 
     public:
         GameOverScene();
@@ -16,7 +17,6 @@ namespace Scenes
 
         void load() override;
         void unload() override;
-        void draw(SDL_Surface & surface) override;
     };
 }
 
