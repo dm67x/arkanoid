@@ -59,7 +59,7 @@ void CollisionSystem::update(double deltaTime) {
                             b->get<Components::Motion>("motion")->velocity = Vector2<float>(0, 1);
                         }*/
                         if (pc) event_manager->trigger("add_points", &pc->points);
-                        delete entity2;
+                        entity2->setActive(false);
                     }
                 }
 
