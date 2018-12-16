@@ -4,7 +4,7 @@
 EventManager * System::event_manager = Singleton<EventManager>::getInstance();
 EntityManager * System::entity_manager = Singleton<EntityManager>::getInstance();
 
-System::System() {
+System::System() : active(false) {
 }
 
 void System::input(SDL_Event e) {
@@ -20,4 +20,8 @@ void System::update(double deltaTime) {
 void System::draw(SDL_Surface & surface) {
 	current = Singleton<SceneManager>::getInstance()->getCurrent();
 	if (!current) return;
+}
+
+void System::setActive(bool active) {
+	this->active = active;
 }

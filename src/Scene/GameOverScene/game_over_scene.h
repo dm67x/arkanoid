@@ -3,6 +3,7 @@
 
 #include "Scene/scene.h"
 #include "Entity/Text/text.h"
+#include "System/TextSystem/text_system.h"
 
 namespace Scenes
 {
@@ -10,6 +11,7 @@ namespace Scenes
     {
     private:
         Entities::Text * game_over_text;
+        TextSystem * text_system;
 
     public:
         GameOverScene();

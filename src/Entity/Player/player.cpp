@@ -6,7 +6,7 @@
 using namespace Entities;
 
 Player::Player(const std::string name) 
-    : Entity(), name(name)
+    : Entity(), name(name), score(0)
 {
     // Creation de l'entite "ship"
 	ship = new Entities::Ship();
@@ -45,4 +45,12 @@ void Player::setActive(bool active) {
     Entity::setActive(active);
     ship->setActive(active);
     for (auto ball : balls) ball->setActive(active);
+}
+
+void Player::addScore(int points) {
+    score += points;
+}
+
+void Player::resetScore() {
+    score = 0;
 }

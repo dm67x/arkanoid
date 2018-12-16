@@ -14,6 +14,7 @@ namespace Entities
         Entities::Ship * ship;
         std::vector<Entities::Ball *> balls;
         std::string name;
+        int score;
 
     public:
         Player(const std::string name);
@@ -21,6 +22,9 @@ namespace Entities
 
         void setActive(bool active) override;
         void setPosition(Vector2<float> position);
+        void addScore(int points);
+        void resetScore();
+        inline const int getScore() { return score; }
     };
 }
 

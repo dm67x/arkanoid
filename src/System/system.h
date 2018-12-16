@@ -9,6 +9,9 @@
 
 class System
 {
+private:
+    bool active;
+
 protected:
 	Scene * current;
     static EntityManager * entity_manager;
@@ -20,6 +23,9 @@ public:
     virtual void input(SDL_Event e);
     virtual void update(double deltaTime);
     virtual void draw(SDL_Surface & surface);
+
+    void setActive(bool active);
+    inline const bool isActive() { return active; }
 };
 
 #endif
