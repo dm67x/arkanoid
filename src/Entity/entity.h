@@ -25,7 +25,7 @@ public:
     T * get(std::string name) {
         for (auto it = components.begin(); it != components.end(); it++) {
             if ((*it)->name() == name) {
-                return static_cast<T *>(*it);
+                return dynamic_cast<T *>(*it);
             }
         }
         return nullptr;
