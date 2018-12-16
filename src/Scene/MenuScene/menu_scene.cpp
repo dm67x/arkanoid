@@ -51,10 +51,9 @@ void MenuScene::load() {
     quit_btn->setActive(true);
 
     Components::Text * tc = play_btn->get<Components::Text>("text");
-    if (!tc || tc->sprites.size() == 0) return;
     Components::Sprite * sp = tc->sprites[0];
     Components::Transform * trc = play_btn->get<Components::Transform>("transform");
-    if (!trc) return;
+
     int tw = sp->src.w * trc->scale.x * tc->sprites.size();
     int th = sp->src.h * trc->scale.y;
 
@@ -62,10 +61,9 @@ void MenuScene::load() {
     trc->position.y = (getHeight() - th) * 0.5f - getHeight() / 4.0f;
 
     tc = quit_btn->get<Components::Text>("text");
-    if (!tc || tc->sprites.size() == 0) return;
     sp = tc->sprites[0];
     trc = quit_btn->get<Components::Transform>("transform");
-    if (!trc) return;
+    
     tw = sp->src.w * trc->scale.x * tc->sprites.size();
     th = sp->src.h * trc->scale.y;
 

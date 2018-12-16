@@ -30,4 +30,5 @@ Components::Sprite * Button::spriteFromChar(char c) {
 	SDL_Rect rect = { x * width, y * height, width, height };
     Components::Sprite * s = new Components::Sprite();
     s->src = rect;
+    return s;
 }

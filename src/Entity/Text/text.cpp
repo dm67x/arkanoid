@@ -27,6 +27,7 @@ Components::Sprite * Text::spriteFromChar(char c) {
 	SDL_Rect rect = { x * width, y * height, width, height };
     Components::Sprite * s = new Components::Sprite();
     s->src = rect;
+    return s;
 }
 
 void Text::setText(std::string text) {
