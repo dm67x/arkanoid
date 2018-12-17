@@ -16,6 +16,7 @@ public:
 
     const Vector2<float> getBrickScale();
     Vector2<float> getPosition(int line, int column);
+	void setSize(int line, int column);
 };
 
 #endif

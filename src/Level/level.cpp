@@ -20,14 +20,25 @@ Level::Level(std::string filename)
 
 	string ligne;
 	ifstream fichier(filename, ios::in);  // on ouvre le fichier en lecture
-	int pts, line, column, bonus, hit;
+	int pts, line, column, bonus, hit, bl, bc;
 	Entities::Brick * brick = nullptr;
 
 	while(getline(fichier,ligne))
 	{   
-		if (ligne[0] == '#') continue;  
 		std::istringstream iss (ligne);
 		string token;
+		
+		if (ligne[0] == '#') continue;
+		if (ligne[0] == '&') {
+			for (int i = 0; getline(iss, token, ';'); i++) {
+				if (i == 1) bl = std::stoi(token, nullptr);
+				else if (i == 2) bc = std::stoi(token, nullptr);
+			}
+			std::cout << bl << "," << bc << std::endl;
+			board->setSize(bl, bc);
+			continue;
+		}
+		
 		for (int i = 0; getline(iss, token, ';'); i++) {
 			if (i == 0) pts = std::stoi(token, nullptr);
 			else if (i == 1) column = std::stoi(token, nullptr);

@@ -38,7 +38,10 @@ GameScene::GameScene() : Scene("game") {
 	system_manager->add("gamescene_win", *win_system);
 
 	level_manager = Singleton<LevelManager>::getInstance();
+	level_manager->add(new Level("./assets/levels/level1.txt"));
 	level_manager->add(new Level("./assets/levels/level2.txt"));
+	level_manager->add(new Level("./assets/levels/level3.txt"));
+	level_manager->add(new Level("./assets/levels/level4.txt"));
 	
 	player = new Entities::Player("Joueur 1");
 
@@ -85,6 +88,7 @@ void GameScene::load() {
 	gameover_system->setActive(true);
 	points_block_system->setActive(true);
 	text_system->setActive(true);
+	win_system->setActive(true);
 
 	player->setPosition(Vector2<float>(getWidth() / 2, getHeight() - 20.0f));
 	player->setActive(true);
@@ -102,5 +106,6 @@ void GameScene::unload() {
 	gameover_system->setActive(false);
 	points_block_system->setActive(false);
 	text_system->setActive(false);
+	win_system->setActive(false);
 	level_manager->get()->unload();
 }

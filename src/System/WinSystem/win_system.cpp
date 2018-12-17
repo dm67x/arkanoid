@@ -6,12 +6,17 @@
 void WinSystem::update(double deltaTime) {
     System::update(deltaTime);
 
-    int nb = 0;
+    bool exist = false;
     for (auto entity : entity_manager->get()) {
-        if (entity->get<Components::Health>("health")) nb++;
+        if (entity->get<Components::Health>("health")) {
+			exist = true;
+			break;
+		}
     }
+    
+    //SDL_Log("%d\n", exist);
 
-    if (nb == 0) {
+    if (!exist) {
         // Passer au niveau suivant sinon terminer jeu
         bool res = Singleton<LevelManager>::getInstance()->next();
         if (!res) {

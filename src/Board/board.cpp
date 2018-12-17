@@ -19,3 +19,8 @@ Vector2<float> Board::getPosition(int line, int column) {
     return Vector2<float>(column * bw * scale.x + bw * scale.x * 0.5f, 
         line * bh * scale.y + bh * scale.y * 0.5f);
 }
+
+void Board::setSize(int line, int column) {
+	size.x = column;
+	size.y = line;
+}
